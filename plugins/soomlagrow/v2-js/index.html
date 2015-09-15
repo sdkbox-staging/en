@@ -946,11 +946,9 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#soomla-grow">Soomla Grow</a></li>
+        <li class="main active"><a href="#grow">GROW</a></li>
         
             <li><a href="#integration">Integration</a></li>
-        
-            <li><a href="#extra-steps-for-android">Extra steps for Android</a></li>
         
             <li><a href="#configuration">Configuration</a></li>
         
@@ -973,14 +971,201 @@
 Include Base: /Users/jtsm/Chukong-Inc/pr/en/src/soomlagrow/v3-cpp
 -->
 
-<h1 id="soomla-grow">Soomla Grow</h1>
-<p><strong>Soomla Grow</strong> is a community-driven analytics dashboard. Developers using GROW can gain valuable insights about their games' performance and compare the data to benchmarks of other games in the GROW community.</p>
+<h1 id="grow">GROW</h1>
+<p>GROW is <a href="http://soom.la">SOOMLA</a>'s flagship, community-driven, data network. Mobile game studios can take advantage of GROW's Anaytics, Whales Reports and Insights in order to gain valuable knowledge about users' behavior in other games.
+Information about GROW can be found on the <a href="http://know.soom.la/">Knowledge Base</a>.</p>
 <h2 id="integration">Integration</h2>
-<p>Open a terminal and use the following command to install the SDKBOX SoomlaGrow plugin. Make sure you setup SDKBOX installer correctly.</p>
-<pre><code class="bash">$ sdkbox import soomlagrow
+<ol>
+<li>
+<p>If you still didn't sign up on the GROW Dashboard, go ahead and do it <a href="http://dashboard.soom.la">here</a>.</p>
+</li>
+<li>
+<p>Open a terminal and use the following command to install GROW's SDKBOX plugin. Make sure you setup SDKBOX installer correctly.</p>
+</li>
+</ol>
+<p><code>bash
+  $ sdkbox import soomlagrow</code></p>
+<h2 id="configuration">Configuration</h2>
+<p>SDKBOX Installer will automatically inject a sample configuration to your <code>res/sdkbox_config.json</code>, that you will have to modify before you use in your own app.</p>
+<p>Here is an example of the GROW configuration, you need to replace <code>&lt;gameKey&gt;</code> and <code>&lt;envkey&gt;</code> items with the ones you were given by the <a href="http://dashboard.soom.la">GROW Dashboard</a>. You will probably use the same <code>&lt;gameKey&gt;</code> and <code>&lt;envKey&gt;</code> for Android and iOS but you will still need to specify it twice, once for each platform. Example:</p>
+<pre><code class="json">&quot;ios&quot; :
+{
+  &quot;soomlaGrow&quot;:{
+              &quot;gameKey&quot;:&quot;0cbc07e3-0f0c-4b68-bb0c-061c1b5fb553&quot;,
+              &quot;envKey&quot;:&quot;8b865add-4541-4db1-be18-f6c7e5e00564&quot;
+          }
+}
+&quot;android&quot; :
+{
+  &quot;soomlaGrow&quot;:{
+              &quot;gameKey&quot;:&quot;0cbc07e3-0f0c-4b68-bb0c-061c1b5fb553&quot;,
+              &quot;envKey&quot;:&quot;8b865add-4541-4db1-be18-f6c7e5e00564&quot;
+          }
+}
 </code></pre>
 
-<h2 id="extra-steps-for-android">Extra steps for Android</h2>
+<h2 id="usage">Usage</h2>
+<h3 id="register-javascript-functions">Register Javascript Functions</h3>
+<p>You need to register all the GROW JS functions with cocos2d-x before using them.</p>
+<p>To do this:
+* Modify <code>./frameworks/runtime-src/Classes/AppDelegate.cpp</code> to include the following headers:</p>
+<pre><code class="cpp">#include &quot;PluginSoomlaGrowJS.hpp&quot;
+#include &quot;PluginSoomlaGrowJSHelper.hpp&quot;
+</code></pre>
+
+<ul>
+<li>Modify <code>./frameworks/runtime-src/Classes/AppDelegate.cpp</code> make sure to call:</li>
+</ul>
+<pre><code class="cpp">sc-&gt;addRegisterCallback(register_all_PluginSoomlaGrowJS);
+sc-&gt;addRegisterCallback(register_all_PluginSoomlaGrowJS_helper);
+</code></pre>
+
+<h3 id="initialize-soomlagrow">Initialize SoomlaGrow</h3>
+<p>Initialize the plugin by calling <code>init()</code> where appropriate in your code. We
+recommend to do this in the <code>app.js</code>. Example:</p>
+<pre><code class="javascript">sdkbox.PluginSoomlaGrow.init();
+</code></pre>
+
+<h3 id="using-grows-insights-module">Using GROW's Insights module</h3>
+<p>After initialization you can begin to use the Insights functionality. Use <code>refreshInsight</code>, 'getUserInsightInfo' wherever you want from your code:</p>
+<pre><code class="javascript">sdkbox.PluginSoomlaGrow.refreshInsight()
+sdkbox.PluginSoomlaGrow.getUserInsightInfo()
+</code></pre>
+
+<h3 id="catch-soomlagrow-events-optional">Catch SoomlaGrow events (optional)</h3>
+<p>This allows you to catch the <code>GROW</code> events so that you can perform operations based upon responses. A simple example might look like this:</p>
+<pre><code class="javascript">sdkbox.PluginSoomlaGrow.setListener({
+            onHighWayInitialized: function(data) {cc.log(&quot;onHighWayInitialized&quot;)},
+            onHighWayConnected: function(data) { cc.log(&quot;onHighWayConnected&quot;) },
+            onHighWayDisconnected: function(data) { cc.log(&quot;onHighWayDisconnected&quot;) }
+            })
+sdkbox.PluginSoomlaGrow.init()
+</code></pre>
+
+<h2 id="api-reference">API Reference</h2>
+<h3 id="methods">Methods</h3>
+<pre><code class="javascript">sdkbox.PluginSoomlaGrow.init();
+</code></pre>
+
+<blockquote>
+<p>initialize the plugin instance.</p>
+</blockquote>
+<pre><code class="javascript">sdkbox.PluginSoomlaGrow.setListener(listener);
+</code></pre>
+
+<blockquote>
+<p>Set listener to listen to GROW events</p>
+</blockquote>
+<pre><code class="javascript">sdkbox.PluginSoomlaGrow.refreshInsight()
+</code></pre>
+
+<blockquote>
+<p>Refreshed Insights information from the server</p>
+</blockquote>
+<pre><code class="javascript">sdkbox.PluginSoomlaGrow.getUserInsightInfo()
+</code></pre>
+
+<blockquote>
+<p>get user insights info
+ Note: the returned value may be empty</p>
+</blockquote>
+<h3 id="listeners">Listeners</h3>
+<pre><code class="javascript">onHighWayInitialized()
+</code></pre>
+
+<blockquote>
+<p>This event is triggered once the highway initialized.</p>
+</blockquote>
+<pre><code class="javascript">onHighWayConnected()
+</code></pre>
+
+<blockquote>
+<p>This event is triggered once the highway is connected to server.</p>
+</blockquote>
+<pre><code class="javascript">onHighWayDisconnected()
+</code></pre>
+
+<blockquote>
+<p>This event is triggered once the highway disconnect from the server.</p>
+</blockquote>
+<h2 id="manual-integration">Manual Integration</h2>
+<p>If the <em>SDKBOX Installer</em> <strong>fails</strong> to complete successfully, it is possible to integrate SDKBOX manually. If the installer complete successfully, please <strong>do not</strong> complete anymore of this document. It is not necessary.</p>
+<p>These steps are listed last in this document on purpose as they are seldom needed. If you find yourself using these steps, please, after completing, double back and re-read the steps above for other integration items.</p>
+<h2 id="manual-integration-for-ios">Manual Integration For iOS</h2>
+<p>Drag and drop the following frameworks from the <strong>plugins/ios</strong> folder of the <code>SoomlaGrow</code> bundle into your Xcode project, check <code>Copy items if needed</code> when adding frameworks:</p>
+<blockquote>
+<p>sdkbox.framework</p>
+<p>PluginSoomlaGrow.framework</p>
+</blockquote>
+<p>The above frameworks depend upon a large number of other frameworks. You also need to add the following system frameworks, if you don't already have them:</p>
+<blockquote>
+<p>Security.framework</p>
+<p>libsqlite3.0.dylib</p>
+<p>StoreKit.framework</p>
+<p>CFNetwork.framework</p>
+<p>libicucore.dylib</p>
+<p>SystemConfguration.framework</p>
+<p>AdSupport.framework</p>
+</blockquote>
+<p>Copy all source and header files from <code>plugin/jsbindings/</code> to your projects <code>Classes</code> folder.</p>
+<p>Add these same files, that you just copied, to Xcode by either dragging and dropping them into Xcode or by using <strong>File -&gt; Add files to...</strong>.</p>
+<h2 id="manual-integration-for-android">Manual Integration For Android.</h2>
+<h3 id="copy-files">Copy Files</h3>
+<p>Copy the following <strong>jar</strong> files from <code>plugin/android/libs</code> folder of this
+bundle into your project’s <strong>proj.android/libs</strong> folder.</p>
+<blockquote>
+<p>SoomlaGrowLite.jar</p>
+<p>PluginSoomlaGrow.jar</p>
+<p>sdkbox.jar</p>
+</blockquote>
+<p>Copy the <code>pluginsoomlagrow</code> and <code>sdkbox</code> directories from <code>plugin/android/jni</code> to your <code>proj.android/jni/</code> directory. If the <code>sdkbox</code> folder exists, it's ok to overwrite it.</p>
+<h3 id="edit-androidmanifestxml">Edit <code>AndroidManifest.xml</code></h3>
+<p>Include the following permissions above the <strong>application tag</strong>:</p>
+<pre><code class="xml">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
+&lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
+&lt;uses-permission android:name=&quot;com.android.vending.BILLING&quot;/&gt;
+</code></pre>
+
+<h3 id="edit-androidmk">Edit <code>Android.mk</code></h3>
+<p>Edit <code>proj.android/jni/Android.mk</code> to:</p>
+<p>Add additional requirements to <strong>LOCAL_STATIC_LIBRARIES</strong>:</p>
+<pre><code>LOCAL_STATIC_LIBRARIES += android_native_app_glue
+LOCAL_LDLIBS += -landroid
+LOCAL_LDLIBS += -llog
+LOCAL_STATIC_LIBRARIES += PluginSoomlaGrow
+LOCAL_STATIC_LIBRARIES += sdkbox
+</code></pre>
+
+<p>Add a call to:</p>
+<pre><code>$(call import-add-path,$(LOCAL_PATH))
+</code></pre>
+
+<p>before any <strong>import-module</strong> statements.</p>
+<p>Add additional <strong>import-module</strong> statements at the end:</p>
+<pre><code>$(call import-module, ./sdkbox)
+$(call import-module, ./pluginsoomlagrow)
+</code></pre>
+
+<p>This means that your ordering should look similar to this:</p>
+<pre><code>$(call import-add-path,$(LOCAL_PATH))
+$(call import-module, ./sdkbox)
+$(call import-module, ./pluginsoomlagrow)
+</code></pre>
+
+<h3 id="edit-aplicationmk">Edit <code>Aplication.mk</code></h3>
+<p>Edit <code>proj.android/jni/Application.mk</code> to:</p>
+<p>Add <strong>APP_PATFORM</strong> version requirements:</p>
+<pre><code>APP_PLATFORM := android-9
+</code></pre>
+
+<p>Copy all source and header files from <code>plugin/jsbindings/</code> to your projects <code>Classes</code> folder.</p>
+<p>Add all <code>.cpp</code> files, that you just copied, to <code>Android.mk</code> in the <strong>LOCAL_SRC_FILES</strong> section. Example</p>
+<pre><code>LOCAL_SRC_FILES := hellocpp/main.cpp \
+                  ../../Classes/AppDelegate.cpp \
+                  ../../Classes/HelloWorldScene.cpp \
+                                    ../../Classes/NewSourceFile.cpp
+</code></pre>
+
 <h3 id="modify-java">Modify <strong><YourGameName>.java</strong></h3>
 <ul>
 <li>Modify <strong>proj.android/src/<package identifier>/<YourGameName>.java</strong> to add the following imports:</li>
@@ -1063,177 +1248,7 @@ import com.sdkbox.plugin.SDKBox;
 #}
 </code></pre>
 
-<p><strong>Note:</strong> Proguard only works with <strong>Release</strong> builds (i.e <code>cocos run -m release</code>) debug builds do not invoke Proguard rules.</p>
-<h2 id="configuration">Configuration</h2>
-<p>SDKBOX Installer will automatically inject a sample configuration to your <code>res/sdkbox_config.json</code>, that you have to modify it before you can use it for your own app</p>
-<p>Here is an example of the SoomlaGrow configuration, you need to replace <code>&lt;game key&gt;</code> and <code>&lt;envkey id&gt;</code> items with your specific <a href="http://soom.la/"><strong>Soomla ID</strong></a> account information.</p>
-<pre><code class="json">&quot;SoomlaGrow&quot;:{
-            &quot;GameKey&quot;:&quot;0cbc07e3-0f0c-4b68-bb0c-061c1b5fb553&quot;,
-            &quot;EnvKey&quot;:&quot;8b865add-4541-4db1-be18-f6c7e5e00564&quot;
-        }
-</code></pre>
-
-<h2 id="usage">Usage</h2>
-<h3 id="register-javascript-functions">Register Javascript Functions</h3>
-<p>You need to register all the SoomlaGrow JS functions with cocos2d-x before using them.</p>
-<p>To do this:
-* Modify <code>./frameworks/runtime-src/Classes/AppDelegate.cpp</code> to include the following headers:</p>
-<pre><code class="cpp">#include &quot;PluginSoomlaGrowJS.hpp&quot;
-#include &quot;PluginSoomlaGrowJSHelper.hpp&quot;
-</code></pre>
-
-<ul>
-<li>Modify <code>./frameworks/runtime-src/Classes/AppDelegate.cpp</code> make sure to call:</li>
-</ul>
-<pre><code class="cpp">sc-&gt;addRegisterCallback(register_all_PluginSoomlaGrowJS);
-sc-&gt;addRegisterCallback(register_all_PluginSoomlaGrowJS_helper);
-</code></pre>
-
-<h3 id="initialize-soomlagrow">Initialize SoomlaGrow</h3>
-<p>Initialize the plugin by calling <code>init()</code> where appropriate in your code. We
-recommend to do this in the <code>app.js</code>. Example:</p>
-<pre><code class="javascript">sdkbox.PluginSoomlaGrow.init();
-</code></pre>
-
-<h3 id="using-soomlagrow-user-insight-module">Using SoomlaGrow user insight module</h3>
-<p>After initialization you can begin to use the SoomlaGrow functionality. Use <code>refreshInsight</code>, 'getUserInsightInfo' wherever you want from your code:</p>
-<pre><code class="javascript">sdkbox.PluginSoomlaGrow.refreshInsight()
-sdkbox.PluginSoomlaGrow.getUserInsightInfo()
-</code></pre>
-
-<h3 id="catch-soomlagrow-events-optional">Catch SoomlaGrow events (optional)</h3>
-<p>This allows you to catch the <code>SoomlaGrow</code> events so that you can perform operations based upon responses. A simple example might look like this:</p>
-<pre><code class="javascript">sdkbox.PluginSoomlaGrow.setListener({
-            onHighWayInitialized: function(data) {cc.log(&quot;onHighWayInitialized&quot;)},
-            onHighWayConnected: function(data) { cc.log(&quot;onHighWayConnected&quot;) },
-            onHighWayDisconnected: function(data) { cc.log(&quot;onHighWayDisconnected&quot;) }
-            })
-sdkbox.PluginSoomlaGrow.init()
-</code></pre>
-
-<h2 id="api-reference">API Reference</h2>
-<h3 id="methods">Methods</h3>
-<pre><code class="javascript">sdkbox.PluginSoomlaGrow.init();
-</code></pre>
-
-<blockquote>
-<p>initialize the plugin instance.</p>
-</blockquote>
-<pre><code class="javascript">sdkbox.PluginSoomlaGrow.setListener(listener);
-</code></pre>
-
-<blockquote>
-<p>Set listener to listen for soomlagrow events</p>
-</blockquote>
-<pre><code class="javascript">sdkbox.PluginSoomlaGrow.refreshInsight()
-</code></pre>
-
-<blockquote>
-<p>Refreshed SoomlaInsights information from the server</p>
-</blockquote>
-<pre><code class="javascript">sdkbox.PluginSoomlaGrow.getUserInsightInfo()
-</code></pre>
-
-<blockquote>
-<p>get user insight info
- Note: the return may be empty</p>
-</blockquote>
-<h3 id="listeners">Listeners</h3>
-<pre><code class="javascript">onHighWayInitialized()
-</code></pre>
-
-<blockquote>
-<p>The delegate named onHighWayInitialized is triggerred once the highway initialized.</p>
-</blockquote>
-<pre><code class="javascript">onHighWayConnected()
-</code></pre>
-
-<blockquote>
-<p>The delegate named onHighWayConnected is triggerred once the highway connected to server success.</p>
-</blockquote>
-<pre><code class="javascript">onHighWayDisconnected()
-</code></pre>
-
-<blockquote>
-<p>The delegate named onHighWayDisconnected is triggerred once the highway disconnect to server.</p>
-</blockquote>
-<h2 id="manual-integration">Manual Integration</h2>
-<p>If the <em>SDKBOX Installer</em> <strong>fails</strong> to complete successfully, it is possible to integrate SDKBOX manually. If the installer complete successfully, please <strong>do not</strong> complete anymore of this document. It is not necessary.</p>
-<p>These steps are listed last in this document on purpose as they are seldom needed. If you find yourself using these steps, please, after completing, double back and re-read the steps above for other integration items.</p>
-<h2 id="manual-integration-for-ios">Manual Integration For iOS</h2>
-<p>Drag and drop the following frameworks from the <strong>plugins/ios</strong> folder of the <code>SoomlaGrow</code> bundle into your Xcode project, check <code>Copy items if needed</code> when adding frameworks:</p>
-<blockquote>
-<p>sdkbox.framework</p>
-<p>PluginSoomlaGrow.framework</p>
-</blockquote>
-<p>The above frameworks depend upon a large number of other frameworks. You also need to add the following system frameworks, if you don't already have them:</p>
-<blockquote>
-<p>Security.framework</p>
-<p>libsqlite3.0.dylib</p>
-<p>StoreKit.framework</p>
-<p>CFNetwork.framework</p>
-<p>libicucore.dylib</p>
-<p>SystemConfguration.framework</p>
-<p>AdSupport.framework</p>
-</blockquote>
-<p>Copy all source and header files from <code>plugin/jsbindings/</code> to your projects <code>Classes</code> folder.</p>
-<p>Add these same files, that you just copied, to Xcode by either dragging and dropping them into Xcode or by using <strong>File -&gt; Add files to...</strong>.</p>
-<h2 id="manual-integration-for-android">Manual Integration For Android.</h2>
-<h3 id="copy-files">Copy Files</h3>
-<p>Copy the following <strong>jar</strong> files from <code>plugin/android/libs</code> folder of this
-bundle into your project’s <strong>proj.android/libs</strong> folder.</p>
-<blockquote>
-<p>SoomlaGrowLite.jar</p>
-<p>PluginSoomlaGrow.jar</p>
-<p>sdkbox.jar</p>
-</blockquote>
-<p>Copy the <code>pluginsoomlagrow</code> and <code>sdkbox</code> directories from <code>plugin/android/jni</code> to your <code>proj.android/jni/</code> directory. If the <code>sdkbox</code> folder exists, it's ok to overwrite it.</p>
-<h3 id="edit-androidmanifestxml">Edit <code>AndroidManifest.xml</code></h3>
-<p>Include the following permissions above the <strong>application tag</strong>:</p>
-<pre><code class="xml">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
-&lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
-&lt;uses-permission android:name=&quot;com.android.vending.BILLING&quot;/&gt;
-</code></pre>
-
-<h3 id="edit-androidmk">Edit <code>Android.mk</code></h3>
-<p>Edit <code>proj.android/jni/Android.mk</code> to:</p>
-<p>Add additional requirements to <strong>LOCAL_STATIC_LIBRARIES</strong>:</p>
-<pre><code>LOCAL_STATIC_LIBRARIES += android_native_app_glue
-LOCAL_LDLIBS += -landroid
-LOCAL_LDLIBS += -llog
-LOCAL_STATIC_LIBRARIES += PluginSoomlaGrow
-LOCAL_STATIC_LIBRARIES += sdkbox
-</code></pre>
-
-<p>Add a call to:</p>
-<pre><code>$(call import-add-path,$(LOCAL_PATH))
-</code></pre>
-
-<p>before any <strong>import-module</strong> statements.</p>
-<p>Add additional <strong>import-module</strong> statements at the end:</p>
-<pre><code>$(call import-module, ./sdkbox)
-$(call import-module, ./pluginsoomlagrow)
-</code></pre>
-
-<p>This means that your ordering should look similar to this:</p>
-<pre><code>$(call import-add-path,$(LOCAL_PATH))
-$(call import-module, ./sdkbox)
-$(call import-module, ./pluginsoomlagrow)
-</code></pre>
-
-<h3 id="edit-aplicationmk">Edit <code>Aplication.mk</code></h3>
-<p>Edit <code>proj.android/jni/Application.mk</code> to:</p>
-<p>Add <strong>APP_PATFORM</strong> version requirements:</p>
-<pre><code>APP_PLATFORM := android-9
-</code></pre>
-
-<p>Copy all source and header files from <code>plugin/jsbindings/</code> to your projects <code>Classes</code> folder.</p>
-<p>Add all <code>.cpp</code> files, that you just copied, to <code>Android.mk</code> in the <strong>LOCAL_SRC_FILES</strong> section. Example</p>
-<pre><code>LOCAL_SRC_FILES := hellocpp/main.cpp \
-                  ../../Classes/AppDelegate.cpp \
-                  ../../Classes/HelloWorldScene.cpp \
-                                    ../../Classes/NewSourceFile.cpp
-</code></pre></div>
+<p><strong>Note:</strong> Proguard only works with <strong>Release</strong> builds (i.e <code>cocos run -m release</code>) debug builds do not invoke Proguard rules.</p></div>
             
         </div>
 

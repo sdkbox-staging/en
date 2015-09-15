@@ -1044,8 +1044,9 @@ AppDelegate::applicationDidFinishLaunching()
 <pre><code>sdkbox::PluginFyber::requestOffers(&quot;coins&quot;);
 </code></pre>
 
-<p>Display an available rewarded video, call <code>requestOffers</code> first.:</p>
-<pre><code class="cpp">sdkbox::PluginFyber::showOffers();
+<p>Display an available rewarded video, call <code>requestOffers()</code> first and then <code>showOffers()</code>. Developer can <code>requestOffers()</code> anytime, then <code>showOffers()</code> without any delay:</p>
+<pre><code class="cpp">sdkbox::PluginFyber::requestOffers();
+sdkbox::PluginFyber::showOffers();
 </code></pre>
 
 <h4 id="interstitials">Interstitials</h4>

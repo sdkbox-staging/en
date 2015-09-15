@@ -1129,7 +1129,7 @@ SDKBox.init(this);
 <h3 id="setting-review-optional">Setting Review (optional)</h3>
 <p>You can set a custom string for the rate prompt, if you don't want to use the default string.</p>
 <p><code>Note:</code> if you set <code>tryPromptWhenInit</code> to <strong>true</strong> which is in <code>sdkbox.config</code>, you must call the following functions before <code>init()</code>:</p>
-<pre><code class="cpp">sdkbox.PluginReview:setCustomPromptTitle(&quot;custom title&quot;);
+<pre><code class="lua">sdkbox.PluginReview:setCustomPromptTitle(&quot;custom title&quot;);
 sdkbox.PluginReview:setCustomPromptMessage(&quot;custom message&quot;);
 sdkbox.PluginReview:setCustomPromptCancelButtonTitle(&quot;custom cancel&quot;);
 sdkbox.PluginReview:setCustomPromptRateButtonTitle(&quot;custom rate&quot;);
@@ -1137,16 +1137,12 @@ sdkbox.PluginReview:setCustomPromptRateLaterButtonTitle(&quot;custom rate later&
 </code></pre>
 
 <p>After initialization you can begin to use the Review functionality.
-Use <code>tryToShowPrompt</code> try to display rate prompt:</p>
-<pre><code class="cpp">sdkbox.PluginReview:tryToShowPrompt();
-</code></pre>
-
-<p>Use <code>forceToShowPrompt</code> to display rate prompt without checks:</p>
-<pre><code class="cpp">sdkbox.PluginReview:forceToShowPrompt();
+Use <code>show</code> try to display rate prompt:</p>
+<pre><code class="lua">sdkbox.PluginReview:show();
 </code></pre>
 
 <p>If you set <code>UserEventLimit</code> not 0 in <code>sdkbox.config</code>, you must call <code>userDidSignificantEvent</code> increase user event count: <code>userDidSignificantEvent</code> increase user event count</p>
-<pre><code class="cpp">sdkbox.PluginReview:userDidSignificantEvent(true);
+<pre><code class="lua">sdkbox.PluginReview:userDidSignificantEvent(true);
 </code></pre>
 
 <h3 id="catch-review-events-optional">Catch Review events (optional)</h3>
@@ -1169,117 +1165,72 @@ plugin:init()
 
 <h2 id="api-reference">API Reference</h2>
 <h3 id="methods">Methods</h3>
-<pre><code class="lua">sdkbox.PluginReview:init();
+<pre><code class="lua">sdkbox.PluginReview:init()
 </code></pre>
 
 <blockquote>
 <p>initialize the plugin instance.</p>
 </blockquote>
-<pre><code class="lua">sdkbox.PluginReview:setListener(listener);
+<pre><code class="lua">sdkbox.PluginReview:setListener(listener)
 </code></pre>
 
 <blockquote>
 <p>Set listener to listen for adcolony events</p>
 </blockquote>
-<pre><code class="lua">sdkbox.PluginReview:getListener();
+<pre><code class="lua">sdkbox.PluginReview:show(force)
 </code></pre>
 
 <blockquote>
-<p>Get the listener</p>
+<p>Tells 'SDKBox review plugin' to try and show the prompt (a rating alert).
+if you call <code>show</code> with <code>false</code> or null params,
+the prompt will be showed if there is connection available,
+the user hasn't declined to rate or hasn't rated current version.
+if the item <code>tryPromptWhenInit</code> in sdkbox.config is false, you can call this try to show prompt
+if you call <code>show</code> with <code>true</code> params
+the prompt will be showed without checks (the prompt is always displayed).
+The case where you should call this is if your app has an
+explicit "Rate this app" command somewhere. This is similar to rateApp,
+but instead of jumping to the review directly, an intermediary prompt is displayed.
+another case is for debug</p>
 </blockquote>
-<pre><code class="lua">sdkbox.PluginReview:removeListener();
+<pre><code class="lua">sdkbox.PluginReview:userDidSignificantEvent(canPromptForRating)
 </code></pre>
 
-<blockquote>
-<p>Remove the listener, and can't listen to events anymore</p>
-</blockquote>
-<pre><code class="lua">sdkbox.PluginReview:tryToShowPrompt();
+<pre><code class="lua">sdkbox.PluginReview:setTitle(title)
 </code></pre>
 
-<blockquote>
-<p>Tells PluginReview to try and show the prompt (a rating alert). The prompt will be showed
-  if there is connection available, the user hasn't declined to rate
-  or hasn't rated current version.
-  if the item <code>tryPromptWhenInit</code> in sdkbox.config is false, you can call this try to show prompt</p>
-</blockquote>
-<pre><code class="lua">sdkbox.PluginReview:forceToShowPrompt();
+<pre><code class="lua">sdkbox.PluginReview:setMessage(message)
 </code></pre>
 
-<blockquote>
-<p>Tells PluginReview to show the prompt (a rating alert).
-  Similar to tryToShowPrompt, but without checks (the prompt is always displayed).
-  Passing false will hide the rate later button on the prompt.</p>
-</blockquote>
-<p>The case where you should call this is if your app has an
-  explicit "Rate this app" command somewhere. This is similar to rateApp,
-  but instead of jumping to the review directly, an intermediary prompt is displayed.</p>
-<p>another case is for debug</p>
-<pre><code class="lua">sdkbox.PluginReview:userDidSignificantEvent(false);
+<pre><code class="lua">sdkbox.PluginReview:setCancelButtonTitle(cancelTitle)
 </code></pre>
 
-<blockquote>
-<p>Tells PluginReview that the user performed a significant event. A significant
-  event is whatever you want it to be. If you're app is used to make VoIP
-  calls, then you might want to call this method whenever the user places
-  a call. If it's a game, you might want to call this whenever the user
-  beats a level boss.</p>
-</blockquote>
-<p>If the user has performed enough significant events and used the app enough,
-  you can suppress the rating alert by passing NO for canPromptForRating. The
-  rating alert will simply be postponed until it is called again with YES for
-  canPromptForRating. The rating alert can also be triggered by appLaunched:
-  and appEnteredForeground: (as long as you pass YES for canPromptForRating
-  in those methods).</p>
-<pre><code class="lua">sdkbox.PluginReview:setCustomPromptTitle(title);
+<pre><code class="lua">sdkbox.PluginReview:setRateButtonTitle(rateTitle)
 </code></pre>
 
-<blockquote>
-<p>Set customized title for alert view.</p>
-</blockquote>
-<pre><code class="lua">sdkbox.PluginReview:setCustomPromptMessage(message);
+<pre><code class="lua">sdkbox.PluginReview:setRateLaterButtonTitle(rateLaterTitle)
 </code></pre>
 
-<blockquote>
-<p>Set customized message for alert view.</p>
-</blockquote>
-<pre><code class="lua">sdkbox.PluginReview:setCustomPromptCancelButtonTitle(cancelTitle);
-</code></pre>
-
-<blockquote>
-<p>Set customized cancel button title for alert view.</p>
-</blockquote>
-<pre><code class="lua">sdkbox.PluginReview:setCustomPromptRateButtonTitle(rateTitle);
-</code></pre>
-
-<blockquote>
-<p>Set customized rate button title for alert view.</p>
-</blockquote>
-<pre><code class="lua">sdkbox.PluginReview:setCustomPromptRateLaterButtonTitle(rateLaterTitle);
-</code></pre>
-
-<blockquote>
-<p>Set customized rate later button title for alert view.</p>
-</blockquote>
 <h3 id="listeners">Listeners</h3>
-<pre><code class="lua">didDisplayAlert
+<pre><code class="lua">onDisplayAlert()
 </code></pre>
 
 <blockquote>
-<p>trigger when rate prompt display</p>
+<p>trigger when alert prompt show</p>
 </blockquote>
-<pre><code class="lua">didDeclineToRate
+<pre><code class="lua">onDeclineToRate()
 </code></pre>
 
 <blockquote>
 <p>trigger when user refuse to rate</p>
 </blockquote>
-<pre><code class="lua">didToRate
+<pre><code class="lua">onRate()
 </code></pre>
 
 <blockquote>
 <p>trigger when user want to rate</p>
 </blockquote>
-<pre><code class="lua">didToRemindLater
+<pre><code class="lua">onRemindLater()
 </code></pre>
 
 <blockquote>
