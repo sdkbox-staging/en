@@ -954,6 +954,8 @@
         
             <li><a href="#configuration">Configuration</a></li>
         
+            <li><a href="#extra-steps">Extra steps</a></li>
+        
             <li><a href="#usage">Usage</a></li>
         
             <li><a href="#api-reference">API Reference</a></li>
@@ -990,6 +992,27 @@ Here is an example adding <code>Tune</code>:</p>
     &quot;id&quot;:&quot;&lt;TUNE ID&gt;&quot;,
     &quot;key&quot;:&quot;&lt;TUNE KEY&gt;&quot;,
     &quot;debug&quot;:false
+}
+</code></pre>
+
+<h2 id="extra-steps">Extra steps</h2>
+<h3 id="setup-ios">Setup iOS</h3>
+<ul>
+<li>Apply the code change to <code>AppController.mm</code> instead of <code>AppDelegate.cpp</code></li>
+</ul>
+<pre><code>#import &lt;MobileAppTracker/MobileAppTracker.h&gt;
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    // MAT will not function without the measureSession call included
+    [MobileAppTracker measureSession];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
+{
+    [MobileAppTracker applicationDidOpenURL:[url absoluteString] sourceApplication:sourceApplication];
+
+    return YES;
 }
 </code></pre>
 
