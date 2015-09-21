@@ -9,12 +9,14 @@
         
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>js - SDKBOX</title>
+	<title>js - SDKBOX Documentation</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
         <link href="../../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="../../../css/highlight.css">
+        <link href="../../../css/custom.css" rel="stylesheet">
+
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -53,7 +55,7 @@
             
 
             <!-- Main title -->
-            <a class="navbar-brand" href="../../..">SDKBOX</a>
+            <a class="navbar-brand" href="http://sdkbox.com"><img src="http://www.cocos2d-x.org/s/sdkbox/SDKBOX_logo.png"></a>
         </div>
 
         <!-- Expanded navigation -->
@@ -64,7 +66,7 @@
                 
                 
                     <li >
-                        <a href="../../..">Home</a>
+                        <a href="../../..">Overview</a>
                     </li>
                 
                 
@@ -648,7 +650,7 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" class="non-link">Review</a>
+    <a tabindex="-1" class="non-link">Ratings & Reviews</a>
     <ul class="dropdown-menu">
         
             
@@ -1325,12 +1327,13 @@ bundle into your project’s <strong>proj.android/libs</strong> folder.</p>
 <h3 id="edit-stringsxml">Edit strings.xml</h3>
 <p>Open <code>res/values/strings.xml</code>, Add a new string with the name
 <code>facebook_app_id</code> and value as your Facebook App ID. Example:</p>
-<p><code>xml
-    &lt;?xml version="1.0" encoding="utf-8"?&gt;
-    &lt;resources&gt;
-        &lt;string name="app_name"&gt;facebook&lt;/string&gt;
-        &lt;string name="facebook_app_id"&gt;280194012150923&lt;/string&gt;
-    &lt;/resources&gt;</code></p>
+<pre><code class="xml">  &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+  &lt;resources&gt;
+      &lt;string name=&quot;app_name&quot;&gt;facebook&lt;/string&gt;
+      &lt;string name=&quot;facebook_app_id&quot;&gt;280194012150923&lt;/string&gt;
+  &lt;/resources&gt;
+</code></pre>
+
 <h3 id="edit-androidmk">Edit <code>Android.mk</code></h3>
 <p>Edit <code>proj.android/jni/Android.mk</code> to:</p>
 <p>Add additional requirements to <strong>LOCAL_WHOLE_STATIC_LIBRARIES</strong>:</p>
@@ -1370,6 +1373,15 @@ changed to:</p>
                                     ../../Classes/NewSourceFile.cpp
 </code></pre>
 
+<h3 id="modify-projectproperties">Modify <code>project.properties</code></h3>
+<p>Add following line to your <code>project.properties</code></p>
+<pre><code>android.library.reference.1=./libs/facebook_lib
+</code></pre>
+
+<blockquote>
+<p>Note: if you already have an <code>android.library.reference.1</code> you can add
+another by incrementing the final digit as <code>android.library.reference.2</code>, etc.</p>
+</blockquote>
 <h3 id="modify-cocos2dxactivityjava">Modify <strong>Cocos2dxActivity.java</strong></h3>
 <ul>
 <li>

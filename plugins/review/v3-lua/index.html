@@ -9,12 +9,14 @@
         
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>lua - SDKBOX</title>
+	<title>lua - SDKBOX Documentation</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
         <link href="../../../css/base.css" rel="stylesheet">
         <link rel="stylesheet" href="../../../css/highlight.css">
+        <link href="../../../css/custom.css" rel="stylesheet">
+
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -53,7 +55,7 @@
             
 
             <!-- Main title -->
-            <a class="navbar-brand" href="../../..">SDKBOX</a>
+            <a class="navbar-brand" href="http://sdkbox.com"><img src="http://www.cocos2d-x.org/s/sdkbox/SDKBOX_logo.png"></a>
         </div>
 
         <!-- Expanded navigation -->
@@ -64,7 +66,7 @@
                 
                 
                     <li >
-                        <a href="../../..">Home</a>
+                        <a href="../../..">Overview</a>
                     </li>
                 
                 
@@ -648,7 +650,7 @@
                         
                             
   <li class="dropdown-submenu">
-    <a tabindex="-1" class="non-link">Review</a>
+    <a tabindex="-1" class="non-link">Ratings & Reviews</a>
     <ul class="dropdown-menu">
         
             
@@ -946,7 +948,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#review">Review</a></li>
+        <li class="main active"><a href="#ratings-reviews">Ratings &amp; Reviews</a></li>
         
             <li><a href="#integration">Integration</a></li>
         
@@ -973,10 +975,10 @@
 Include Base: /Users/jtsm/Chukong-Inc/pr/en/src/review/v3-cpp
 -->
 
-<h1 id="review">Review</h1>
-<p>Review is a plugin that will help remind your users to review your app on the App Store.</p>
+<h1 id="ratings-reviews">Ratings &amp; Reviews</h1>
+<p>This is a plugin that will help remind your users to rate and review your app on the App Store.</p>
 <h2 id="integration">Integration</h2>
-<p>Open a terminal and use the following command to install the SDKBOX Review plugin. Make sure you setup SDKBOX installer correctly.</p>
+<p>Open a terminal and use the following command to install the SDKBOX Ratings &amp; Reviews plugin. Make sure you setup SDKBOX installer correctly.</p>
 <pre><code class="bash">$ sdkbox import review
 </code></pre>
 
@@ -1081,7 +1083,7 @@ SDKBox.init(this);
 <p><strong>Note:</strong> Proguard only works with <strong>Release</strong> builds (i.e <code>cocos run -m release</code>) debug builds do not invoke Proguard rules.</p>
 <h2 id="configuration">Configuration</h2>
 <p>SDKBOX Installer will automatically inject a sample configuration to your <code>res/sdkbox_config.json</code>, that you have to modify it before you can use it for your own app</p>
-<p>Here is an example of the Review configuration.</p>
+<p>Here is an example of the configuration.</p>
 <pre><code class="json">&quot;Review&quot;:{
     &quot;ios&quot;: {
         &quot;Review&quot;:{
