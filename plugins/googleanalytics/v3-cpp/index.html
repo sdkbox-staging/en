@@ -964,7 +964,7 @@
         
             <li><a href="#manual-integration-for-ios">Manual Integration For iOS</a></li>
         
-            <li><a href="#manual-integration-for-android">Manual Integration For Android.</a></li>
+            <li><a href="#manual-integration-for-android-and-android-studio">Manual Integration For Android and Android Studio</a></li>
         
             <li><a href="#proguard-optional">Proguard (optional)</a></li>
         
@@ -1167,27 +1167,37 @@ following system frameworks, if you don't already have them:</p>
 <blockquote>
 <p>-force_load /path/to/libAdIdAccess.a</p>
 </blockquote>
-<h2 id="manual-integration-for-android">Manual Integration For Android.</h2>
+<h2 id="manual-integration-for-android-and-android-studio">Manual Integration For Android and Android Studio</h2>
+<p>Both <strong>Android</strong> development using a command-line and using <strong>Android Studio</strong> are supported. <code>proj.android</code> will be used as our <code>&lt;project_root&gt;</code> for <strong>command-line</strong> development, while <code>proj.android-studio</code> will be used as our <code>&lt;project_root&gt;</code> for <strong>Android Studio</strong>.</p>
 <h3 id="copy-files">Copy Files</h3>
 <p>Copy the following <strong>jar</strong> files from <code>plugin/android/libs</code> folder of this
-bundle into your project’s <strong>proj.android/libs</strong> folder.</p>
+bundle into your project’s <strong><project_root>/libs</strong> folder.</p>
 <blockquote>
 <p>PluginGoogleAnalytics.jar</p>
 <p>sdkbox.jar</p>
 </blockquote>
 <ul>
-<li>If you're using cocos2d-x from source copy the <strong>jar</strong> files to:</li>
+<li>
+<p>If you're using cocos2d-x from source copy the <strong>jar</strong> files to:</p>
+<p>Android command-line:
+<code>cocos2d/cocos/platform/android/java/libs</code></p>
+<p>Android Studio:
+<code>cocos2d/cocos/platform/android/libcocos2dx/libs</code></p>
+</li>
+<li>
+<p>If you're using cocos2d-js or lua copy the <strong>jar</strong> files to:</p>
+<p>Android command-line:
+<code>frameworks/cocos2d-x/cocos/platform/android/java/libs</code></p>
+<p>Android Studio:
+<code>frameworks/cocos2d-x/cocos/platform/android/libcocos2dx/libs</code></p>
+</li>
+<li>
+<p>If you're using prebuilt cocos2d-x copy the <strong>jar</strong> files to:</p>
+<p>Android command-line:
+<code>&lt;project_root&gt;/libs</code></p>
+</li>
 </ul>
-<p><code>cocos2d/cocos/platform/android/java/libs</code></p>
-<ul>
-<li>If you're using cocos2d-js or lua copy the <strong>jar</strong> files to:</li>
-</ul>
-<p><code>frameworks/cocos2d-x/cocos/platform/android/java/libs</code></p>
-<ul>
-<li>If you're using prebuilt cocos2d-x copy the <strong>jar</strong> files to:</li>
-</ul>
-<p><code>proj.android/libs</code></p>
-<p>Copy the <code>plugingoogleanalytics</code> and <code>sdkbox</code> directories from <code>plugin/android/jni</code> to your <code>proj.android/jni/</code> directory. If the <code>sdkbox</code> folder exists, it's ok to overwrite it.</p>
+<p>Copy the <code>plugingoogleanalytics</code> and <code>sdkbox</code> directories from <code>plugin/android/jni</code> to your <code>&lt;project_root&gt;/jni/</code> directory. If the <code>sdkbox</code> folder exists, it's ok to overwrite it.</p>
 <h3 id="edit-androidmanifestxml">Edit <code>AndroidManifest.xml</code></h3>
 <p>Include the following permissions above the <strong>application tag</strong>:</p>
 <pre><code class="xml">  &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
@@ -1204,7 +1214,7 @@ bundle into your project’s <strong>proj.android/libs</strong> folder.</p>
 </code></pre>
 
 <h3 id="edit-the-meta-data-files">Edit the meta-data files</h3>
-<p>In the step above a file named <code>global_tracker.xml</code> was specified. This file must be placed in <code>proj.android/res/values/</code>. This file needs to contain required settings. The contents of this file could be something like this:</p>
+<p>In the step above a file named <code>global_tracker.xml</code> was specified. This file must be placed in <code>&lt;project_root&gt;/res/values/</code>. This file needs to contain required settings. The contents of this file could be something like this:</p>
 <pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
 &lt;resources&gt;
     &lt;integer name=&quot;ga_dispatchPeriod&quot;&gt;300&lt;/integer&gt;
@@ -1213,7 +1223,7 @@ bundle into your project’s <strong>proj.android/libs</strong> folder.</p>
 </code></pre>
 
 <h3 id="edit-androidmk">Edit <code>Android.mk</code></h3>
-<p>Edit <code>proj.android/jni/Android.mk</code> to:</p>
+<p>Edit <code>&lt;project_root&gt;/jni/Android.mk</code> to:</p>
 <p>Add additional requirements to <strong>LOCAL_WHOLE_STATIC_LIBRARIES</strong>:</p>
 <pre><code>LOCAL_WHOLE_STATIC_LIBRARIES += PluginGoogleAnalytics
 LOCAL_WHOLE_STATIC_LIBRARIES += sdkbox
@@ -1237,7 +1247,7 @@ $(call import-module, ./plugingoogleanalytics)
 
 <p><strong>Note:</strong> It is important to make sure these statements are above the existing <code>$(call import-module,./prebuilt-mk)</code> statement, if you are using the pre-built libraries.</p>
 <h3 id="modify-applicationmk-cocos2d-x-v30-to-v32-only">Modify <code>Application.mk</code> (Cocos2d-x v3.0 to v3.2 only)</h3>
-<p>Edit <code>proj.android/jni/Application.mk</code> to make sure <strong>APP_STL</strong> is defined
+<p>Edit <code>&lt;project_root&gt;/jni/Application.mk</code> to make sure <strong>APP_STL</strong> is defined
 correctly. If <code>Application.mk</code> contains <code>APP_STL := c++_static</code>, it should be
 changed to:</p>
 <pre><code>APP_STL := gnustl_static
