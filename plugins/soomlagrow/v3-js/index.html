@@ -1015,6 +1015,8 @@
         
             <li><a href="#integration">Integration</a></li>
         
+            <li><a href="#important-notice">Important Notice</a></li>
+        
             <li><a href="#configuration">Configuration</a></li>
         
             <li><a href="#usage">Usage</a></li>
@@ -1050,6 +1052,23 @@ Information about GROW can be found on the <a href="http://know.soom.la/">Knowle
 </ol>
 <p><code>bash
   $ sdkbox import soomlagrow</code></p>
+<h2 id="important-notice">Important Notice</h2>
+<p>If you upgraded to Xcode7 you need to perform the following steps to your project for plugin to function correctly.</p>
+<h4 id="disable-app-transport-security">Disable App Transport Security</h4>
+<p>Adding the following entry to the plist:</p>
+<pre><code>&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;
+&lt;dict&gt;
+    &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;
+    &lt;true/&gt;
+&lt;/dict&gt;
+</code></pre>
+
+<h4 id="disable-bitcode-support">Disable Bitcode support</h4>
+<p>You have to turn off Bitcode support otherwise you won't be able to build cocos2d-x</p>
+<h4 id="set-your-game-requires-full-screen">Set your game requires full screen</h4>
+<p>if your game don't support all the orientations you will need to check <code>Requires full screen</code> in xcode, otherwise, you won't be able to submit your app to Apple.</p>
+<h4 id="whitelist-canopenurl-function">Whitelist canOpenURL function</h4>
+<p>Depends on the plugins in your project, you need to add the required entry to the plist, under <code>LSApplicationQueriesSchemes</code></p>
 <h2 id="configuration">Configuration</h2>
 <p>SDKBOX Installer will automatically inject a sample configuration to your <code>res/sdkbox_config.json</code>, that you will have to modify before you use in your own app.</p>
 <p>Here is an example of the GROW configuration, you need to replace <code>&lt;gameKey&gt;</code> and <code>&lt;envkey&gt;</code> items with the ones you were given by the <a href="http://dashboard.soom.la">GROW Dashboard</a>. You will probably use the same <code>&lt;gameKey&gt;</code> and <code>&lt;envKey&gt;</code> for Android and iOS but you will still need to specify it twice, once for each platform. Example:</p>
