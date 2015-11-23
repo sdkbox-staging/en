@@ -1324,7 +1324,7 @@
         
             <li><a href="#manual-integration-for-ios">Manual Integration For iOS</a></li>
         
-            <li><a href="#manual-integration-for-android-and-android-studio">Manual Integration For Android and Android Studio</a></li>
+            <li><a href="#manual-integration-for-android">Manual Integration For Android</a></li>
         
             <li><a href="#proguard-optional">Proguard (optional)</a></li>
         
@@ -1617,8 +1617,10 @@ recommend to do this in the <code>app.js</code>. Example:</p>
 </blockquote>
 <p>Copy all source and header files from <code>plugin/jsbindings/</code> to your projects <code>Classes</code> folder.</p>
 <p>Add these same files, that you just copied, to Xcode by either dragging and dropping them into Xcode or by using <strong>File -&gt; Add files to...</strong>.</p>
-<h2 id="manual-integration-for-android-and-android-studio">Manual Integration For Android and Android Studio</h2>
-<p>Both <strong>Android</strong> development using a command-line and using <strong>Android Studio</strong> are supported. <code>proj.android</code> will be used as our <code>&lt;project_root&gt;</code> for <strong>command-line</strong> development, while <code>proj.android-studio</code> will be used as our <code>&lt;project_root&gt;</code> for <strong>Android Studio</strong>.</p>
+<h2 id="manual-integration-for-android">Manual Integration For Android</h2>
+<p>Both <strong>Android</strong> development using a command-line and using <strong>Android Studio</strong> are supported. 
+<em> <code>proj.android</code> will be used as our <code>&lt;project_root&gt;</code> for <strong>command-line</strong> development
+</em> <code>proj.android-studio</code> will be used as our <code>&lt;project_root&gt;</code> for <strong>Android Studio</strong>.</p>
 <h3 id="copy-files">Copy Files</h3>
 <p>Copy the following <strong>jar</strong> files from <code>plugin/android/libs</code> folder of this
 bundle into your project’s <strong><project_root>/libs</strong> folder.</p>
