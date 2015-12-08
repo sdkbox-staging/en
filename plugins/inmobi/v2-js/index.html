@@ -1541,10 +1541,30 @@ sc-&gt;addRegisterCallback(register_all_PluginInMobiJS_helper);
 <p>Initialize the plugin by calling <code>init()</code> where appropriate in your code. We
 recommend to do this in the <code>app.js</code>. Example:</p>
 <pre><code class="javascript">sdkbox.PluginInMobi.init();
+</code></pre>
 
-//setting if need
-sdkbox.PluginInMobi.setLogLevel(sdkbox.PluginInMobi.SBIMSDKLogLevel.kIMSDKLogLevelDebug);
-sdkbox.PluginInMobi.addIdForType(&quot;test&quot;, sdkbox.PluginInMobi.SBIMSDKIdType.kIMSDKIdTypeLogin);
+<h3 id="show-interstitial">Show Interstitial</h3>
+<p>After initialization you can begin to use the InMobi functionality. Use <code>showInterstitial</code> wherever you want from your code:</p>
+<pre><code class="javascript">// Manually Loading Ads
+sdkbox.PluginInMobi.loadInterstitial();
+
+// show interstitial
+if (sdkbox.PluginInMobi.isInterstitialReady()) {
+    console.log('inmobi interstitial ad is ready');
+    sdkbox.PluginInMobi.showInterstitial();
+} else {
+    console.log('inmobi interstitial ad is not ready');
+}
+</code></pre>
+
+<h3 id="set-log-level">Set Log level</h3>
+<p>You can set log level with follow function</p>
+<pre><code>sdkbox.PluginInMobi.setLogLevel(sdkbox.PluginInMobi.SBIMSDKLogLevel.kIMSDKLogLevelDebug);
+</code></pre>
+
+<h3 id="set-user-data">Set user data</h3>
+<p>You can use following functions to set user data</p>
+<pre><code>sdkbox.PluginInMobi.addIdForType(&quot;test&quot;, sdkbox.PluginInMobi.SBIMSDKIdType.kIMSDKIdTypeLogin);
 sdkbox.PluginInMobi.removeIdType(sdkbox.PluginInMobi.SBIMSDKIdType.kIMSDKIdTypeLogin);
 sdkbox.PluginInMobi.setAge(18);
 sdkbox.PluginInMobi.setAreaCode(&quot;area code&quot;);
@@ -1561,20 +1581,6 @@ sdkbox.PluginInMobi.setLocation(&quot;cd&quot;, &quot;sc&quot;, &quot;usa&quot;)
 sdkbox.PluginInMobi.setLocation(102, 348);
 sdkbox.PluginInMobi.setNationality(&quot;nationality&quot;);
 sdkbox.PluginInMobi.setPostalCode(&quot;618000&quot;);
-</code></pre>
-
-<h3 id="show-interstitial">Show Interstitial</h3>
-<p>After initialization you can begin to use the InMobi functionality. Use <code>showInterstitial</code> wherever you want from your code:</p>
-<pre><code class="javascript">// Manually Loading Ads
-sdkbox.PluginInMobi.loadInterstitial();
-
-// show interstitial
-if (sdkbox.PluginInMobi.isInterstitialReady()) {
-    console.log('inmobi interstitial ad is ready');
-    sdkbox.PluginInMobi.showInterstitial();
-} else {
-    console.log('inmobi interstitial ad is not ready');
-}
 </code></pre>
 
 <h3 id="catch-inmobi-events-optional">Catch InMobi events (optional)</h3>

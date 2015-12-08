@@ -1527,7 +1527,7 @@ To ensure security, during normal execution the new configuration is locally sav
 <pre><code class="lua">sdkbox.PluginInMobi:init()
 </code></pre>
 
-<h3 id="using-inmobi">Using InMobi</h3>
+<h3 id="show-interstitial">Show interstitial</h3>
 <p>After initialization you can begin to use the InMobi functionality:</p>
 <pre><code class="lua">local plugin = sdkbox.PluginInMobi
 plugin:setListener(function(args)
@@ -1536,7 +1536,26 @@ plugin:setListener(function(args)
 end)
 plugin:init()
 
--- setting if need
+-- Manually Loading Ads
+-- plugin:loadInterstitial();
+
+-- show intestitial
+if plugin:isInterstitialReady() then
+    print('inmobi interstitial ad is ready');
+    plugin:showInterstitial();
+else
+    print('inmobi interstitial ad is not ready');
+end
+</code></pre>
+
+<h3 id="set-log-level">Set Log level</h3>
+<p>You can set log level with follow function</p>
+<pre><code>plugin:setLogLevel(sdkbox.PluginInMobi.SBIMSDKLogLevel.kIMSDKLogLevelDebug);
+</code></pre>
+
+<h3 id="set-user-data">Set user data</h3>
+<p>You can use following functions to set user data</p>
+<pre><code>-- setting if need
 print(&quot;inmobi plugin version:&quot; .. plugin:getVersion());
 plugin:setLogLevel(sdkbox.PluginInMobi.SBIMSDKLogLevel.kIMSDKLogLevelDebug);
 plugin:addIdForType(&quot;test&quot;, sdkbox.PluginInMobi.SBIMSDKIdType.kIMSDKIdTypeLogin);
@@ -1556,17 +1575,6 @@ plugin:setLocation(&quot;cd&quot;, &quot;sc&quot;, &quot;usa&quot;);
 plugin:setLocation(102, 348);
 plugin:setNationality(&quot;nationality&quot;);
 plugin:setPostalCode(&quot;618000&quot;);
-
--- Manually Loading Ads
--- plugin:loadInterstitial();
-
--- show intestitial
-if plugin:isInterstitialReady() then
-    print('inmobi interstitial ad is ready');
-    plugin:showInterstitial();
-else
-    print('inmobi interstitial ad is not ready');
-end
 </code></pre>
 
 <h3 id="catch-inmobi-events-optional">Catch InMobi events (optional)</h3>
