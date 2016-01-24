@@ -4,24 +4,38 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2015-12-07</lastmod>
+     <lastmod>2016-01-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
 
     
+        
+    <url>
+     <loc>None/cocos/</loc>
+     <lastmod>2016-01-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     <url>
      <loc>None/installer/</loc>
-     <lastmod>2015-12-07</lastmod>
+     <lastmod>2016-01-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
+        
+    <url>
+     <loc>None</loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     
         
     <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
+     <loc>None/unity/</loc>
+     <lastmod>2016-01-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -31,9 +45,13 @@
      <changefreq>daily</changefreq>
     </url>
         
+    
+
+    
+        
     <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
+     <loc>None/unreal/</loc>
+     <lastmod>2016-01-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -43,105 +61,31 @@
      <changefreq>daily</changefreq>
     </url>
         
+    
+
+    
+        
     <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
+     <loc>None/liveops/</loc>
+     <lastmod>2016-01-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
+     <loc>None/liveops/remote-config/</loc>
+     <lastmod>2016-01-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
+     <loc>None/liveops/receipt-verification/</loc>
+     <lastmod>2016-01-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None</loc>
-     <lastmod></lastmod>
+     <loc>None/liveops/catalog-management/</loc>
+     <lastmod>2016-01-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -150,7 +94,7 @@
     
     <url>
      <loc>None/release-note/</loc>
-     <lastmod>2015-12-07</lastmod>
+     <lastmod>2016-01-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
