@@ -428,10 +428,13 @@
         <li class="main "><a href="#about-configuration-set-and-versioning">About Configuration Set and Versioning</a></li>
 	
     
-        <li class="main "><a href="#import-existing-app-configs">Import Existing App Configs</a></li>
+        <li class="main "><a href="#import-existing-apps-configs">Import Existing App's Configs</a></li>
 	
     
-        <li class="main "><a href="#setup-app-using-remote-config">Setup App using Remote Config</a></li>
+        <li class="main "><a href="#setup-app-to-use-remote-config">Setup App to use Remote Config</a></li>
+	
+    
+        <li class="main "><a href="#edit-and-publish">Edit and Publish</a></li>
 	
     
     </ul>
@@ -463,13 +466,14 @@
 <li>Each configuration set is defined for a certain platform. However each platform can have multiple sets. If the application will be published to both Apple appstore and Google Play store, you should create at least two configuration sets for both of them. For example: 
 <img alt="chart" src="../../imgs/config_versions.jpg" /></li>
 </ul>
-<h2 id="import-existing-app-configs">Import Existing App Configs</h2>
+<h2 id="import-existing-apps-configs">Import Existing App's Configs</h2>
 <ul>
-<li>When you integrate SDKBOX, a local <code>sdkbox_config.json</code> will be added in your app. It contains all the settings of SDK plugins. </li>
-<li>For moving the local configs to clout, we provice a convinient feature to import them automatically. At your application's page, click on "Import Config" button and upload your local <code>sdkbox_config.json</code>. All you current configurations will be loaded into a few new configuration sets, one for each platform. </li>
-<li>After importing, you should make the remote config as the <strong>master</strong> version moving forward. </li>
+<li>When you integrate SDKBOX plugins, a local <code>sdkbox_config.json</code> will be added in your app. It contains the settings of all the SDKs. </li>
+<li>For moving the local configs into the cloud, we provice a convinient feature to import them automatically. On your application's page, click on "Import Sets" button and upload your local <code>sdkbox_config.json</code>. All you current configurations will be loaded into a few new configuration sets, one for each app store. </li>
+<li>After importing, you should make the remote config as the <strong>master</strong> version moving forward. The local copy in your app is a local default which only used when the network is not available. </li>
+<li>The newly created configuration sets by importing are still in <strong>Draft</strong> state. They are not accessable by the client, until you can edit and publish them to the cloud. </li>
 </ul>
-<h2 id="setup-app-using-remote-config">Setup App using Remote Config</h2>
+<h2 id="setup-app-to-use-remote-config">Setup App to use Remote Config</h2>
 <ul>
 <li>To enable the cloud service in your applications is as easy as calling a single <strong>sdkbox::init()</strong> function and passing in your <strong>token</strong> and <strong>secret</strong> that are provided by the <code>Configuration Set</code>. </li>
 </ul>
@@ -477,11 +481,17 @@
 </code></pre>
 
 <ul>
-<li>We provide a helper function to make this easy. From your application's page, click on "Export". Then select the one <code>Configuraton Set</code> for each platform you will deploy to. Next, you will get two parts of data:  <ul>
-<li>Code snippets for initlizing SDKBOX with the config token/scret for each platform. You can copy and paste them to your app delegate.</li>
-<li>A new version of <code>sdkbox_config.json</code> includes the latest configurations saved in the cloud. <strong>Whenever an app is submitted to the app store, please update the local version of <code>sdkbox_config.json</code> in the app, in case if remote config is not available. For example when there is no network, a local config will always be used.</strong> </li>
+<li>We provide a convinient function to make it easier. From your application's page, click on "Export Sets". Then select the one <code>Configuraton Set</code> for each platform you want to deploy. Then you will be given two instructions:  <ul>
+<li>A code snippet for initlizing SDKBOX with the token/secret of all platforms. You should copy and paste them to your app delegate.</li>
+<li>A new version of <code>sdkbox_config.json</code> that includes the latest configuration values in the cloud. <strong>Whenever an app is submitted to the app store, please update the embedded version of <code>sdkbox_config.json</code> in the app. In case if network connection is not available. this local config will be used by default.</strong> </li>
 </ul>
 </li>
+</ul>
+<h2 id="edit-and-publish">Edit and Publish</h2>
+<ul>
+<li>Once the setup is completed, you can not update the configuration in the clound and push the changes to the live app. </li>
+<li>Make sure to set the configuration to <strong>Live</strong> or <strong>Debug</strong> in order to be downloaded by the app. </li>
+<li>Make sure to edit the correct config in the set which is marked with the same token/secret as in your app. </li>
 </ul></div>
             
         </div>

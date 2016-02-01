@@ -425,7 +425,7 @@
         <li class="main active"><a href="#overview">Overview</a></li>
 	
     
-        <li class="main "><a href="#setup-liveops-with-you-app">Setup LiveOps with you app</a></li>
+        <li class="main "><a href="#setup-liveops">Setup LiveOps</a></li>
 	
     
     </ul>
@@ -440,21 +440,21 @@
 <p class="admonition-title">Note</p>
 <p>LiveOps is optional. All SDKBOX plugins work just fine locally on device when LiveOps is not used. </p>
 </div>
-<h2 id="setup-liveops-with-you-app">Setup LiveOps with you app</h2>
+<h2 id="setup-liveops">Setup LiveOps</h2>
 <ol>
-<li>First sign up a user account on the <a href="http://sdkbox.com">SDKBOX website</a>. </li>
-<li>After signing in, create a new application for your game.   </li>
-<li>Next step is to create configuration sets for your app:<ul>
-<li><a href="./remote-config">Learn more about configuration here.</a></li>
-</ul>
-</li>
-<li>Finally, please reference the created configurations in your app. <ul>
-<li>Click on the "Export" button </li>
-<li>Select the config sets for your app.</li>
-<li>Follow the intructions to initialize SDKBOX with the token/secrete pair. </li>
-</ul>
-</li>
-</ol></div>
+<li>Sign up and log onto <a href="http://sdkbox.com">SDKBOX.com</a>. </li>
+<li>Integrate service plugins with your app automatically with the <a href="../installer">installer</a>, or mannually by downloading the <a href="http://sdkbox.com/integrations">bundles</a>.</li>
+<li>Click on your login name -&gt; select "My Application" -&gt; create a <code>New application</code> for your app with name and bundle info.  <br />
+<img alt="" src="./../imgs/login.png" /></li>
+<li>Upload the <code>sdkbox_config.json</code> from your app with "<strong>Import</strong>" function. One <strong>configuration set</strong> will be created for each app store. 
+<img alt="" src="./../imgs/import.png" /></li>
+<li>Select "<strong>Export</strong>" and follow the intructions to link up your app client with the LiveOps servcies.<br />
+<img alt="" src="./../imgs/export.png" /></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The newly created configuration sets are still in <strong>Draft</strong> state. They are not accessable by the client, until you can edit and publish them to the cloud. <a href="./remote-config">Learn more about Remote Config</a>. </p>
+</div></div>
             
         </div>
 
