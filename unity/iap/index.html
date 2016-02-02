@@ -454,9 +454,6 @@
         <li class="main "><a href="#specifying-a-key-android">Specifying a key (Android)</a></li>
 	
     
-        <li class="main "><a href="#adding-vendor-billing-android">Adding Vendor Billing (Android)</a></li>
-	
-    
         <li class="main "><a href="#adding-products">Adding Products</a></li>
 	
     
@@ -470,6 +467,15 @@
 	
     
         <li class="main "><a href="#product-class">Product Class</a></li>
+	
+    
+        <li class="main "><a href="#additional-android-instructions">Additional Android Instructions</a></li>
+	
+    
+        <li class="main "><a href="#override-unity-activity-android">Override Unity Activity (Android)</a></li>
+	
+    
+        <li class="main "><a href="#adding-vendor-billing-android">Adding Vendor Billing (Android)</a></li>
 	
     
     </ul>
@@ -496,14 +502,6 @@
 <h2 id="specifying-a-key-android">Specifying a key (Android)</h2>
 <p><img alt="" src="./iap_dox3.jpg" /></p>
 <p>On Android, you specify an API key which is used to connect to the google play store and retrieve products. Copy and paste this key into the Android Key field.</p>
-<h2 id="adding-vendor-billing-android">Adding Vendor Billing (Android)</h2>
-<p>In order for In-App-Purchase to work on Android, it needs the following permission to be added.</p>
-<pre><code>&lt;uses-permission android:name=&quot;com.android.vending.BILLING&quot; /&gt;
-</code></pre>
-
-<p>If you have not specified your own AndroidManifest.xml then when you import the package, one will be copied that already has this permission set.</p>
-<p>If you do have your own already, then you will need to add this permission to it.</p>
-<p>The AndroidManifest.xml is merged with the main manifest that Unity creates when building the APK.</p>
 <h2 id="adding-products">Adding Products</h2>
 <p>Products are added on either iTunes connect for Apple, or Google Play Portal for Google. Follow directions <insert links> on how to setup products for Apple and Google platforms.</p>
 <p>Each product will have a name, and there are two types of products. Consumable and Non-consumable. Google only supports the latter, but SDKBOX allows you to have Consumable products on Google as well as Apple, and they behave the same way.</p>
@@ -582,7 +580,23 @@
 </code></pre>
 
 <p>The product class contains all the information about a product retrieved from the server, as well as the consumable state set in the editor.</p>
-<p>You should not create your own products, but rather allow SDKBOX IAP to create them for you.</p></div>
+<p>You should not create your own products, but rather allow SDKBOX IAP to create them for you.</p>
+<h2 id="additional-android-instructions">Additional Android Instructions</h2>
+<h2 id="override-unity-activity-android">Override Unity Activity (Android)</h2>
+<p>In order for In-App-Purchase to work, we have to be able to forward certain activity methods to the billing code. To do this on Unity we have to replace the Unity main activity. If you do not have your own custom activity, and also have not provided your own AndroidManifest.xml, then the package will automatically copy the activity and manifest to the correct location. If there is already a manifest present, then it will notify you with a dialog to read this section and perform the following steps.</p>
+<ol>
+<li>Copy the file <em>CustomActivity.jar</em> from <strong>Assets/IAP/Assets/Plugins/Android</strong> to <strong>Assets/Plugins/Android</strong></li>
+<li>Modify your AndroidManifest.xml to use <em>CustomActivity.jar</em> by replacing the Unity activity as follows. <code>&lt;activity
+            android:name="com.sdkbox.activity.CustomActivity" ...</code></li>
+</ol>
+<h2 id="adding-vendor-billing-android">Adding Vendor Billing (Android)</h2>
+<p>In order for In-App-Purchase to work on Android, it needs the following permission to be added.</p>
+<pre><code>&lt;uses-permission android:name=&quot;com.android.vending.BILLING&quot; /&gt;
+</code></pre>
+
+<p>If you have not specified your own AndroidManifest.xml then when you import the package, one will be copied that already has this permission set.</p>
+<p>If you do have your own already, then you will need to add this permission to it.</p>
+<p>The AndroidManifest.xml is merged with the main manifest that Unity creates when building the APK.</p></div>
             
         </div>
 
