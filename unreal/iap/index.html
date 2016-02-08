@@ -118,16 +118,6 @@
         
             
 <li >
-    <a href="../../plugins/ads/">Ads</a>
-</li>
-
-        
-            
-  
-
-        
-            
-<li >
     <a href="../../plugins/agecheq/">AgeCheq</a>
 </li>
 
@@ -268,7 +258,7 @@
         
             
 <li >
-    <a href="../../plugins/share/">Share</a>
+    <a href="../../plugins/share/">Social Sharing</a>
 </li>
 
         
@@ -356,26 +346,9 @@
                         <ul class="dropdown-menu">
                         
                             
-<li >
-    <a href="../">Unreal Integration</a>
-</li>
-
-                        
-                            
-  
-  <li class="dropdown-submenu">
-    <a tabindex="-1" class="non-link">Plugins</a>
-    <ul class="dropdown-menu">
-        
-            
 <li class="active">
     <a href="./">In-App Purchase</a>
 </li>
-
-        
-    </ul>
-  </li>
-  
 
                         
                         </ul>
@@ -395,7 +368,7 @@
                         
                             
 <li >
-    <a href="../../liveops/remote-config/">Remote Config</a>
+    <a href="../../liveops/remote-config/">Remote Configuration</a>
 </li>
 
                         
@@ -481,8 +454,9 @@
 
 <p>It is important to call the SDKBOX IAP initialization method early, or at least before you call any other methods. You can do this by calling it from your Game Instance Init event, or your first scene's Begin Play event.</p>
 <p>The init method takes a JSON string as a parameter. You can pass a raw string if you would like, but you can also add the product descriptions in the Blueprint editor and build the string at runtime.</p>
+<p><strong>Important:</strong> on Android, you will need to supply the license key which you will find in the <strong>Services &amp; APIs</strong> section for your app in the Google Play Console. This is very important, as IAP will not function correctly without it. This key should be part of the JSON string, or passed into <strong>AndroidKey</strong> on the <code>Sdkbox IAP JSON String from Product Descriptions</code> function. </p>
 <p><img alt="" src="./img2.png" /></p>
-<p>To do this, first add a variable <code>Products</code> of type <code>SDKBox IAPProductDescription</code> and make it an Array. </p>
+<p>To add products in the Blueprint editor, first add a variable <code>Products</code> of type <code>SDKBox IAPProductDescription</code> and make it an Array. </p>
 <p>Now you can add products in the editor by clicking on Products and adding items to the Default Value in the Details pane.</p>
 <p><img alt="" src="./img3.png" /></p>
 <p>The Name is a string value that you will use to reference the product when purchasing.</p>
