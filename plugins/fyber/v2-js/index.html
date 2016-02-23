@@ -13,7 +13,7 @@
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../../../css/base.css" rel="stylesheet">
+        <link href="../../../css/base.css?2" rel="stylesheet">
         <link rel="stylesheet" href="../../../css/highlight.css">
         <link href="../../../css/custom.css" rel="stylesheet">
 
@@ -228,6 +228,16 @@
         
             
 <li >
+    <a href="../../leadbolt/">LeadBolt</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../leaderboard/">Leaderboard</a>
 </li>
 
@@ -258,7 +268,7 @@
         
             
 <li >
-    <a href="../../sdkboxads/">Ads</a>
+    <a href="../../sdkboxads/">SDKBOX Ads</a>
 </li>
 
         
@@ -523,7 +533,7 @@
 <h2 id="prerequisites">Prerequisites</h2>
 <ul>
 <li><strong>For Android, Fyber requires a minimum version of 4.0.3. This version is newer than what the other SDKBOX plugins require.</strong></li>
-<li>Certain SDKBOX plugins do not work together. If you use <strong>Fyber</strong>, then you cannot also use the <strong>AdColony</strong> and <strong>SOOMLA GROW</strong> services, in the same project.</li>
+<li>Certain SDKBOX plugins do not work together. If you use <strong>Fyber</strong>, then you cannot also use the <strong>SOOMLA GROW</strong> services, in the same project.</li>
 </ul>
 <h2 id="integration">Integration</h2>
 <p>Open a terminal and use the following command to install the SDKBOX Fyber plugin. Make sure you setup the SDKBOX installer correctly.</p>
@@ -533,7 +543,7 @@
 <h2 id="important-notice">Important Notice</h2>
 <p>If you upgraded to Xcode7 you need to perform the following steps to your project for plugin to function correctly.</p>
 <h4 id="disable-app-transport-security">Disable App Transport Security</h4>
-<p>Adding the following entry to the plist:</p>
+<p>Adding the following entry to the <code>info.plist</code> file:</p>
 <pre><code>&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;
 &lt;dict&gt;
     &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;
@@ -541,6 +551,8 @@
 &lt;/dict&gt;
 </code></pre>
 
+<p>It should look something like this:</p>
+<p><img alt="" src="../../../imgs/ATS.png" /></p>
 <h4 id="disable-bitcode-support">Disable Bitcode support</h4>
 <p>You have to turn off <strong>Bitcode</strong> support. If you don't cocos2d-x will fail to build.</p>
 <h4 id="set-your-game-requires-full-screen">Set your game requires full screen</h4>
@@ -664,29 +676,29 @@ invoked for the current user ID / app ID combination.</p>
 
 <h2 id="api-reference">API Reference</h2>
 <h3 id="methods">Methods</h3>
-<pre><code class="javascript">sdkbox.PluginFyber.init();
+<pre><code class="javascript">sdkbox.PluginFyber.init(userID);
 </code></pre>
 
 <blockquote>
-<p>initialize the plugin instance.</p>
+<p>initialize the fyber plugin.</p>
 </blockquote>
 <pre><code class="javascript">sdkbox.PluginFyber.showOfferWall(placementId);
 </code></pre>
 
 <blockquote>
-<p>Presents the SponsorPay Mobile OfferWall as a child view controller of your own view controller.</p>
+<p>Presents the Fyber Mobile OfferWall as a child view controller of your own view controller.</p>
 </blockquote>
 <pre><code class="javascript">sdkbox.PluginFyber.requestOffers(placementId);
 </code></pre>
 
 <blockquote>
-<p>Queries the server for BrandEngage offers availability.</p>
+<p>Request the server for rewarded video availability.</p>
 </blockquote>
-<pre><code class="javascript">sdkbox.PluginFyber.showOffers();
+<pre><code class="javascript">sdkbox.PluginFyber.showOffers(placementId);
 </code></pre>
 
 <blockquote>
-<p>Starts running an available engagement.</p>
+<p>Show an available rewarded video.</p>
 </blockquote>
 <pre><code class="javascript">sdkbox.PluginFyber.requestInterstitial();
 </code></pre>
@@ -704,7 +716,7 @@ invoked for the current user ID / app ID combination.</p>
 </code></pre>
 
 <blockquote>
-<p>Fetches the amount of a given currency earned since the last time this method was
+<p>Fetches the amount of a given currency earned since the last time this method was 
 invoked for the current user ID / app ID combination.</p>
 </blockquote>
 <h3 id="listeners">Listeners</h3>

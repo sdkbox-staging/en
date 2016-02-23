@@ -13,7 +13,7 @@
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../../../css/base.css" rel="stylesheet">
+        <link href="../../../css/base.css?2" rel="stylesheet">
         <link rel="stylesheet" href="../../../css/highlight.css">
         <link href="../../../css/custom.css" rel="stylesheet">
 
@@ -228,6 +228,16 @@
         
             
 <li >
+    <a href="../../leadbolt/">LeadBolt</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../leaderboard/">Leaderboard</a>
 </li>
 
@@ -258,7 +268,7 @@
         
             
 <li >
-    <a href="../../sdkboxads/">Ads</a>
+    <a href="../../sdkboxads/">SDKBOX Ads</a>
 </li>
 
         
@@ -517,7 +527,7 @@
 <h2 id="important-notice">Important Notice</h2>
 <p>If you upgraded to Xcode7 you need to perform the following steps to your project for plugin to function correctly.</p>
 <h4 id="disable-app-transport-security">Disable App Transport Security</h4>
-<p>Adding the following entry to the plist:</p>
+<p>Adding the following entry to the <code>info.plist</code> file:</p>
 <pre><code>&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;
 &lt;dict&gt;
     &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;
@@ -525,6 +535,8 @@
 &lt;/dict&gt;
 </code></pre>
 
+<p>It should look something like this:</p>
+<p><img alt="" src="../../../imgs/ATS.png" /></p>
 <h4 id="disable-bitcode-support">Disable Bitcode support</h4>
 <p>You have to turn off <strong>Bitcode</strong> support. If you don't cocos2d-x will fail to build.</p>
 <h4 id="set-your-game-requires-full-screen">Set your game requires full screen</h4>
@@ -612,7 +624,7 @@ public:
 </code></pre>
 
 <blockquote>
-<p>Set listener to listen for Appodeal events</p>
+<p>Set listener to listen for appodeal events</p>
 </blockquote>
 <pre><code class="cpp">static AppodealListener * getListener ( ) ;
 </code></pre>
@@ -626,6 +638,22 @@ public:
 <blockquote>
 <p>Remove the listener, and can't listen to events anymore</p>
 </blockquote>
+<pre><code class="cpp">static void disableNetworkForAdType ( AdType adType ,
+                                      const std::string &amp; networkName ) ;
+</code></pre>
+
+<pre><code class="cpp">static void disableLocationPermissionCheck ( ) ;
+</code></pre>
+
+<pre><code class="cpp">static void setAutocache ( bool autocache , AdType types ) ;
+</code></pre>
+
+<pre><code class="cpp">static bool isAutocacheEnabled ( AdType types ) ;
+</code></pre>
+
+<pre><code class="cpp">static void confirmUsage ( AdType adTypes ) ;
+</code></pre>
+
 <pre><code class="cpp">static void setDebugEnabled ( bool debugEnabled ) ;
 </code></pre>
 
@@ -758,6 +786,36 @@ public:
 
 <blockquote>
 <p>trigger when video finish</p>
+</blockquote>
+<pre><code class="cpp">void onRewardVideoDidLoadAd ( );
+</code></pre>
+
+<blockquote>
+<p>trigger when reward video load</p>
+</blockquote>
+<pre><code class="cpp">void onRewardVideoDidFailToLoadAd ( );
+</code></pre>
+
+<blockquote>
+<p>trigger when reward video fail to load</p>
+</blockquote>
+<pre><code class="cpp">void onRewardVideoDidPresent ( );
+</code></pre>
+
+<blockquote>
+<p>trigger when reward video present</p>
+</blockquote>
+<pre><code class="cpp">void onRewardVideoWillDismiss ( );
+</code></pre>
+
+<blockquote>
+<p>trigger when reward video dismiss</p>
+</blockquote>
+<pre><code class="cpp">void onRewardVideoDidFinish ( int amount , const std::string &amp; name );
+</code></pre>
+
+<blockquote>
+<p>trigger when reward video finish</p>
 </blockquote>
 <h2 id="manual-integration">Manual Integration</h2>
 <p>If the <em>SDKBOX Installer</em> <strong>fails</strong> to complete successfully, it is possible to integrate SDKBOX manually. If the installer complete successfully, please <strong>do not</strong> complete anymore of this document. It is not necessary.</p>

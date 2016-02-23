@@ -13,7 +13,7 @@
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link href="../../../css/base.css" rel="stylesheet">
+        <link href="../../../css/base.css?2" rel="stylesheet">
         <link rel="stylesheet" href="../../../css/highlight.css">
         <link href="../../../css/custom.css" rel="stylesheet">
 
@@ -228,6 +228,16 @@
         
             
 <li >
+    <a href="../../leadbolt/">LeadBolt</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../leaderboard/">Leaderboard</a>
 </li>
 
@@ -258,7 +268,7 @@
         
             
 <li >
-    <a href="../../sdkboxads/">Ads</a>
+    <a href="../../sdkboxads/">SDKBOX Ads</a>
 </li>
 
         
@@ -512,7 +522,7 @@
 <h2 id="important-notice">Important Notice</h2>
 <p>If you upgraded to Xcode7 you need to perform the following steps to your project for plugin to function correctly.</p>
 <h4 id="disable-app-transport-security">Disable App Transport Security</h4>
-<p>Adding the following entry to the plist:</p>
+<p>Adding the following entry to the <code>info.plist</code> file:</p>
 <pre><code>&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;
 &lt;dict&gt;
     &lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;
@@ -520,6 +530,8 @@
 &lt;/dict&gt;
 </code></pre>
 
+<p>It should look something like this:</p>
+<p><img alt="" src="../../../imgs/ATS.png" /></p>
 <h4 id="disable-bitcode-support">Disable Bitcode support</h4>
 <p>You have to turn off <strong>Bitcode</strong> support. If you don't cocos2d-x will fail to build.</p>
 <h4 id="set-your-game-requires-full-screen">Set your game requires full screen</h4>
@@ -539,7 +551,7 @@ Optionally, you can choose to use SDKBOX LiveOps to remotely update this plugin'
 Here is an example adding <code>Kochava</code>:</p>
 <pre><code class="json">&quot;kochava&quot; :
 {
-    &quot;kochavaAppId&quot; : &quot;&lt;KOCHAVA_APP_ID&gt;&quot;,
+    &quot;kochava_app_id&quot; : &quot;&lt;KOCHAVA_APP_ID&gt;&quot;,
     &quot;enableLogging&quot; : 1,
     &quot;retrieveAttribution&quot; : 1
 }
@@ -625,12 +637,6 @@ recommend to do this in the <code>app.js</code>. Example:</p>
 
 <blockquote>
 <p>turn on/off ad tracking</p>
-</blockquote>
-<pre><code class="javascript">sdkbox.PluginKochava.retrieveAttribution();
-</code></pre>
-
-<blockquote>
-<p>returns the attribution data</p>
 </blockquote>
 <pre><code class="javascript">sdkbox.PluginKochava.sendDeepLink(url, application);
 </code></pre>
