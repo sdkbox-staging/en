@@ -461,7 +461,11 @@
         
             <li><a href="#initialize-leadbolt">Initialize LeadBolt</a></li>
         
-            <li><a href="#leadbolt">leadbolt</a></li>
+            <li><a href="#cache-ad">Cache Ad</a></li>
+        
+            <li><a href="#loaddisplay-ad">Load/Display Ad</a></li>
+        
+            <li><a href="#check-if-ad-is-available">Check if Ad is available</a></li>
         
             <li><a href="#catch-leadbolt-events-optional">Catch LeadBolt events (optional)</a></li>
         
@@ -547,11 +551,31 @@ Optionally, you can choose to use SDKBOX LiveOps to remotely update this plugin'
 <h3 id="json-configuration">JSON Configuration</h3>
 <p>SDKBOX Installer will automatically inject a sample configuration to your <code>res/sdkbox_config.json</code>, that you have to modify it before you can use it for your own app</p>
 <p>Here is an example of the LeadBolt configuration, you need to replace <code>&lt;api_key&gt;</code>, <code>&lt;name&gt;</code> item with your specific <a href="http://leadbolt.com/">leadbolt</a> account information.</p>
-<pre><code class="json">&quot;LeadBolt&quot;:{
-    &quot;api_key&quot;:&quot;8uc8Kd5b6LoyJZCAsFUCY2sWmSJkXZ6c&quot;,
-    &quot;ads&quot;:{
-        &quot;ad1&quot;:{
-            &quot;name&quot;:&quot;inapp&quot;
+<pre><code class="json">{
+    &quot;ios&quot;: {
+        &quot;LeadBolt&quot;: {
+            &quot;api_key&quot;: &quot;8uc8Kd5b6LoyJZCAsFUCY2sWmSJkXZ6c&quot;,
+            &quot;ads&quot;: {
+                &quot;directdeal&quot;: {
+                    &quot;name&quot;: &quot;inapp&quot;
+                },
+                &quot;rewardedvideo&quot;: {
+                    &quot;name&quot;: &quot;video&quot;
+                }
+            }
+        }
+    },
+    &quot;android&quot;: {
+        &quot;LeadBolt&quot;: {
+            &quot;api_key&quot;: &quot;is2byYEVjbXiFjVjaYIt6sM4aEIqMWZ3&quot;,
+            &quot;ads&quot;: {
+                &quot;directdeal&quot;: {
+                    &quot;name&quot;: &quot;inapp&quot;
+                },
+                &quot;rewardedvideo&quot;: {
+                    &quot;name&quot;: &quot;video&quot;
+                }
+            }
         }
     }
 }
@@ -565,23 +589,39 @@ Optionally, you can choose to use SDKBOX LiveOps to remotely update this plugin'
 <pre><code class="lua">sdkbox.PluginLeadBolt:init()
 </code></pre>
 
-<h3 id="leadbolt">leadbolt</h3>
-<p>After initialization you can begin to use the LeadBolt functionality:</p>
-<pre><code class="lua">if plugin:isAdReady('ad1') then
-    plugin:loadModule('ad1')
+<h3 id="cache-ad">Cache Ad</h3>
+<blockquote>
+<p>NOTE: Leadbolt ads are cached before use for better user experience. Please allow time for ads to be cached.  Once an ad is cached, you will be able to see the ad. While caching is in progress, ads are not available for display.</p>
+</blockquote>
+<pre><code class="lua">sdkbox.PluginLeadbolt:loadModuleToCache(&quot;directdeal&quot;);
+sdkbox.PluginLeadbolt:loadModuleToCache(&quot;rewardedvideo&quot;);
+</code></pre>
+
+<h3 id="loaddisplay-ad">Load/Display Ad</h3>
+<pre><code class="lua">sdkbox.PluginLeadbolt:loadModule(&quot;directdeal&quot;);
+sdkbox.PluginLeadbolt:loadModule(&quot;rewardedvideo&quot;);
+</code></pre>
+
+<h3 id="check-if-ad-is-available">Check if Ad is available</h3>
+<pre><code class="lua">if plugin:isAdReady('directdeal') then
+    plugin:loadModule('directdeal')
 else
     print('leadbolt ad is not ready')
 end
 </code></pre>
 
 <h3 id="catch-leadbolt-events-optional">Catch LeadBolt events (optional)</h3>
-<p>This allows you to catch the <code>LeadBolt</code> events so that you can perform operations based upon responses. A simple example might look like this:</p>
-<pre><code class="lua">local plugin = sdkbox.PluginLeadBolt
-plugin:setListener(function(args)
+<p>This allows you to catch the LeadBolt ad events so that you can perform operations based upon responses. With rewarded video, the onMediaFinished event allows you to reward players for watching the video.</p>
+<pre><code class="lua">sdkbox.PluginLeadBolt:setListener(function(args)
     local event = args.event
-    dump(args, &quot;leadbolt listener info:&quot;)
+    if &quot;onModuleLoaded&quot; == event then
+    elif &quot;onModuleClosed&quot; == event then
+    elif &quot;onModuleClicked&quot; == event then
+    elif &quot;onModuleCached&quot; == event then
+    elif &quot;onModuleFailed&quot; == event then
+    elif &quot;onMediaFinished&quot; == event then
+    end
 end)
-plugin:init()
 </code></pre>
 
 <h2 id="api-reference">API Reference</h2>
@@ -597,6 +637,24 @@ plugin:init()
 
 <blockquote>
 <p>Set listener to listen for leadbolt events</p>
+</blockquote>
+<pre><code class="lua">sdkbox.PluginLeadBolt:loadModuleToCache(placement, userData)
+</code></pre>
+
+<blockquote>
+<p>Cache Ad with name @placement (referenced from your json config file)</p>
+</blockquote>
+<pre><code class="lua">sdkbox.PluginLeadBolt:isAdReady(placement)
+</code></pre>
+
+<blockquote>
+<p>Check if Ad with name @placement (referenced from your json config file) is available for display</p>
+</blockquote>
+<pre><code class="lua">sdkbox.PluginLeadBolt:loadModule(placement, userData)
+</code></pre>
+
+<blockquote>
+<p>Load/Display Ad with name @placement (referenced from your json config file)</p>
 </blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:startSession(apiKey)
 </code></pre>
@@ -625,57 +683,67 @@ plugin:init()
 <pre><code class="lua">sdkbox.PluginLeadBolt:event(name)
 </code></pre>
 
+<blockquote>
+<p>event</p>
+</blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:event(name, floatValue)
 </code></pre>
 
-<pre><code class="lua">sdkbox.PluginLeadBolt:transaction(name, floatValue, currencyCode)
-</code></pre>
-
-<pre><code class="lua">sdkbox.PluginLeadBolt:transaction(name, floatValue, currencyCode, instant)
-</code></pre>
-
-<pre><code class="lua">sdkbox.PluginLeadBolt:transaction(name, floatValue, currencyCode, ref)
-</code></pre>
-
+<blockquote>
+<p>event with float value</p>
+</blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:transaction(name, floatValue, currencyCode, ref, instant)
 </code></pre>
 
-<pre><code class="lua">sdkbox.PluginLeadBolt:loadModule(placement)
-</code></pre>
-
-<pre><code class="lua">sdkbox.PluginLeadBolt:loadModule(placement, userData)
-</code></pre>
-
-<pre><code class="lua">sdkbox.PluginLeadBolt:loadModuleToCache(placement)
-</code></pre>
-
-<pre><code class="lua">sdkbox.PluginLeadBolt:loadModuleToCache(placement, userData)
-</code></pre>
-
+<blockquote>
+<p>Transaction Events</p>
+</blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:destroyModule()
 </code></pre>
 
+<blockquote>
+<p>destroy module</p>
+</blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:setCrashHandlerStatus(enable)
 </code></pre>
 
+<blockquote>
+<p>Crash Reporting</p>
+</blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:crashWithName(crashName, description)
 </code></pre>
 
+<blockquote>
+<p>Crash Reporting</p>
+</blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:fixAdOrientation(orientation)
 </code></pre>
 
-<pre><code class="lua">sdkbox.PluginLeadBolt:isAdReady(placement)
-</code></pre>
-
+<blockquote>
+<p>force Ad Orientation</p>
+</blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:setAgeRange(range)
 </code></pre>
 
+<blockquote>
+<p>setAgeRange
+You can increase your App’s performance by optionally including the additional information above. This allows selected premium advertisers to display their Ads to your users. To pass this additional information, use the following methods BEFORE calling loadModuleToCache.
+accepted values "13-17", "18-25", "26-35", "36-45", "46+"</p>
+</blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:setGender(gender)
 </code></pre>
 
+<blockquote>
+<p>setGender
+You can increase your App’s performance by optionally including the additional information above. This allows selected premium advertisers to display their Ads to your users. To pass this additional information, use the following methods BEFORE calling loadModuleToCache.
+accepted valued "Male", "Female"</p>
+</blockquote>
 <pre><code class="lua">sdkbox.PluginLeadBolt:setFramework(f)
 </code></pre>
 
+<blockquote>
+<p>setFramework</p>
+</blockquote>
 <h3 id="listeners">Listeners</h3>
 <pre><code class="lua">onModuleLoaded(placement)
 </code></pre>
@@ -711,7 +779,7 @@ plugin:init()
 </code></pre>
 
 <blockquote>
-<p>Notifies the delegate that the module has finished</p>
+<p>Notifies the delegate that the rewarded video has finished playing.</p>
 </blockquote>
 <h2 id="manual-integration">Manual Integration</h2>
 <p>If the <em>SDKBOX Installer</em> <strong>fails</strong> to complete successfully, it is possible to integrate SDKBOX manually. If the installer complete successfully, please <strong>do not</strong> complete anymore of this document. It is not necessary.</p>
@@ -936,9 +1004,6 @@ SDKBox.init(this);
 -keep public class com.sdkbox.** { *; }
 -dontwarn com.sdkbox.**
 
-#twitter
--keep public com.twitter.sdk.android.** { *; }
--keep public io.fabric.sdk.android.** { *; }
 </code></pre>
 
 <p><strong>Note:</strong> Proguard only works with <strong>Release</strong> builds (i.e <code>cocos run -m release</code>) debug builds do not invoke Proguard rules.</p></div>
