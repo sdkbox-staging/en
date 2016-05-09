@@ -128,6 +128,16 @@
         
             
 <li >
+    <a href="../../appnext/">Appnext</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../appodeal/">Appodeal</a>
 </li>
 
@@ -139,6 +149,16 @@
             
 <li >
     <a href="../../amazon/">Amazon</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
+    <a href="../../apteligent/">Apteligent</a>
 </li>
 
         
@@ -258,6 +278,16 @@
         
             
 <li >
+    <a href="../../onesignal/">OneSignal</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../playphone/">Playphone</a>
 </li>
 
@@ -288,7 +318,7 @@
         
             
 <li >
-    <a href="../">Social Sharing</a>
+    <a href="../../sdkboxplay/">SDKBOX Play</a>
 </li>
 
         
@@ -298,7 +328,7 @@
         
             
 <li >
-    <a href="../../soomlagrow/">SOOMLA Grow</a>
+    <a href="../">Social Sharing</a>
 </li>
 
         
@@ -363,6 +393,24 @@
                             
 <li >
     <a href="../../../unity/iap/">In-App Purchase</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../unity/review/">Ratings & Reviews</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../unity/socialshare/">SocialShare</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../unity/googleanalytics/documentation/">Google Analytics</a>
 </li>
 
                         
@@ -445,7 +493,10 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#integration">Integration</a></li>
+        <li class="main active"><a href="#overview">Overview</a></li>
+	
+    
+        <li class="main "><a href="#integration">Integration</a></li>
 	
     
         <li class="main "><a href="#important-notice">Important Notice</a></li>
@@ -461,10 +512,6 @@
             <li><a href="#whitelist-canopenurl-function">Whitelist canOpenURL function</a></li>
         
             <li><a href="#json-configuration">JSON Configuration</a></li>
-        
-            <li><a href="#fabric-key-in-androidmanifest">fabric key in AndroidManifest</a></li>
-        
-            <li><a href="#how-get-fabric-organization-apikey">How get fabric organization apikey</a></li>
         
 	</ul>
 	
@@ -528,11 +575,24 @@
 
 <h4><em><b>For the Lua version of cocos2d-x v2.x</b> - (<a href="./../">all other versions</a>)</em></h4>
 
+<h2 id="overview">Overview</h2>
+<p>SDKBOX Share plugin provide an one stop solution for developers to share to all social platforms.</p>
+<p>Currently SDKBOX Share supports share to <strong>twitter</strong> and <strong>facebook</strong></p>
+<p>Please make sure you create developer account on the following platforms</p>
+<ul>
+<li><a href="http://developers.facebook.com/">Facebook</a></li>
+<li><a href="http://apps.twitter.com/">Twitter</a> (For twitter you'll also need <a href="https://fabric.io">Fabric</a>)</li>
+</ul>
 <h2 id="integration">Integration</h2>
 <p>Open a terminal and use the following command to install the SDKBOX Share plugin. Make sure you setup the SDKBOX installer correctly.</p>
 <pre><code class="bash">$ sdkbox import share
 </code></pre>
 
+<p>You will also need to import SDKBOX facebook plugin if you want enable facebook share support</p>
+<pre><code class="bash">$ sdkbox import facebook
+</code></pre>
+
+<p>Facebook plugin have some extra integration steps, please click <a href="http://docs.sdkbox.com/en/plugins/facebook/v3-cpp/#extra-steps">here</a></p>
 <h2 id="important-notice">Important Notice</h2>
 <p>If you upgraded to Xcode7 you need to perform the following steps to your project for plugin to function correctly.</p>
 <h4 id="disable-app-transport-security">Disable App Transport Security</h4>
@@ -560,37 +620,53 @@ Optionally, you can choose to use SDKBOX LiveOps to remotely update this plugin'
 
 <h3 id="json-configuration">JSON Configuration</h3>
 <p>SDKBOX Installer will automatically inject a sample configuration to your <code>res/sdkbox_config.json</code>, that you have to modify it before you can use it for your own app</p>
-<p>Here is an example of the Share configuration, you need to replace <code>&lt;key&gt;</code>, <code>&lt;secret&gt;</code> item with your specific <a href="http://apps.twitter.com/">Twitter</a> account information.</p>
-<pre><code class="json">&quot;Share&quot;:{
-    &quot;platforms&quot;:{
-        &quot;Twitter&quot;:{
-            &quot;params&quot;: {
-                &quot;key&quot;:&quot;BUJTV6NEM7BAhhm82B12VbKGy&quot;,
-                &quot;secret&quot;:&quot;haVcKarM96Sr4390XLQoHjyRUSyuHdkMX6letcc38h8TOWyiR9&quot;
+<p>Here is an example of the Share configuration</p>
+<pre><code class="json">    &quot;android&quot;: {
+        &quot;Facebook&quot;: {
+            &quot;debug&quot;: false
+        },
+        &quot;Share&quot;: {
+            &quot;platforms&quot;: {
+                &quot;Twitter&quot;: {
+                    &quot;params&quot;: {
+                        &quot;secret&quot;: &quot;nlmUdPNcFGLWhyLu9cD794EDuDrVQnjd0YjTpB6sX8oHIQRrne&quot;,
+                        &quot;key&quot;: &quot;EuovpLL0UhSGB7Jv5eKFJNMqO&quot;
+                    }
+                },
+                &quot;Facebook&quot;: {}    //support facebook share
+            }
+        }
+    },
+    &quot;ios&quot;: {
+        &quot;Facebook&quot;: {
+            &quot;debug&quot;: true
+        },
+        &quot;Share&quot;: {
+            &quot;platforms&quot;: {
+                &quot;Twitter&quot;: {
+                    &quot;params&quot;: {
+                        &quot;secret&quot;: &quot;haVcKarM96Sr4390XLQoHjyRUSyuHdkMX6letcc38h8TOWyiR9&quot;,
+                        &quot;key&quot;: &quot;BUJTV6NEM7BAhhm82B12VbKGy&quot;
+                    }
+                },
+                &quot;Facebook&quot;: {}    //support facebook share
             }
         }
     }
-}
 </code></pre>
 
-<h3 id="fabric-key-in-androidmanifest">fabric key in AndroidManifest</h3>
-<p>you need replace <code>&lt;api_key&gt;</code> with your <a href="https://fabric.io/settings/organizations">fabric organization</a> item in AndroidManifest.xml</p>
+<p><strong>Twitte configuration</strong></p>
+<p>you need to replace <code>&lt;key&gt;</code>, <code>&lt;secret&gt;</code> item with your specific <a href="http://apps.twitter.com/">Twitter</a> account.</p>
+<p>you also need replace <code>&lt;api_key&gt;</code> with your <a href="https://fabric.io/settings/organizations">fabric organization</a> item in <code>AndroidManifest.xml</code></p>
 <pre><code class="xml">&lt;meta-data
             android:name=&quot;io.fabric.ApiKey&quot;
             android:value=&quot;api_key&quot; /&gt;
 </code></pre>
 
-<h3 id="how-get-fabric-organization-apikey">How get fabric organization apikey</h3>
-<ul>
-<li>create a organization in <a href="https://fabric.io/settings/organizations">fabric organization</a></li>
-</ul>
-<p>maybe look like the following
-<img alt="" src="../../../imgs/share_twitter_organizations.png" /></p>
-<ul>
-<li>and then, get orgranization key</li>
-</ul>
-<p>maybe look like the following
+<p>You can get fabric organization apikey in the organization screen
 <img alt="" src="../../../imgs/share_twitter_organization_info.png" /></p>
+<p><strong>Facebook configuration</strong></p>
+<p>you need to add a <code>Facebook</code> entry in the config</p>
 <!---->
 
 <h2 id="usage">Usage</h2>
@@ -601,14 +677,50 @@ Optionally, you can choose to use SDKBOX LiveOps to remotely update this plugin'
 
 <h3 id="share">share</h3>
 <p>After initialization you can begin to use the Share functionality:</p>
-<pre><code class="lua">sdkbox.PluginShare:share({text=&quot;#sdkbox the end of sdk figue (www.sdkbox.com)&quot;})
+<pre><code class="lua">local shareInfo = {}
+shareInfo.text = '#sdkbox(www.sdkbox.com) - the cure for sdk fatigue - from lua - '
+shareInfo.title = &quot;sdkbox&quot;;
+shareInfo.image = &quot;http://www.sdkbox.com/assets/images/logo.png&quot;;
+shareInfo.link = &quot;http://www.sdkbox.com&quot;;
+
+//sdkbox.SocialPlatform.Platform_Select will show platforms list, let user select which platform want to share
+//sdkbox.SocialPlatform.Platform_Twitter will share with twitter directly
+//sdkbox.SocialPlatform.Platform_Facebook will share with facebook directly
+shareInfo.platform = sdkbox.SocialPlatform.Platform_Select;
+plugin:share(shareInfo)
 </code></pre>
 
+<p>all value of sdkbox.SocialPlatform</p>
+<ul>
+<li>Platform_Unknow</li>
+<li>Platform_Twitter</li>
+<li>Platform_Facebook</li>
+<li>Platform_Select</li>
+<li>Platform_All</li>
+</ul>
+<p>all value of sdkbox.SocialShareState</p>
+<ul>
+<li>SocialShareStateNone</li>
+<li>SocialShareStateUnkonw</li>
+<li>SocialShareStateBegin</li>
+<li>SocialShareStateSuccess</li>
+<li>SocialShareStateFail</li>
+<li>SocialShareStateCancelled</li>
+<li>SocialShareStateSelectShow</li>
+<li>SocialShareStateSelected</li>
+<li>SocialShareStateSelectCancelled</li>
+</ul>
 <h3 id="catch-share-events-optional">Catch Share events (optional)</h3>
 <p>This allows you to catch the <code>Share</code> events so that you can perform operations based upon responses. A simple example might look like this:</p>
 <pre><code class="lua">local plugin = sdkbox.PluginShare
 plugin:setListener(function(responsed)
-    dump(responsed, &quot;share listener info:&quot;)
+    local event = responsed.event
+
+    dump(responsed, &quot;PluginShare share listener info:&quot;)
+    if responsed.response.state == sdkbox.SocialShareState.SocialShareStateSuccess then
+        print('share success')
+    end
+
 end)
 plugin:init()
 </code></pre>
