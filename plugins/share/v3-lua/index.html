@@ -392,6 +392,12 @@
                         
                             
 <li >
+    <a href="../../../unity/allinone/">SDKBOX AllInOne</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../../unity/iap/">In-App Purchase</a>
 </li>
 
@@ -410,7 +416,13 @@
                         
                             
 <li >
-    <a href="../../../unity/googleanalytics/documentation/">Google Analytics</a>
+    <a href="../../../unity/googleanalytics/">Google Analytics</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../unity/sdkboxplay/">SDKBOX Play</a>
 </li>
 
                         
@@ -577,7 +589,7 @@
 
 <h2 id="overview">Overview</h2>
 <p>SDKBOX Share plugin provide an one stop solution for developers to share to all social platforms.</p>
-<p>Currently SDKBOX Share supports share to <strong>twitter</strong> and <strong>facebook</strong></p>
+<p>Currently SDKBOX Share supports share via <strong>twitter</strong>, <strong>facebook</strong> and <strong>SMS</strong></p>
 <p>Please make sure you create developer account on the following platforms</p>
 <ul>
 <li><a href="http://developers.facebook.com/">Facebook</a></li>
@@ -633,7 +645,8 @@ Optionally, you can choose to use SDKBOX LiveOps to remotely update this plugin'
                         &quot;key&quot;: &quot;EuovpLL0UhSGB7Jv5eKFJNMqO&quot;
                     }
                 },
-                &quot;Facebook&quot;: {}    //support facebook share
+                &quot;Facebook&quot;: {},     //support facebook share
+                &quot;SMS&quot;:{}            //support sms share
             }
         }
     },
@@ -649,7 +662,8 @@ Optionally, you can choose to use SDKBOX LiveOps to remotely update this plugin'
                         &quot;key&quot;: &quot;BUJTV6NEM7BAhhm82B12VbKGy&quot;
                     }
                 },
-                &quot;Facebook&quot;: {}    //support facebook share
+                &quot;Facebook&quot;: {},     //support facebook share
+                &quot;SMS&quot;:{}            //support sms share
             }
         }
     }
@@ -657,6 +671,7 @@ Optionally, you can choose to use SDKBOX LiveOps to remotely update this plugin'
 
 <p><strong>Twitte configuration</strong></p>
 <p>you need to replace <code>&lt;key&gt;</code>, <code>&lt;secret&gt;</code> item with your specific <a href="http://apps.twitter.com/">Twitter</a> account.</p>
+<p>For android only</p>
 <p>you also need replace <code>&lt;api_key&gt;</code> with your <a href="https://fabric.io/settings/organizations">fabric organization</a> item in <code>AndroidManifest.xml</code></p>
 <pre><code class="xml">&lt;meta-data
             android:name=&quot;io.fabric.ApiKey&quot;
@@ -680,8 +695,9 @@ Optionally, you can choose to use SDKBOX LiveOps to remotely update this plugin'
 <pre><code class="lua">local shareInfo = {}
 shareInfo.text = '#sdkbox(www.sdkbox.com) - the cure for sdk fatigue - from lua - '
 shareInfo.title = &quot;sdkbox&quot;;
-shareInfo.image = &quot;http://www.sdkbox.com/assets/images/logo.png&quot;;
+-- shareInfo.image = &quot;path/to/image&quot;;
 shareInfo.link = &quot;http://www.sdkbox.com&quot;;
+info.showDialog = false; -- if you want share with dialog，set the value true
 
 //sdkbox.SocialPlatform.Platform_Select will show platforms list, let user select which platform want to share
 //sdkbox.SocialPlatform.Platform_Twitter will share with twitter directly
@@ -767,6 +783,7 @@ plugin:init()
 <p>Social.framework</p>
 <p>GameController.framework</p>
 <p>SystemConfiguration.framework</p>
+<p>MessageUI.framework</p>
 </blockquote>
 <p>Copy all source and header files from <code>plugin/luabindings/</code> to your projects <code>Classes</code> folder.</p>
 <p>Add these same files, that you just copied, to Xcode by either dragging and dropping them into Xcode or by using <strong>File -&gt; Add files to...</strong>.</p>
@@ -849,6 +866,7 @@ to your <code>&lt;project_root&gt;/jni/</code> directory.</p>
 </ul>
 <pre><code class="xml">&lt;uses-permission android:name=&quot;android.permission.INTERNET&quot;/&gt;
 &lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot;/&gt;
+&lt;uses-permission android:name=&quot;android.permission.SEND_SMS&quot;/&gt;
 </code></pre>
 
 <ul>
