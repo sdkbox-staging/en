@@ -746,7 +746,6 @@ URL schemes: com.sdkbox.gpg
 <p>Google Play initialization is thorughout a <code>gpg.Builder</code> object.
 This is a valid copy-and-paste example for authenticating into the library:</p>
 <pre><code>
-// 1
 var config = new gpg.PlatformConfiguration();
 config.SetClientID('777734739048-cdkbeieil19d6pfkavddrri5o19gk4ni.apps.googleusercontent.com');
 
@@ -774,12 +773,12 @@ new gpg.GameServices.Builder()
 </code></pre>
 
 <p>Let's dive into this process step by step.</p>
-<h4 id="1">// 1</h4>
+<h4 id="step-1-initialization">Step 1 Initialization</h4>
 <p>Create a <code>gpg.PlatformConfiguration</code> object. The client id will be specific for your application, and only needed on iOS.
 It is thus an optional call, but won't hurt having it set for Android as well.</p>
 <p>This object is needed to create a GameServices object, which is the object that will proxy to the whole Google Play library objects.</p>
 <p>The GPG authentication process, either sign-in or sign-out, spans into two phases:</p>
-<h4 id="2-auth-started">// 2 Auth started.</h4>
+<h4 id="step-2-auth-started">Step 2 Auth started.</h4>
 <p>This function needs a callback of the form:</p>
 <pre><code>/**
  * @typedef {{AuthOperation:gpg.AuthOperation}}
@@ -793,7 +792,7 @@ var AuthActionStartedCallbackParams;
 </code></pre>
 
 <p>This function is mostly informative. See <code>gpg.AuthOperation</code> enum for more details.</p>
-<h4 id="3-auth-finished">// 3 Auth finished.</h4>
+<h4 id="step-3-auth-finished">Step 3 Auth finished.</h4>
 <p>This function needs a callback of the form:</p>
 <pre><code>/**
  * @typedef {{AuthOperation:number, AuthStatus:number}}
@@ -809,16 +808,16 @@ var AuthActionFinishedCallbackParams;
 <p>The callback be invoked with the operation type <code>AuthOperation</code> :sign-in or sign-out and the operation result <code>AuthStatus</code>.
 This steps, is very important since it will tell whether the user got authenticated <code>// 4</code> or not <code>// 5</code>.
 The <code>gpg.IsSuccess(...)</code> will be the common idiom to verify whether an operation's been succesful or not.</p>
-<h4 id="4">// 4</h4>
+<h4 id="step-4">Step 4</h4>
 <p>This will be a good point to get local user information, as well as modify the UI to signal authorized.</p>
-<h4 id="5">// 5</h4>
+<h4 id="step-5">Step 5</h4>
 <p>Things did not work as expected.</p>
-<h4 id="6">// 6</h4>
+<h4 id="step-6">Step 6</h4>
 <p>This is an optional step, but worth mentioning since this is the only place where GPG loggin capabilities can be controlled from.</p>
 <p>This is an optional step.</p>
-<h4 id="7">// 7</h4>
+<h4 id="step-7">Step 7</h4>
 <p>If your game expects to save games on the cloud, this is step would be mandatory, and optional otherwise.</p>
-<h4 id="8">// 8</h4>
+<h4 id="step-8">Step 8</h4>
 <p>Until this steps, all previous code is authentication set up.
 This <code>Create</code> call is the actual executable code to be authenticated, notified apropriately and agin access to the GPG objects.
 GPG interation will happen by means of a <code>gpg.GameServices</code> object. This object will eventually been passed to the <code>Create</code> method's callback if everything went ok.</p>
