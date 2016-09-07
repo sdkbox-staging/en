@@ -551,20 +551,18 @@
 	
 	<ul class="sub-sidenav">
         
-            <li><a href="#initialize-google-analytics">Initialize Google Analytics</a></li>
+            <li><a href="#register-javascript-functions">Register Javascript Functions</a></li>
+        
+            <li><a href="#pre-requisites">Pre-requisites</a></li>
+        
+            <li><a href="#initialize-google-play-games-gpg">Initialize Google Play Games (GPG)</a></li>
+        
+            <li><a href="#gpggameservices">gpg::GameServices</a></li>
         
 	</ul>
 	
     
         <li class="main "><a href="#api-reference">API Reference</a></li>
-	
-	<ul class="sub-sidenav">
-        
-            <li><a href="#methods">Methods</a></li>
-        
-            <li><a href="#listeners">Listeners</a></li>
-        
-	</ul>
 	
     
         <li class="main "><a href="#manual-integration">Manual Integration</a></li>
@@ -712,152 +710,166 @@ URL schemes: com.sdkbox.gpg
 <h4 id="whitelist-canopenurl-function">Whitelist canOpenURL function</h4>
 <p>This depends on what plugins are in your project. You may need to add the required entry to the <code>info.plist</code>, under <code>LSApplicationQueriesSchemes</code>.</p>
 <h2 id="usage">Usage</h2>
-<h3 id="initialize-google-analytics">Initialize Google Analytics</h3>
-<p>Initialize the plugin where appropriate in your code. We recommend to do this in the <code>AppDelegate::applicationDidFinishLaunching()</code> or <code>AppController:didFinishLaunchingWithOptions()</code>. Make sure to include the appropriate headers:</p>
-<pre><code class="cpp">#include &quot;PluginGoogleAnalytics/PluginGoogleAnalytics.h&quot;
-AppDelegate::applicationDidFinishLaunching()
-{
-     sdkbox::PluginGoogleAnalytics::init();
-}
+<h3 id="register-javascript-functions">Register Javascript Functions</h3>
+<p>You need to register all the Google Play Games JS functions with cocos2d-x before using them.</p>
+<p>To do this:
+* Modify <code>./frameworks/runtime-src/Classes/AppDelegate.cpp</code> to include the following headers:</p>
+<pre><code class="cpp">#include &quot;PluginSdkboxGooglePlay.hpp&quot;
 </code></pre>
 
-<p>You can always manually stop recording events at any time by calling:</p>
-<pre><code class="cpp">sdkbox::PluginGoogleAnalytics::stopSession();
+<ul>
+<li>Modify <code>./frameworks/runtime-src/Classes/AppDelegate.cpp</code> make sure to call:</li>
+</ul>
+<pre><code class="cpp">sc-&gt;addRegisterCallback(register_all_PluginSdkboxGooglePlay);
 </code></pre>
 
-<p>However, in-order to record events again you must then manually call:</p>
-<pre><code class="cpp">sdkbox::PluginGoogleAnalytics::startSession();
+<h3 id="pre-requisites">Pre-requisites</h3>
+<p>Your application must be registered on the Google Developer console, and have play services enabled.
+Leaderboards, Achievements, Quests, Events, Realtime Multiplayer and Turn Based multiplayer support must be explicitly enabled and configured in the console.</p>
+<p>For more information please refer to:
++ Client Ids: https://developers.google.com/games/services/console/enabling
++ Configure services: https://developers.google.com/games/services/console/configuring</p>
+<p>Make sure your applications are <strong>always</strong> signed with your release certificate. </p>
+<h3 id="initialize-google-play-games-gpg">Initialize Google Play Games (GPG)</h3>
+<p>Google Play initialization is thorughout a <code>gpg.Builder</code> object.
+This is a valid copy-and-paste example for authenticating into the library:</p>
+<pre><code>
+// 1
+var config = new gpg.PlatformConfiguration();
+
+if ( !_game_services || !_game_services-&gt;IsAuthorized() ) {
+        _game_services = gpg::GameServices::Builder()
+                .SetOnAuthActionStarted([this](gpg::AuthOperation op) {
+                    // 2
+
+                })
+                .SetOnAuthActionFinished([this](gpg::AuthOperation op, gpg::AuthStatus status) {
+
+                    // 3
+
+                    if ( status==gpg::AuthStatus::VALID ) {
+                        // 4
+                        _signed_in = true;                       
+                    } else {
+                        // 5
+                        _signed_in = false;
+                    }
+
+                })
+                .SetDefaultOnLog( gpg::LogLevel::VERBOSE )  // 6
+                .EnableSnapshots()                          // 7
+                .Create( config );                          // 8
+    } 
 </code></pre>
 
-<p>Logged data usually shows up within one day.</p>
+<p>Let's dive into this process step by step.</p>
+<h4 id="1">// 1</h4>
+<p>Create a <code>gpg.PlatformConfiguration</code> object. The client id will be specific for your application, and only needed on iOS.
+It is thus an optional call, but won't hurt having it set for Android as well.</p>
+<p>This object is needed to create a GameServices object, which is the object that will proxy to the whole Google Play library objects.</p>
+<p>The GPG authentication process, either sign-in or sign-out, spans into two phases:</p>
+<h4 id="2-auth-started">// 2 Auth started.</h4>
+<p>This function needs a callback of the form:</p>
+<pre><code>/**
+ * @typedef {{AuthOperation:gpg.AuthOperation}}
+ */
+var AuthActionStartedCallbackParams;
+
+/**
+ * @callback AuthActionStartedCallback
+ * @param {AuthActionStartedCallbackParams} result;
+ */
+</code></pre>
+
+<p>This function is mostly informative. See <code>gpg.AuthOperation</code> enum for more details.</p>
+<h4 id="3-auth-finished">// 3 Auth finished.</h4>
+<p>This function needs a callback of the form:</p>
+<pre><code>/**
+ * @typedef {{AuthOperation:number, AuthStatus:number}}
+ */
+var AuthActionFinishedCallbackParams;
+
+/**
+ * @callback AuthActionFinishedCallback
+ * @param {AuthActionFinishedCallbackParams} result;
+ */
+</code></pre>
+
+<p>The callback be invoked with the operation type <code>AuthOperation</code> :sign-in or sign-out and the operation result <code>AuthStatus</code>.
+This steps, is very important since it will tell whether the user got authenticated <code>// 4</code> or not <code>// 5</code>.
+The <code>gpg.IsSuccess(...)</code> will be the common idiom to verify whether an operation's been succesful or not.</p>
+<h4 id="4">// 4</h4>
+<p>This will be a good point to get local user information, as well as modify the UI to signal authorized.</p>
+<h4 id="5">// 5</h4>
+<p>Things did not work as expected.</p>
+<h4 id="6">// 6</h4>
+<p>This is an optional step, but worth mentioning since this is the only place where GPG loggin capabilities can be controlled from.</p>
+<p>This is an optional step.</p>
+<h4 id="7">// 7</h4>
+<p>If your game expects to save games on the cloud, this is step would be mandatory, and optional otherwise.</p>
+<h4 id="8">// 8</h4>
+<p>This <code>Create</code> call is the actual executable code to be authenticated, notified appropriately and agin access to the GPG objects.
+GPG interaction will happen by means of a <code>gpg::GameServices</code> object. This object will eventually been passed to the <code>Create</code> method's callback if everything went ok.</p>
+<h4 id="signed-in">Signed in.</h4>
+<p>After following the previous code, your system can be signed_in or not to GPG. A common idiom about how to deal with a login ui or sign out, could be this code:</p>
+<pre><code>    if ( _game_services ) {
+        if ( _signed_in ) {
+            _game_services.SignOut();
+        } else {
+            _game_services.StartAuthorizationUI();
+        }
+    }
+</code></pre>
+
+<h3 id="gpggameservices">gpg::GameServices</h3>
+<p>An instance of this object will be granted once the Authentication process works.
+It will grant access to the GPG library functionality, by exposing the following:</p>
+<h4 id="gpgplayermanager-and-gpgstatsmanager">gpg::PlayerManager and gpg::StatsManager</h4>
+<p>Gets and sets various player-related data.
+For example, gives information about the current logged-in player <code>FetchSelf</code>, or about any player identified by an id <code>Fetch</code>.
+Also, player stats can be obtained with interesting information such as a player's average session length, number of days since last played or the number of purchased he's done on the game.</p>
+<h4 id="gpgsnapshotmanager">gpg::SnapshotManager</h4>
+<p>The Saved Games service gives you a convenient way to save your players' game progression to Google's servers. Your game can retrieve the saved game data to allow returning players to continue a game at their last save point from any device.
+The Saved Games service makes it possible to synchronize a player's game data across multiple devices.</p>
+<p>For more intormation refer to: https://developers.google.com/games/services/common/concepts/savedgames</p>
+<h4 id="gpgleaderboardmanager">gpg::LeaderboardManager</h4>
+<p>Leaderboards can be a fun way to drive competition among your players, both for your most hardcore fans (who will be fighting for the top spot in a public leaderboard) and for your more casual players (who will be interested in comparing their progress to their friends').</p>
+<p>For example, it gives access to metadata about a leaderboard <code>Fetch</code>, pages with user's scores <code>FetchScorePage</code>, etc.</p>
+<p>For more information refer to: https://developers.google.com/games/services/common/concepts/leaderboards</p>
+<h4 id="gpgachievementmanager">gpg::AchievementManager</h4>
+<p>Achievements can be a great way to increase your users' engagement within your game. You can implement achievements in your game to encourage players to experiment with features they might not normally use, or to approach your game with entirely different play styles. Achievements can also be a fun way for players to compare their progress with each other and engage in light-hearted competition.</p>
+<p>For example, you could unlock <code>Unlock</code>, increment <code>Increment</code> or reveal an achievement <code>Reveal</code>.</p>
+<p>For more information refer to: https://developers.google.com/games/services/common/concepts/achievements</p>
+<h4 id="gpgquestmanager-gpgeventmanager">gpg::QuestManager, gpg.EventManager</h4>
+<p>The Google Play Games events service allows you to collect cumulative data generated by your players during gameplay and store them in Google's servers for game analytics. You can flexibly define what player data your game should collect; this might include metrics such as how often:</p>
+<ul>
+<li>Players use a particular item</li>
+<li>Players reach a certain level</li>
+<li>Players perform some specific game action</li>
+</ul>
+<p>You can use the events data as feedback on how to improve your game. For example, you can adjust the difficulty level of certain levels in your game that players are finding too hard to complete.</p>
+<p>For example you could accept a Quest <code>Accept</code> or claim milestones on a given quest <code>AcceptMilestone</code>.</p>
+<p>For more information refer to: https://developers.google.com/games/services/common/concepts/quests</p>
+<h4 id="gpgturnbasedmultiplayer">gpg::TurnBasedMultiplayer</h4>
+<p>In a turn-based multiplayer game, a single shared state is passed between multiple players, and only one player has permission to modify the shared state at a time. Players take turns asynchronously according to an order of play determined by the game. Your game can use the turn-based multiplayer API provided by Google Play games services to manage the following tasks:</p>
+<ul>
+<li>Invite players to join a turn-based multiplayer match, look for random players to be automatically matched to your game, or a combination of both. Google Play games services allows you to host up to eight participants in a match.</li>
+<li>Store participant and match state information on Google's servers and share updated match data asynchronously with all participants over the lifecycle of the turn-based match.</li>
+<li>Send match invitation and turn notifications to players. Notifications appear on all devices on which the player is logged in (unless disabled).</li>
+</ul>
+<p>For more information refer to: https://developers.google.com/games/services/common/concepts/turnbasedMultiplayer</p>
+<h4 id="gpgrealtimemultiplayer">gpg::RealTimeMultiplayer</h4>
+<p>Your game can use the real-time multiplayer API in Google Play games services to connect multiple players together in a single game session and transfer data messages between connected players. Using the real-time multiplayer API can help to simplify your game development effort because the API handles the following tasks on your behalf:</p>
+<ul>
+<li>Manages network connections to create and maintain a real-time multiplayer room (a virtual construct that enables network communication between multiple players in the same game session and lets players send data directly to one another).</li>
+<li>Provides a player selection user interface (UI) to invite players to join a room, look for random players for auto-matching, or a combination of both.</li>
+<li>Stores participant and room state information on the Google Play games services servers during the lifecycle of the real-time multiplayer game.</li>
+<li>Sends room invitations and updates to players. Notifications appear on all devices on which the player is logged in (unless disabled).</li>
+</ul>
+<p>For more information refer to: https://developers.google.com/games/services/common/concepts/realtimeMultiplayer</p>
+<h4 id="nearby-connections-android-only">Nearby Connections (Android only)</h4>
 <h2 id="api-reference">API Reference</h2>
-<h3 id="methods">Methods</h3>
-<pre><code class="cpp">static void init ( ) ;
-</code></pre>
-
-<blockquote>
-<p>initialize the plugin instance.</p>
-</blockquote>
-<pre><code class="cpp">static void startSession ( ) ;
-</code></pre>
-
-<blockquote>
-<p>The analytics session is being explicitly started at plugin initialization time.</p>
-</blockquote>
-<pre><code class="cpp">static void stopSession ( ) ;
-</code></pre>
-
-<blockquote>
-<p>You normally will never stop a session manually.</p>
-</blockquote>
-<pre><code class="cpp">static void dispatchHits ( ) ;
-</code></pre>
-
-<blockquote>
-<p>Manually request dispatch of hits. By default, data is dispatched from the
-Google Analytics SDK for Android every 5 minutes.</p>
-</blockquote>
-<pre><code class="cpp">static void dispatchPeriodically ( int seconds ) ;
-</code></pre>
-
-<blockquote>
-<p>Change the dispatch info time period to the desired amount of seconds.</p>
-</blockquote>
-<pre><code class="cpp">static void stopPeriodicalDispatch ( ) ;
-</code></pre>
-
-<blockquote>
-<p>Stop periodically sending info. Then manually the <code>dispatchPeridically</code>
-or <code>dispatchHits</code> should be called.</p>
-</blockquote>
-<pre><code class="cpp">static void setUser ( const std::string &amp; userID ) ;
-</code></pre>
-
-<blockquote>
-<p>Set user ID for this tracking session</p>
-</blockquote>
-<pre><code class="cpp">static void setDimension ( int index , const std::string &amp; value ) ;
-</code></pre>
-
-<blockquote>
-<p>Set value to custom dimension</p>
-</blockquote>
-<pre><code class="cpp">static void setMetric ( int index , const std::string &amp; value ) ;
-</code></pre>
-
-<blockquote>
-<p>Set value to custom metric</p>
-</blockquote>
-<pre><code class="cpp">static void logScreen ( const std::string &amp; title ) ;
-</code></pre>
-
-<blockquote>
-<p>Log screen info. title is the title of a screen. Screens are logical units
-inside your app you'd like to identify at analytics panel.</p>
-</blockquote>
-<pre><code class="cpp">static void logEvent ( const std::string &amp; eventCategory ,
-                       const std::string &amp; eventAction ,
-                       const std::string &amp; eventLabel ,
-                       int value ) ;
-</code></pre>
-
-<blockquote>
-<p>GoogleAnalytics::logEvent("Achievement", "Unlocked", "Slay 10 dragons", 5);</p>
-</blockquote>
-<pre><code class="cpp">static void logException ( const std::string &amp; exceptionDescription ,
-                           bool isFatal ) ;
-</code></pre>
-
-<blockquote>
-<p>Log an exception. It is a basic support for in-app events.</p>
-</blockquote>
-<pre><code class="cpp">static void logTiming ( const std::string &amp; timingCategory ,
-                        int timingInterval ,
-                        const std::string &amp; timingName ,
-                        const std::string &amp; timingLabel ) ;
-</code></pre>
-
-<blockquote>
-<p>Measure a time inside the application.</p>
-</blockquote>
-<pre><code class="cpp">static void logSocial ( const std::string &amp; socialNetwork ,
-                        const std::string &amp; socialAction ,
-                        const std::string &amp; socialTarget ) ;
-</code></pre>
-
-<blockquote>
-<p>Log a social event.</p>
-</blockquote>
-<pre><code class="cpp">static void setDryRun ( bool enable ) ;
-</code></pre>
-
-<blockquote>
-<p>While running on dry run, the tracked events won't be sent to the actual
-analytics account.</p>
-</blockquote>
-<pre><code class="cpp">static void enableAdvertisingTracking ( bool enable ) ;
-</code></pre>
-
-<blockquote>
-<p>Enable advertising tracking when in google's ad vendors.</p>
-</blockquote>
-<pre><code class="cpp">static void createTracker ( const std::string &amp; trackerId ) ;
-</code></pre>
-
-<blockquote>
-<p>Create a tracker identified by the google analytics tracker id XX-YYYYYYYY-Z.
-If the tracker already existed, no new tracker will be created. In any case, the
-tracker associated with tracker id will be set as default tracker for  analytics
-operations.</p>
-</blockquote>
-<pre><code class="cpp">static void enableTracker ( const std::string &amp; trackerId ) ;
-</code></pre>
-
-<blockquote>
-<p>Enable a tracker identified by a trackerId. If the tracker does not exist,
-nothing will happen.</p>
-</blockquote>
-<h3 id="listeners">Listeners</h3>
+<p>You can check Google Play online c++ documentation here: https://developers.google.com/games/services/cpp/api/annotated</p>
 <h2 id="manual-integration">Manual Integration</h2>
 <p>If the <em>SDKBOX Installer</em> <strong>fails</strong> to complete successfully, it is possible to integrate SDKBOX manually. If the installer complete successfully, please <strong>do not</strong> complete anymore of this document. It is not necessary.</p>
 <p>These steps are listed last in this document on purpose as they are seldom needed. If you find yourself using these steps, please, after completing, double back and re-read the steps above for other integration items.</p>
