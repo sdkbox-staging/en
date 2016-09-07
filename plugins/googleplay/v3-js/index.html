@@ -551,9 +551,9 @@
 	
 	<ul class="sub-sidenav">
         
-            <li><a href="#register-javascript-functions">Register Javascript Functions</a></li>
-        
             <li><a href="#pre-requisites">Pre-requisites</a></li>
+        
+            <li><a href="#register-javascript-functions">Register Javascript Functions</a></li>
         
             <li><a href="#initialize-google-play-games-gpg">Initialize Google Play Games (GPG)</a></li>
         
@@ -630,13 +630,13 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p><a href="../">&#8249; Google Play Services Doc Home</a></p>
-<h1>Google Play Services Integration Guide</h1>
+<p><a href="../">&#8249; Google Play Games Services Doc Home</a></p>
+<h1>Google Play Games Services Integration Guide</h1>
 
 <h4><em><b>For the Javascript version of cocos2d-x v3.x</b> - (<a href="./../">all other versions</a>)</em></h4>
 
 <h2 id="integration">Integration</h2>
-<p>Open a terminal and use the following command to install the SDKBOX Google Play Services plugin. Make sure you setup the SDKBOX installer correctly.</p>
+<p>Open a terminal and use the following command to install the SDKBOX Google Play Games Services plugin. Make sure you setup the SDKBOX installer correctly.</p>
 <pre><code class="bash">$ sdkbox import googleplay 
 </code></pre>
 
@@ -722,6 +722,13 @@ URL schemes: com.sdkbox.gpg
 <h4 id="whitelist-canopenurl-function">Whitelist canOpenURL function</h4>
 <p>This depends on what plugins are in your project. You may need to add the required entry to the <code>info.plist</code>, under <code>LSApplicationQueriesSchemes</code>.</p>
 <h2 id="usage">Usage</h2>
+<h3 id="pre-requisites">Pre-requisites</h3>
+<p>Your must create your app on <a href="https://play.google.com/apps/publish">Google Play Developer console</a> and have game services enabled.</p>
+<p>Leaderboards, Achievements, Quests, Events, Realtime Multiplayer and Turn Based multiplayer support must be explicitly enabled and configured in the console.</p>
+<p>Please follow <a href="https://developers.google.com/games/services/console/enabling">this guide</a> to setup Google Play Games Services for your game. After the setup, you can follow <a href="https://developers.google.com/games/services/console/configuring">this guide</a> to enable different Games Services for your game.</p>
+<blockquote>
+<p>Note: Your Games Services will use your release keystore by default, so if you want to test your game in debug settings, please link an additional app with <a href="http://stackoverflow.com/questions/17612928/should-i-use-debug-keystore-with-google-play-game-services-during-development">debug keystore</a></p>
+</blockquote>
 <h3 id="register-javascript-functions">Register Javascript Functions</h3>
 <p>You need to register all the Google Play Games JS functions with cocos2d-x before using them.</p>
 <p>To do this:
@@ -735,13 +742,6 @@ URL schemes: com.sdkbox.gpg
 <pre><code class="cpp">sc-&gt;addRegisterCallback(register_all_PluginSdkboxGooglePlay);
 </code></pre>
 
-<h3 id="pre-requisites">Pre-requisites</h3>
-<p>Your application must be registered on the Google Developer console, and have play services enabled.
-Leaderboards, Achievements, Quests, Events, Realtime Multiplayer and Turn Based multiplayer support must be explicitly enabled and configured in the console.</p>
-<p>For more information please refer to:
-+ Client Ids: https://developers.google.com/games/services/console/enabling
-+ Configure services: https://developers.google.com/games/services/console/configuring</p>
-<p>Make sure your applications are <strong>always</strong> signed with your release certificate. </p>
 <h3 id="initialize-google-play-games-gpg">Initialize Google Play Games (GPG)</h3>
 <p>Google Play initialization is thorughout a <code>gpg.Builder</code> object.
 This is a valid copy-and-paste example for authenticating into the library:</p>

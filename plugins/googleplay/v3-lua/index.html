@@ -549,6 +549,12 @@
     
         <li class="main "><a href="#usage">Usage</a></li>
 	
+	<ul class="sub-sidenav">
+        
+            <li><a href="#pre-requisites">Pre-requisites</a></li>
+        
+	</ul>
+	
     
         <li class="main "><a href="#configuring-google-play-services">Configuring Google Play Services</a></li>
 	
@@ -591,6 +597,29 @@
 	<ul class="sub-sidenav">
         
             <li><a href="#getting-stats-for-the-currently-signed-in-player">Getting stats for the currently signed in player</a></li>
+        
+	</ul>
+	
+    
+        <li class="main "><a href="#achievements">Achievements</a></li>
+	
+	<ul class="sub-sidenav">
+        
+            <li><a href="#state">State</a></li>
+        
+            <li><a href="#showing-the-ui">Showing the UI</a></li>
+        
+            <li><a href="#fetch-achievements">Fetch Achievements</a></li>
+        
+            <li><a href="#fetch-achievement">Fetch Achievement</a></li>
+        
+            <li><a href="#increment-achievement">Increment Achievement</a></li>
+        
+            <li><a href="#unlock-achievement">Unlock Achievement</a></li>
+        
+            <li><a href="#reveal-achievement">Reveal Achievement</a></li>
+        
+            <li><a href="#achievements_1">Achievements</a></li>
         
 	</ul>
 	
@@ -664,13 +693,13 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p><a href="../">&#8249; Google Play Services Doc Home</a></p>
-<h1>Google Play Services Integration Guide</h1>
+<p><a href="../">&#8249; Google Play Games Services Doc Home</a></p>
+<h1>Google Play Games Services Integration Guide</h1>
 
 <h4><em><b>For the Lua version of cocos2d-x v3.x</b> - (<a href="./../">all other versions</a>)</em></h4>
 
 <h2 id="integration">Integration</h2>
-<p>Open a terminal and use the following command to install the SDKBOX Google Play Services plugin. Make sure you setup the SDKBOX installer correctly.</p>
+<p>Open a terminal and use the following command to install the SDKBOX Google Play Games Services plugin. Make sure you setup the SDKBOX installer correctly.</p>
 <pre><code class="bash">$ sdkbox import googleplay 
 </code></pre>
 
@@ -756,6 +785,13 @@ URL schemes: com.sdkbox.gpg
 <h4 id="whitelist-canopenurl-function">Whitelist canOpenURL function</h4>
 <p>This depends on what plugins are in your project. You may need to add the required entry to the <code>info.plist</code>, under <code>LSApplicationQueriesSchemes</code>.</p>
 <h2 id="usage">Usage</h2>
+<h3 id="pre-requisites">Pre-requisites</h3>
+<p>Your must create your app on <a href="https://play.google.com/apps/publish">Google Play Developer console</a> and have game services enabled.</p>
+<p>Leaderboards, Achievements, Quests, Events, Realtime Multiplayer and Turn Based multiplayer support must be explicitly enabled and configured in the console.</p>
+<p>Please follow <a href="https://developers.google.com/games/services/console/enabling">this guide</a> to setup Google Play Games Services for your game. After the setup, you can follow <a href="https://developers.google.com/games/services/console/configuring">this guide</a> to enable different Games Services for your game.</p>
+<blockquote>
+<p>Note: Your Games Services will use your release keystore by default, so if you want to test your game in debug settings, please link an additional app with <a href="http://stackoverflow.com/questions/17612928/should-i-use-debug-keystore-with-google-play-game-services-during-development">debug keystore</a></p>
+</blockquote>
 <h2 id="configuring-google-play-services">Configuring Google Play Services</h2>
 <p>Currently the configuration process is done in Lua and passed into Google Play Services when creating the game services object. This object is managed for you, and is available from the <code>gpg</code> Lua namespace.</p>
 <p>To create the game services instance, you need to pass in a table that contains the <code>ClientID</code> that represents the game you have created in the Google Play Console.</p>
@@ -861,6 +897,75 @@ end)
         -- use PlayerStats here
     end
 end)
+</code></pre>
+
+<h2 id="achievements">Achievements</h2>
+<p>For the complete documentation, check out <a href="https://developers.google.com/games/services/common/concepts/achievements">achievements</a></p>
+<h3 id="state">State</h3>
+<p>Achievements can be hidden, revealed, and unlocked. </p>
+<p>Achievements can be designated as standard or incremental. Generally, an incremental achievement involves a player making gradual progress towards earning the achievement over a longer period of time</p>
+<h3 id="showing-the-ui">Showing the UI</h3>
+<pre><code>    gpg.Achievements:ShowAllUI(function(result)
+        -- handle the result here
+    end)
+</code></pre>
+
+<h3 id="fetch-achievements">Fetch Achievements</h3>
+<pre><code>    gpg.Achievements:FetchAll(nil, function(result)
+        log:d(log:to_str(result))
+    end)
+</code></pre>
+
+<h3 id="fetch-achievement">Fetch Achievement</h3>
+<pre><code>    gpg.Achievements:Fetch('CgkI6KjppNEWEAIQBQ', nil, function(result)
+        log:d(log:to_str(result))
+    end)
+</code></pre>
+
+<h3 id="increment-achievement">Increment Achievement</h3>
+<pre><code>   gpg.Achievements:Increment('CgkI6KjppNEWEAIQBQ')
+</code></pre>
+
+<h3 id="unlock-achievement">Unlock Achievement</h3>
+<pre><code>   gpg.Achievements:Unlock('CgkI6KjppNEWEAIQBQ')
+</code></pre>
+
+<h3 id="reveal-achievement">Reveal Achievement</h3>
+<pre><code>    gpg.Achievements:Reveal('CgkI6KjppNEWEAIQBQ')
+</code></pre>
+
+<h3 id="achievements_1">Achievements</h3>
+<h4 id="achievement-description">Achievement description</h4>
+<pre><code>{
+    &quot;currentSteps&quot;     : Current steps completed of the achievement,
+    &quot;description&quot;      : Description of the achievement.
+    &quot;id&quot;               : String Id,
+    &quot;lastModifiedTime&quot; : Time last modified,
+    &quot;name&quot;             : Name of the achievement,
+    &quot;revealedIconUrl&quot;  : URL for the revealed icon,
+    &quot;state&quot;            : State, hidden, revealed, unlocked,
+    &quot;totalSteps&quot;       : Total number of steps,
+    &quot;type&quot;             : Incremental or standard,
+    &quot;unlockedIconUrl&quot;  : URL for the unlocked icon,
+    &quot;valid&quot;            : 1 or 0 if valid,
+    &quot;xp&quot;               : Amount of XP awarded
+}
+</code></pre>
+
+<h4 id="achievementsshowallui">Achievements:ShowAllUI</h4>
+<pre><code>{
+    &quot;result&quot; : result code
+}
+</code></pre>
+
+<h4 id="achievementsfetchall">Achievements:FetchAll</h4>
+<pre><code>    &quot;result&quot;            : result code,
+    &quot;achievement_array&quot; : array of Achievements
+</code></pre>
+
+<h4 id="achievementsfetch">Achievements:Fetch</h4>
+<pre><code>    &quot;result&quot;         : result code,
+    &quot;achievement&quot; : Achievement
 </code></pre>
 
 <h2 id="api-reference">API Reference</h2>
