@@ -735,12 +735,12 @@
     android:value=&quot;@string/google_app_id&quot; /&gt;
 </code></pre>
 
-<h4 id="update-stringxml">Update <code>string.xml</code></h4>
+<h4 id="update-stringxml">Update string.xml</h4>
 <p>Add this entry to <code>proj.android/res/values/string.xml</code></p>
 <pre><code>&lt;string name=&quot;google_app_id&quot;&gt;777734739048&lt;/string&gt;
 </code></pre>
 
-<p>Change that <code>google_app_id</code> value with your own App Id.</p>
+<p>Replace <code>google_app_id</code> value with your own App Id.</p>
 <h3 id="ios">iOS</h3>
 <h4 id="set-a-rootview-controller-for-gpg">Set a rootview controller for GPG:</h4>
 <p>Update <code>proj.ios_mac/ios/RootViewController.h</code>
@@ -775,23 +775,32 @@ Add this:</p>
     [GIDSignIn sharedInstance].uiDelegate = _viewController;
 </code></pre>
 
-<h4 id="url-types">URL types</h4>
+<h4 id="add-url-types">Add URL types</h4>
+<p>Add the following URL types under <strong>your project &gt; Info &gt; URL Types</strong></p>
 <ul>
 <li>
 <p>URL 1:</p>
-<p>Identifier: <code>com.google.ReverseClientId</code>
-Url schemes: <code>com.googleusercontent.apps.777734739048-cdkbeieil19d6pfkavddrri5o19gk4ni</code>
-(use this as sample, or put your very own application’s url scheme) </p>
+<ul>
+<li>Identifier: <code>com.google.ReverseClientId</code></li>
+<li>Url schemes: <code>com.googleusercontent.apps.777734739048-cdkbeieil19d6pfkavddrri5o19gk4ni</code><blockquote>
+<p>(use this as sample, or put your very own application’s url scheme) </p>
+</blockquote>
+</li>
+</ul>
 </li>
 <li>
 <p>URL 2:</p>
-<p>Identifier: <code>com.google.BundleId</code>
-URL schemes: <code>com.sdkbox.gpg</code>
-(use this as sample or put your own application’s bundle id)</p>
+<ul>
+<li>Identifier: <code>com.google.BundleId</code></li>
+<li>URL schemes: <code>com.sdkbox.gpg</code><blockquote>
+<p>(use this as sample or put your own application’s bundle id)</p>
+</blockquote>
+</li>
+</ul>
 </li>
 </ul>
 <h4 id="further-info">Further info</h4>
-<p>For further info, have a look at: https://developers.google.com/games/services/cpp/gettingStartedIOS</p>
+<p>For more information check out the <a href="https://developers.google.com/games/services/cpp/gettingStartedIOS">official documentation</a></p>
 <h2 id="important-notice">Important Notice</h2>
 <p>Please make sure the following settings in your project for plugin to function correctly.</p>
 <h4 id="disable-app-transport-security">Disable App Transport Security</h4>
@@ -1236,7 +1245,7 @@ Add this:</p>
     [GIDSignIn sharedInstance].uiDelegate = _viewController;
 </code></pre>
 
-<h4 id="url-types_1">URL types</h4>
+<h4 id="url-types">URL types</h4>
 <ul>
 <li>
 <p>URL 1:</p>
