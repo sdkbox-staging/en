@@ -228,7 +228,7 @@
         
             
 <li >
-    <a href="../">Google Play</a>
+    <a href="../">Google Play Games</a>
 </li>
 
         
@@ -523,6 +523,9 @@
     
         <li class="main active"><a href="#integration">Integration</a></li>
 	
+    
+        <li class="main "><a href="#after-installation">After Installation</a></li>
+	
 	<ul class="sub-sidenav">
         
             <li><a href="#android">Android</a></li>
@@ -640,18 +643,23 @@
 <pre><code class="bash">$ sdkbox import googleplay 
 </code></pre>
 
+<h2 id="after-installation">After Installation</h2>
 <h3 id="android">Android</h3>
-<h4 id="androidmanifestxml">AndroidManifest.xml</h4>
-<p>Add this meta to the manifest file:</p>
+<h4 id="update-androidmanifestxml">Update AndroidManifest.xml</h4>
+<p>Add this meta-data tag to your <code>AndroidManifest.xml</code></p>
 <pre><code>&lt;meta-data android:name=&quot;com.google.android.gms.games.APP_ID&quot; 
     android:value=&quot;@string/google_app_id&quot; /&gt;
 </code></pre>
 
-<p>Make sure to add an entry to the file <code>res/values/string.xml</code> of the form: <code>&lt;string name="google_app_id"&gt;777734739048&lt;/string&gt;</code>
-Change that value for your own generated play games App Id.</p>
+<h4 id="update-stringxml">Update <code>string.xml</code></h4>
+<p>Add this entry to <code>proj.android/res/values/string.xml</code></p>
+<pre><code>&lt;string name=&quot;google_app_id&quot;&gt;777734739048&lt;/string&gt;
+</code></pre>
+
+<p>Change that <code>google_app_id</code> value with your own App Id.</p>
 <h3 id="ios">iOS</h3>
-<h4 id="set-a-rootview-controller-for-gpg-ui">Set a rootview controller for GPG UI:</h4>
-<p>Update proj.ios_mac/ios/RootViewController.h
+<h4 id="set-a-rootview-controller-for-gpg">Set a rootview controller for GPG:</h4>
+<p>Update <code>proj.ios_mac/ios/RootViewController.h</code>
 Add this:</p>
 <pre><code>import &lt;GoogleSignIn/GoogleSignIn.h&gt;
 
@@ -660,13 +668,11 @@ Add this:</p>
 </code></pre>
 
 <h4 id="set-google-play-signin-listeners">Set Google Play signin listeners</h4>
-<p>Update proj.ios_mac/ios/AppController.mm</p>
+<p>Update <code>proj.ios_mac/ios/AppController.mm</code></p>
 <ol>
 <li>Add this method:</li>
 </ol>
-<pre><code>- (BOOL)application:(UIApplication *)app
-            openURL:(NSURL *)url
-            options:(NSDictionary *)options {
+<pre><code>- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options {
     return [[GIDSignIn sharedInstance] handleURL:url
                                sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
                                       annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
@@ -689,14 +695,14 @@ Add this:</p>
 <ul>
 <li>
 <p>URL 1:</p>
-<p>Identifier: com.google.ReverseClientId
-Url schemes: com.googleusercontent.apps.777734739048-cdkbeieil19d6pfkavddrri5o19gk4ni
+<p>Identifier: <code>com.google.ReverseClientId</code>
+Url schemes: <code>com.googleusercontent.apps.777734739048-cdkbeieil19d6pfkavddrri5o19gk4ni</code>
 (use this as sample, or put your very own application’s url scheme) </p>
 </li>
 <li>
 <p>URL 2:</p>
-<p>Identifier: com.google.BundleId
-URL schemes: com.sdkbox.gpg
+<p>Identifier: <code>com.google.BundleId</code>
+URL schemes: <code>com.sdkbox.gpg</code>
 (use this as sample or put your own application’s bundle id)</p>
 </li>
 </ul>
@@ -2563,7 +2569,7 @@ following system frameworks, if you don't already have them:</p>
 <li>get <code>GoogleSignIn.framework</code> and <code>GoogleSignIn.bundle</code> from Sign iOS SDK: https://developers.google.com/identity/sign-in/ios/sdk</li>
 </ul>
 <h3 id="code-changes">Code changes</h3>
-<h4 id="set-a-rootview-controller-for-gpg-ui_1">Set a rootview controller for GPG UI:</h4>
+<h4 id="set-a-rootview-controller-for-gpg-ui">Set a rootview controller for GPG UI:</h4>
 <p>Update proj.ios_mac/ios/RootViewController.h
 Add this:</p>
 <pre><code>import &lt;GoogleSignIn/GoogleSignIn.h&gt;
