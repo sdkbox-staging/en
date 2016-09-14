@@ -619,7 +619,26 @@
         
             <li><a href="#reveal-achievement">Reveal Achievement</a></li>
         
-            <li><a href="#achievements_1">Achievements</a></li>
+	</ul>
+	
+    
+        <li class="main "><a href="#leaderboards">Leaderboards</a></li>
+	
+	<ul class="sub-sidenav">
+        
+            <li><a href="#show-ui">Show UI</a></li>
+        
+            <li><a href="#showallui">ShowAllUI</a></li>
+        
+            <li><a href="#submit-score">Submit Score</a></li>
+        
+            <li><a href="#fetchallscoresummaries">FetchAllScoreSummaries</a></li>
+        
+            <li><a href="#fetchall">FetchAll</a></li>
+        
+            <li><a href="#fetchscorepage">FetchScorePage</a></li>
+        
+            <li><a href="#fetchnextscorepage">FetchNextScorePage</a></li>
         
 	</ul>
 	
@@ -636,6 +655,8 @@
             <li><a href="#quests">Quests</a></li>
         
             <li><a href="#playerstats">PlayerStats</a></li>
+        
+            <li><a href="#achievements_1">Achievements</a></li>
         
 	</ul>
 	
@@ -934,38 +955,39 @@ end)
 <pre><code>    gpg.Achievements:Reveal('CgkI6KjppNEWEAIQBQ')
 </code></pre>
 
-<h3 id="achievements_1">Achievements</h3>
-<h4 id="achievement-description">Achievement description</h4>
-<pre><code>{
-    &quot;currentSteps&quot;     : Current steps completed of the achievement,
-    &quot;description&quot;      : Description of the achievement.
-    &quot;id&quot;               : String Id,
-    &quot;lastModifiedTime&quot; : Time last modified,
-    &quot;name&quot;             : Name of the achievement,
-    &quot;revealedIconUrl&quot;  : URL for the revealed icon,
-    &quot;state&quot;            : State, hidden, revealed, unlocked,
-    &quot;totalSteps&quot;       : Total number of steps,
-    &quot;type&quot;             : Incremental or standard,
-    &quot;unlockedIconUrl&quot;  : URL for the unlocked icon,
-    &quot;valid&quot;            : 1 or 0 if valid,
-    &quot;xp&quot;               : Amount of XP awarded
-}
+<h2 id="leaderboards">Leaderboards</h2>
+<p>Checkout additional docs for leaderboards <a href="https://developers.google.com/games/services/common/concepts/leaderboards">here</a></p>
+<h3 id="show-ui">Show UI</h3>
+<pre><code>    gpg.Leaderboards:ShowUI(&quot;achievement id&quot;)
 </code></pre>
 
-<h4 id="achievementsshowallui">Achievements:ShowAllUI</h4>
-<pre><code>{
-    &quot;result&quot; : result code
-}
+<h3 id="showallui">ShowAllUI</h3>
+<pre><code>    gpg.Leaderboards:ShowAllUI()
 </code></pre>
 
-<h4 id="achievementsfetchall">Achievements:FetchAll</h4>
-<pre><code>    &quot;result&quot;            : result code,
-    &quot;achievement_array&quot; : array of Achievements
+<h3 id="submit-score">Submit Score</h3>
+<pre><code>    gpg.Leaderboards:SubmitScore(&quot;achievement id&quot;, score, &quot;meta data&quot;, function(result)
+    end)
 </code></pre>
 
-<h4 id="achievementsfetch">Achievements:Fetch</h4>
-<pre><code>    &quot;result&quot;         : result code,
-    &quot;achievement&quot; : Achievement
+<h3 id="fetchallscoresummaries">FetchAllScoreSummaries</h3>
+<pre><code>    gpg.Leaderboards:FetchAllScoreSummaries(&quot;achievement id&quot;, data source, function(result)
+    end)
+</code></pre>
+
+<h3 id="fetchall">FetchAll</h3>
+<pre><code>    gpg.Leaderboards:FetchAll(datasource, function(result)
+    end)
+</code></pre>
+
+<h3 id="fetchscorepage">FetchScorePage</h3>
+<pre><code>    gpg.Leaderboards:FetchScorePage(&quot;achievement id&quot;, datasource, time, timespan, collection, maxitmes, function(result)
+    end)
+</code></pre>
+
+<h3 id="fetchnextscorepage">FetchNextScorePage</h3>
+<pre><code>    gpg.Leaderboards:FetchNextScorePage(datasource, max items, function(result)
+    end)
 </code></pre>
 
 <h2 id="api-reference">API Reference</h2>
@@ -1094,6 +1116,40 @@ end)
     &quot;hasSpendPercentile&quot;      : 1 if valid,
     &quot;spendPercentile&quot;         : what spend percentile they are in
 }
+</code></pre>
+
+<h3 id="achievements_1">Achievements</h3>
+<h4 id="achievement-description">Achievement description</h4>
+<pre><code>{
+    &quot;currentSteps&quot;     : Current steps completed of the achievement,
+    &quot;description&quot;      : Description of the achievement.
+    &quot;id&quot;               : String Id,
+    &quot;lastModifiedTime&quot; : Time last modified,
+    &quot;name&quot;             : Name of the achievement,
+    &quot;revealedIconUrl&quot;  : URL for the revealed icon,
+    &quot;state&quot;            : State, hidden, revealed, unlocked,
+    &quot;totalSteps&quot;       : Total number of steps,
+    &quot;type&quot;             : Incremental or standard,
+    &quot;unlockedIconUrl&quot;  : URL for the unlocked icon,
+    &quot;valid&quot;            : 1 or 0 if valid,
+    &quot;xp&quot;               : Amount of XP awarded
+}
+</code></pre>
+
+<h4 id="achievementsshowallui">Achievements:ShowAllUI</h4>
+<pre><code>{
+    &quot;result&quot; : result code
+}
+</code></pre>
+
+<h4 id="achievementsfetchall">Achievements:FetchAll</h4>
+<pre><code>    &quot;result&quot;            : result code,
+    &quot;achievement_array&quot; : array of Achievements
+</code></pre>
+
+<h4 id="achievementsfetch">Achievements:Fetch</h4>
+<pre><code>    &quot;result&quot;         : result code,
+    &quot;achievement&quot; : Achievement
 </code></pre>
 
 <h2 id="manual-integration">Manual Integration</h2>
