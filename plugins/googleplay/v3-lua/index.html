@@ -747,7 +747,7 @@
 <h4 id="set-a-rootview-controller-for-gpg">Set a rootview controller for GPG:</h4>
 <p>Update <code>proj.ios_mac/ios/RootViewController.h</code>
 Add this:</p>
-<pre><code>import &lt;GoogleSignIn/GoogleSignIn.h&gt;
+<pre><code>#import &lt;GoogleSignIn/GoogleSignIn.h&gt;
 
 // Change RootViewController class definition to:
 @interface RootViewController : UIViewController&lt;GIDSignInUIDelegate&gt; 

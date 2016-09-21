@@ -564,6 +564,24 @@
         
             <li><a href="#initialize-google-play-games">Initialize Google Play Games</a></li>
         
+            <li><a href="#authorization">Authorization</a></li>
+        
+            <li><a href="#achievements">Achievements</a></li>
+        
+            <li><a href="#leaderboards">Leaderboards</a></li>
+        
+            <li><a href="#turn-based-multiplayer">Turn-based multiplayer</a></li>
+        
+            <li><a href="#real-time-multiplayer">Real-time multiplayer</a></li>
+        
+            <li><a href="#events-and-quests">Events and Quests</a></li>
+        
+            <li><a href="#saved-games">Saved Games</a></li>
+        
+            <li><a href="#nearby-connections-android-only">Nearby Connections (Android only)</a></li>
+        
+            <li><a href="#player-statistics">Player Statistics</a></li>
+        
 	</ul>
 	
     
@@ -647,7 +665,7 @@
 <h4 id="set-a-rootview-controller-for-gpg">Set a rootview controller for GPG:</h4>
 <p>Update <code>proj.ios_mac/ios/RootViewController.h</code>
 Add this:</p>
-<pre><code>import &lt;GoogleSignIn/GoogleSignIn.h&gt;
+<pre><code>#import &lt;GoogleSignIn/GoogleSignIn.h&gt;
 
 // Change RootViewController class definition to:
 @interface RootViewController : UIViewController&lt;GIDSignInUIDelegate&gt; 
@@ -737,6 +755,15 @@ Add this:</p>
 }
 </code></pre>
 
+<h3 id="authorization">Authorization</h3>
+<h3 id="achievements">Achievements</h3>
+<h3 id="leaderboards">Leaderboards</h3>
+<h3 id="turn-based-multiplayer">Turn-based multiplayer</h3>
+<h3 id="real-time-multiplayer">Real-time multiplayer</h3>
+<h3 id="events-and-quests">Events and Quests</h3>
+<h3 id="saved-games">Saved Games</h3>
+<h3 id="nearby-connections-android-only">Nearby Connections (Android only)</h3>
+<h3 id="player-statistics">Player Statistics</h3>
 <p>For other Google Play Game Services functionalities please take a look at official google play games services <a href="https://developers.google.com/games/services/cpp/GettingStartedNativeClient">documentation</a></p>
 <h2 id="api-reference">API Reference</h2>
 <p>For C++ API reference for Google Play Games Services, please refer to the <a href="https://developers.google.com/games/services/cpp/api/annotated">official documentation</a></p>
