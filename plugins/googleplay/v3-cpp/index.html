@@ -570,15 +570,15 @@
         
             <li><a href="#leaderboards">Leaderboards</a></li>
         
-            <li><a href="#turn-based-multiplayer">Turn-based multiplayer</a></li>
-        
             <li><a href="#real-time-multiplayer">Real-time multiplayer</a></li>
+        
+            <li><a href="#turn-based-multiplayer">Turn-based multiplayer</a></li>
         
             <li><a href="#events-and-quests">Events and Quests</a></li>
         
             <li><a href="#saved-games">Saved Games</a></li>
         
-            <li><a href="#nearby-connections-android-only">Nearby Connections (Android only)</a></li>
+            <li><a href="#nearby-connections">Nearby Connections</a></li>
         
             <li><a href="#player-statistics">Player Statistics</a></li>
         
@@ -743,7 +743,10 @@ Add this:</p>
 <h2 id="usage">Usage</h2>
 <h3 id="pre-requisites">Pre-requisites</h3>
 <p>Your must create your app on <a href="https://play.google.com/apps/publish">Google Play Developer console</a> and all the services must be explicitly enabled and configured in the console.</p>
-<p>Please follow <a href="https://developers.google.com/games/services/console/enabling">setup guide</a> to setup Google Play Games Services for your game. After the setup, please follow <a href="https://developers.google.com/games/services/console/configuring">config guide</a> to enable different Games Services for your game.</p>
+<ul>
+<li>Please follow <a href="https://developers.google.com/games/services/console/enabling">setup guide</a> to setup Google Play Games Services for your game. </li>
+<li>After the setup, please follow <a href="https://developers.google.com/games/services/console/configuring">config guide</a> to enable different Games Services for your game.</li>
+</ul>
 <blockquote>
 <p>Note: Google Play Games Services will use your release keystore by default, if you want to test your game in debug settings, please link an additional app with <a href="http://stackoverflow.com/questions/17612928/should-i-use-debug-keystore-with-google-play-game-services-during-development">debug keystore</a></p>
 </blockquote>
@@ -756,15 +759,23 @@ Add this:</p>
 </code></pre>
 
 <h3 id="authorization">Authorization</h3>
+<p>All Google Play Game services require user login, make sure you request user to login before using any of the services. For more information take a look at the <a href="https://developers.google.com/games/services/cpp/GettingStartedNativeClient#concepts">official documentation</a></p>
 <h3 id="achievements">Achievements</h3>
+<p>For Achievements to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at <a href="https://developers.google.com/games/services/common/concepts/achievements">achievements documentation</a></p>
 <h3 id="leaderboards">Leaderboards</h3>
-<h3 id="turn-based-multiplayer">Turn-based multiplayer</h3>
+<p>For Leaderboards to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at <a href="https://developers.google.com/games/services/common/concepts/leaderboards">leaderboards documentation</a></p>
 <h3 id="real-time-multiplayer">Real-time multiplayer</h3>
+<p>For Real-time multiplayer to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at <a href="https://developers.google.com/games/services/common/concepts/realtimeMultiplayer">Real-time Multiplayer documentation</a></p>
+<h3 id="turn-based-multiplayer">Turn-based multiplayer</h3>
+<p>For Turn-based multiplayer to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at <a href="https://developers.google.com/games/services/common/concepts/turnbasedMultiplayer">Turn-based Multiplayer documentation</a></p>
 <h3 id="events-and-quests">Events and Quests</h3>
+<p>For Events and Quests to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at <a href="https://developers.google.com/games/services/common/concepts/quests">Events and Quests documentation</a></p>
 <h3 id="saved-games">Saved Games</h3>
-<h3 id="nearby-connections-android-only">Nearby Connections (Android only)</h3>
+<p>Saved Games feature requires to be turned on during initialization stage by calling <code>EnableSnapshots()</code> as well as Enable it in the Google Play Developer Console. For more information please take a look at <a href="https://developers.google.com/games/services/common/concepts/savedgames">Saved Games documentation</a></p>
+<h3 id="nearby-connections">Nearby Connections</h3>
+<p>Nearby Connections enables local multiplayer and screen casting for your game. For more information please take a look at <a href="https://developers.google.com/games/services/cpp/nearby">Nearby documentation</a></p>
 <h3 id="player-statistics">Player Statistics</h3>
-<p>For other Google Play Game Services functionalities please take a look at official google play games services <a href="https://developers.google.com/games/services/cpp/GettingStartedNativeClient">documentation</a></p>
+<p>Player Stats adds useful analytics data to your game. For more information please take a look at <a href="https://developers.google.com/games/services/cpp/stats">Player Stats documentation</a> </p>
 <h2 id="api-reference">API Reference</h2>
 <p>For C++ API reference for Google Play Games Services, please refer to the <a href="https://developers.google.com/games/services/cpp/api/annotated">official documentation</a></p>
 <h2 id="manual-integration">Manual Integration</h2>
