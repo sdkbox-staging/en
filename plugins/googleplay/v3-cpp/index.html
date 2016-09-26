@@ -944,13 +944,7 @@ to your <code>&lt;project_root&gt;/jni/</code> directory.</p>
 <p>Note: sdkbox link with <code>gnustl</code> by default, if your project link with <code>c++static</code> please replace the files in <code>&lt;project_root&gt;/jni/&lt;plugin_name&gt;/libs</code> with files in <code>&lt;project_root&gt;/jni/&lt;plugin_name&gt;/libs_c++_static</code> folder</p>
 </blockquote>
 <h3 id="edit-androidmanifestxml">Edit <code>AndroidManifest.xml</code></h3>
-<p>Include the following permissions above the <strong>application tag</strong>:</p>
-<pre><code class="xml">  &lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&gt;
-  &lt;uses-permission android:name=&quot;android.permission.ACCESS_NETWORK_STATE&quot; /&gt;
-  &lt;uses-permission android:name=&quot;android.permission.WAKE_LOCK&quot; /&gt;
-</code></pre>
-
-<p>There are also a few necessary meta-data tags that also need to be added:</p>
+<p>Add following meta-data tags:</p>
 <pre><code class="xml">&lt;meta-data android:name=&quot;com.google.android.gms.version&quot;
     android:value=&quot;@integer/google_play_services_version&quot; /&gt;
 &lt;meta-data android:name=&quot;com.google.android.gms.games.APP_ID&quot; 
@@ -961,27 +955,16 @@ to your <code>&lt;project_root&gt;/jni/</code> directory.</p>
 Change that value for your own generated play games App Id.</p>
 <h3 id="edit-androidmk">Edit <code>Android.mk</code></h3>
 <p>Edit <code>&lt;project_root&gt;/jni/Android.mk</code> to:</p>
-<h4 id="gpg-dependency">GPG dependency</h4>
-<p>Install in a folder named <code>gpg</code> inside your <code>proj.android</code> directory the android part of a file downloaded from: https://developers.google.com/games/services/downloads/gpg-cpp-sdk.v2.1.zip </p>
+<p>Install in a folder named <code>gpg</code> inside your <code>proj.android\jni</code> directory</p>
 <p>Add this to your <code>android.mk</code> file</p>
-<pre><code># right after: include $(CLEAR_VARS)
-LOCAL_MODULE := libgpg
-LOCAL_SRC_FILES := ../gpg/lib/gnustl/$(TARGET_ARCH_ABI)/libgpg.a
-include $(PREBUILT_STATIC_LIBRARY)
-
-# in local c includes block
-LOCAL_C_INCLUDES += ../gpg/include/
-
-# in local whole static libs block
-LOCAL_WHOLE_STATIC_LIBRARIES += gpg-1
-
-# in imports block
-$(call import-module, ../gpg)
+<h4 id="add-include-path">Add include path</h4>
+<pre><code>LOCAL_C_INCLUDES += ./gpg/include/
 </code></pre>
 
-<h4 id="other-mk-file-steps">Other mk file steps</h4>
+<h4 id="add-static-libraries">Add static libraries</h4>
 <p>Add additional requirements to <strong>LOCAL_WHOLE_STATIC_LIBRARIES</strong>:</p>
-<pre><code>LOCAL_WHOLE_STATIC_LIBRARIES += PluginGoogleAnalytics
+<pre><code>LOCAL_WHOLE_STATIC_LIBRARIES += gpg-1
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginSdkboxGooglePlay
 LOCAL_WHOLE_STATIC_LIBRARIES += sdkbox
 </code></pre>
 
@@ -991,7 +974,8 @@ LOCAL_WHOLE_STATIC_LIBRARIES += sdkbox
 
 <p>before any <strong>import-module</strong> statements.</p>
 <p>Add additional <strong>import-module</strong> statements at the end:</p>
-<pre><code>$(call import-module, ./sdkbox)
+<pre><code>$(call import-module, ./gpg)
+$(call import-module, ./sdkbox)
 $(call import-module, ./pluginsdkboxgoogleplay)
 </code></pre>
 
