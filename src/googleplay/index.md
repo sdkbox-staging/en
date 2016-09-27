@@ -2,15 +2,15 @@
 
 <h1>Google Play Games Services Plugin</h1>
 
-##Overview
-You can find [more information about this plugin here.](http://www.cocos2d-x.org/sdkbox/googleplay) (TBD)
+##概述
+关于这个插件的[更多信息在这里](http://www.cocos2d-x.org/sdkbox/googleplay) (TBD)。
 
-##Integration Guides
+##集成说明
 
-* [The C++ version](./v3-cpp)
-* [The Javascript version](./v3-js)
-* [The Lua version](./v3-lua)
+* [C++ 版本](./v3-cpp)
+* [Javascript 版本](./v3-js)
+* [Lua 版本](./v3-lua)
 
-##Sample Project
+##示例工程
 
-[A demo project on github](https://github.com/sdkbox/sdkbox-sample-googleplay)
+[github 上的示例](https://github.com/sdkbox/sdkbox-sample-googleplay)

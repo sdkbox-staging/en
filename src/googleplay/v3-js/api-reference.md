@@ -1,6 +1,6 @@
-## API Reference
+## API 参考
 
-All the javascript code is already annotated and will populate intellisense from all the major Javascript IDEs like IntelliJ, Webstorm, Visual Studio Code, etc.
+所有 javascript 代码都已经为主要 IDE 做了注释，例如 IntelliJ, Webstorm, Visual Studio Code, 等等.
 
 ### Enum values
 

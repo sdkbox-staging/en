@@ -1,23 +1,23 @@
 
-### Register Javascript Functions
-You need to register all the Google Play Games JS functions with cocos2d-x before using them.
+### 注册 Javascript 函数
+在 cocos2d-x 使用它们之前，你需要注册所有的 Google Play Games JS 函数.
 
-To do this:
-* Modify `./frameworks/runtime-src/Classes/AppDelegate.cpp` to include the following headers:
+要做到这个:
+* 修改 `./frameworks/runtime-src/Classes/AppDelegate.cpp` 包含下列头:
 ```cpp
 #include "PluginSdkboxGooglePlayJS.hpp"
 #include "PluginSdkboxGooglePlayJSHelper.h"
 ```
 
-* Modify `./frameworks/runtime-src/Classes/AppDelegate.cpp` make sure to call:
+* 修改 `./frameworks/runtime-src/Classes/AppDelegate.cpp` 确保调用:
 ```cpp
     sc->addRegisterCallback(register_all_PluginSdkboxGooglePlayJS);
     sc->addRegisterCallback(register_all_PluginSdkboxGooglePlayJS_helper);
 ```
 
-### Initialize Google Play Games
-Google Play initialization is thorughout a `gpg.Builder` object.
-This is a valid copy-and-paste example for authenticating into the library:
+### 初始化 Google Play Games
+Google Play 通过一个 `gpg.Builder` 对象初始化.
+这是一个有效的复制和粘贴鉴定到库中:
 
 ```javascript
 
@@ -39,18 +39,18 @@ new gpg.GameServices.Builder()
             } );
 ```
 
-Let's dive into this process step by step.
+让我们一步步进入这个过程。
 
-###Initialization Process breakdown
-Create a `gpg.PlatformConfiguration` object. The client id will be specific for your application, and only needed on iOS.
+###初始化过程分级
+建立一个 `gpg.PlatformConfiguration` 对象. 客户端 id 必须指定为你自己的应用程序，并且只在 iOS 中需要。
 
-The next step is to create a GameServices object, it will provide the access to all Google Play Game Services.
+下一步是建立一个 GameServices 对象, 它提供所有 Google Play Game Services 的访问.
 
 
-#### Authorization Callback
-There are two callback for GPG authentication `AuthActionStarted` and `AuthActionFinished`
+#### 授权回调
+这有两个 GPG 授权回调: `AuthActionStarted` 和 `AuthActionFinished`
 
-#### Auth started
+#### 授权开始
 
 ```javascript
 //result.AuthOperation indicates if user wants sign in or sign out
@@ -60,7 +60,7 @@ There are two callback for GPG authentication `AuthActionStarted` and `AuthActio
     })
 ```
 
-#### Auth finished
+#### 授权完成
 
 ```javascript
 .SetOnAuthActionFinished(
@@ -69,90 +69,90 @@ There are two callback for GPG authentication `AuthActionStarted` and `AuthActio
     })
 ```
 
-#### Set Logging Level
-Set Logging level is an optional step, but worth mentioning since this is the only place where GPG logging capabilities can be controlled from.
+#### 设置日志级别
+设置日志级别是一个可选步骤, 但值得一提的是只有这个地方可以控制 GPG 的日志能力。
 
 
-#### Enable Saved Game
-If your game expects to save games on the cloud, this is step would be mandatory and you have to specify it during initialization.
+#### 允许保存的游戏
+如果你的游戏预计保存游戏到云端, 这是一步将是强制性的，你必须在初始化过程中指定它。
 
-#### Step 8
-Until this steps, all previous code is authentication set up.
-This `Create` call is the actual executable code to be authenticated, notified apropriately and agin access to the GPG objects.
-GPG interation will happen by means of a `gpg.GameServices` object. This object will eventually been passed to the `Create` method's callback if everything went ok.
+#### 步骤 8
+直到这一步骤之前，所有的代码都是设置验证的。
+这个 `Create` 调用实际执行验证.
+GPG 通过一个 `gpg.GameServices` 对象交互. 如果一切顺利的话，这个对象最终会被传递给 `Create` 方法的回调函数.
 
-### Authorization
+### 授权
 
-All Google Play Game services require user login. So after GPG has been initialized you should attempt to log user in with following API
+所有谷歌玩游戏服务都需要用户登录。 所以经过 GPG 初始化，你应该尝试用下面的 API 登录：
 
 ```javascript
 	game_services.StartAuthorizationUI();
 ```
 
-### Achievements
+### 成就
 
-Achievements can be a great way to increase your users' engagement within your game. You can implement achievements in your game to encourage players to experiment with features they might not normally use, or to approach your game with entirely different play styles. Achievements can also be a fun way for players to compare their progress with each other and engage in light-hearted competition.
+成就是一个很好的方式来增加用户在戏内的参与。 你可以在你的游戏中实现成就来鼓励用户探索的不同的游戏方式。 成就也可以是一个有趣的方式，让玩家彼此进行轻松的竞争。
 
-For example, you could unlock `gpg.GameServices.Achievements.Unlock`, increment `gpg.GameServices.Achievements.Increment` or reveal an achievement `gpg.GameServices.Achievements.Reveal`.
+例如，你可以解锁 `gpg.GameServices.Achievements.Unlock`, 增加 `gpg.GameServices.Achievements.Increment` 或者显示 `gpg.GameServices.Achievements.Reveal`.
 
-For more information refer to: [Achievements documentation](https://developers.google.com/games/services/common/concepts/achievements)
+更多信息请参考 [Achievements documentation](https://developers.google.com/games/services/common/concepts/achievements)
 
-### Leaderboards
+### 排行榜
 
-Leaderboards can be a fun way to drive competition among your players, both for your most hardcore fans (who will be fighting for the top spot in a public leaderboard) and for your more casual players (who will be interested in comparing their progress to their friends').
+排行榜是一个驱动玩家之间的竞争的有趣方式，无论是你最铁杆的粉丝（公共排行榜的榜首）和更多的休闲玩家（朋友之间比较彼此的进步）。
 
-For example, it gives access to metadata about a leaderboard `gpg.GameServices.Leaderboards.Fetch`, pages with user's scores `gpg.GameServices.Leaderboards.FetchScorePage`, etc.
+例如, 它让你访问元数据关于一个排行榜 `gpg.GameServices.Leaderboards.Fetch`, 页面和用户得分 `gpg.GameServices.Leaderboards.FetchScorePage`, 等等.
 
-For more information refer to: [Leaderboards documentation](https://developers.google.com/games/services/common/concepts/leaderboards)
+更多信息请参考 [Leaderboards documentation](https://developers.google.com/games/services/common/concepts/leaderboards)
 
-### Saved Games
+### 保存的游戏
 
-The Saved Games service gives you a convenient way to save your players' game progression to Google's servers. Your game can retrieve the saved game data to allow returning players to continue a game at their last save point from any device.
-The Saved Games service makes it possible to synchronize a player's game data across multiple devices.
+保存的游戏让你可以将游戏进度保存到 Google 的服务器. 你的游戏可以在任何设备上取得保存的游戏并让玩家继续游戏.
+保存的游戏让玩家可以在多个设备间同步游戏数据.
 
-For more intormation refer to: [Saved Games documentation](https://developers.google.com/games/services/common/concepts/savedgames)
+更多信息请参考 [Saved Games documentation](https://developers.google.com/games/services/common/concepts/savedgames)
 
-### Real-time multiplayer
+### 实时多人游戏
 
-Your game can use the real-time multiplayer API in Google Play games services to connect multiple players together in a single game session and transfer data messages between connected players. Using the real-time multiplayer API can help to simplify your game development effort because the API handles the following tasks on your behalf:
+你的游戏可以在 Google Play 游戏服务里使用实时多人游戏 API 连接多个玩家到单个游戏会话，并且在连接的玩家间传输消息数据. 使用实时多人游戏 API 可以帮助简化你的开发，因为你可以从下列任务获得好处:
 
-+ Manages network connections to create and maintain a real-time multiplayer room (a virtual construct that enables network communication between multiple players in the same game session and lets players send data directly to one another).
-+ Provides a player selection user interface (UI) to invite players to join a room, look for random players for auto-matching, or a combination of both.
-+ Stores participant and room state information on the Google Play games services servers during the lifecycle of the real-time multiplayer game.
-+ Sends room invitations and updates to players. Notifications appear on all devices on which the player is logged in (unless disabled).
++ 建立和维护一个实时多人游戏房间(一个虚拟的结构，允许在同一个游戏会话里的玩家通过网络互相通讯，一个玩家可以直接发送数据给另一个玩家)的网络连接.
++ 提供一个玩家选择用户界面 (UI) 来邀请玩家加入房间, 为自动配对寻找随机玩家, 或者组合两种方式.
++ 在实时多人游戏生命期间存储游戏参与者的状态到 Google Play 游戏服务的服务器.
++ 发送房间邀请和更新给玩家. 玩家登陆的所有设备都会受到通知（除非已禁止）.
 
-For more information refer to: [Real-time Multiplayer documentation](https://developers.google.com/games/services/common/concepts/realtimeMultiplayer)
+更多信息请参考 [Real-time Multiplayer documentation](https://developers.google.com/games/services/common/concepts/realtimeMultiplayer)
 
-### Turn-based multiplayer
+### 回合制多人游戏
 
-In a turn-based multiplayer game, a single shared state is passed between multiple players, and only one player has permission to modify the shared state at a time. Players take turns asynchronously according to an order of play determined by the game. Your game can use the turn-based multiplayer API provided by Google Play games services to manage the following tasks:
+在回合制多人游戏中，一个共享的游戏状态在多个玩家间传递, 并且同一时间只有一个玩家有修改共享数据的权利. 根据游戏确定的游戏顺序，玩家异步得到回合信息. 你的游戏可以是用下列任务:
 
-+ Invite players to join a turn-based multiplayer match, look for random players to be automatically matched to your game, or a combination of both. Google Play games services allows you to host up to eight participants in a match.
-+ Store participant and match state information on Google's servers and share updated match data asynchronously with all participants over the lifecycle of the turn-based match.
-+ Send match invitation and turn notifications to players. Notifications appear on all devices on which the player is logged in (unless disabled).
++ 邀请一个玩家加入一个回合制游戏, 为自动配对搜索随机用户, 或者组合两种方式.Google Play 游戏服务允许一次比赛容纳最多八个参与者.
++ 存储参与者和比赛信息到 Google 的服务器，并且在比赛期间同步数据到所有参赛者。
++ 发送比赛邀请和更新给玩家. 玩家登陆的所有设备都会受到通知（除非已禁止）.
 
-For more information refer to: [Turn-based Multiplayer documentation](https://developers.google.com/games/services/common/concepts/turnbasedMultiplayer)
+更多信息请参考 [Turn-based Multiplayer documentation](https://developers.google.com/games/services/common/concepts/turnbasedMultiplayer)
 
-### Player Statistics
+### 玩家统计
 
-Gets and sets various player-related data.
-For example, gives information about the current logged-in player `gpg.GameServices.Players.FetchSelf`, or about any player identified by an id `gpg.GameServices.Players.Fetch`.
-Also, player stats can be obtained with interesting information such as a player's average session length, number of days since last played or the number of purchased he's done on the game. For more information please take a look at [Player Stats documentation](https://developers.google.com/games/services/cpp/stats) 
+读取和设置玩家相关的数据.
+例如, 关于当前已登录的玩家 `gpg.GameServices.Players.FetchSelf`, 或者任何识别的玩家 `gpg.GameServices.Players.Fetch`.
+此外, 玩家统计也可以获取玩家的平均会话时长、每日活跃玩家数等信息. 更多信息请参考 [Player Stats documentation](https://developers.google.com/games/services/cpp/stats)
 
 
-### Events and Quests
+### 事件和任务
 
-The Google Play Games events service allows you to collect cumulative data generated by your players during gameplay and store them in Google's servers for game analytics. You can flexibly define what player data your game should collect; this might include metrics such as how often:
+Google Play Games 事件服务允许你手机玩家在游戏过程中产生的时间，并存储到 Google 的服务器，用于游戏分析。你可以灵活地定义你的游戏应该收集的玩家数据，这可能包括一些指标，如：
 
-+ Players use a particular item
-+ Players reach a certain level
-+ Players perform some specific game action
++ 玩家使用一个特定的项目
++ 玩家达到一定级别
++ 玩家执行一些特定的游戏行动
 
-You can use the events data as feedback on how to improve your game. For example, you can adjust the difficulty level of certain levels in your game that players are finding too hard to complete.
+你可以使用这些事件数据作为如何改进游戏的反馈。例如，你可以调整你的游戏中太难完成的内容。
 
-For example you could accept a Quest `gpg.GameServices.Quests.Accept` or claim milestones on a given quest `gpg.GameServices.Quests.AcceptMilestone`.
+例如，你可以接受一个任务 `gpg.GameServices.Quests.Accept` 或者完成一个里程碑 `gpg.GameServices.Quests.AcceptMilestone`.
 
-For more information refer to: [Events and Quests documentation](https://developers.google.com/games/services/common/concepts/quests)
+更多信息请参考 [Events and Quests documentation](https://developers.google.com/games/services/common/concepts/quests)
 
-### Nearby Connections
-Nearby Connections enables local multiplayer and screen casting for your game. For more information please take a look at [Nearby documentation](https://developers.google.com/games/services/cpp/nearby)
+### 临近连接
+临近连接允许本地多人游戏和屏幕广播. 更多信息请参考 [Nearby documentation](https://developers.google.com/games/services/cpp/nearby)

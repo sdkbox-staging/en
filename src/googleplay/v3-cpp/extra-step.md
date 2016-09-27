@@ -1,44 +1,44 @@
-### Modify __Cocos2dxActivity.java__
-* If you're using cocos2d-x from source, assuming you are in the __proj.android__ directory, __Cocos2dxActivity.java__ is located:
+### 修改 __Cocos2dxActivity.java__
+* 如果你使用 cocos2d-x 源代码, 假定你在 __proj.android__ 目录中, __Cocos2dxActivity.java__ 的位置是:
 
     ```
     ../../cocos2d-x/cocos/platform/android/java/src/org/cocos2dx/
     lib/Cocos2dxActivity.java
     ```
 
-* If you're using the prebuilt cocos2d-x libraries assuming you are in the `proj.android` directory, __Cocos2dxActivity.java__ is located:
+* 如果你使用预编译的 cocos2d-x，假定你在 `proj.android` 目录中, __Cocos2dxActivity.java__ 的位置是:
 
     ```
     ./src/org/cocos2dx/lib/Cocos2dxActivity.java
     ```
 
-  __Note:__ When using Cocos2d-x from source, different versions have __Cocos2dxActivity.java__ in a different location. One way to find the location is to look in __proj.android/project.properties__. Example:
+  __说明:__ 当使用 Cocos2d-x 源代码, 不同版本的 __Cocos2dxActivity.java__ 在不同的位置. 找到这个位置的途径之一是查看 __proj.android/project.properties__. 例如:
   ```
   android.library.reference.1=../../cocos2d-x/cocos/platform/android/java
   ```
 
-In this case, __Cocos2dxActivity.java__ should be located at:
+在这个例子里, __Cocos2dxActivity.java__ 应该位于:
 
 ```
 ../../cocos2d-x/cocos/platform/android/java/src/org/cocos2dx/lib/Cocos2dxActivity.java
 ```
 
-* Modify __Cocos2dxActivity.java__ to add the following imports:
+* 修改 __Cocos2dxActivity.java__ 增加下列 imports:
 ```java
 import android.content.Intent;
 import com.sdkbox.plugin.SDKBox;
 ```
 
-* Second, modify __Cocos2dxActivity.java__ to edit the `onCreate(final Bundle savedInstanceState)` function to add a call to `SDKBox.init(this);`. The placement of this call is important. It must be done after the call to `onLoadNativeLibraries();`. Example:
+* 第二, 修改 __Cocos2dxActivity.java__ 并编辑 `onCreate(final Bundle savedInstanceState)` 函数增加一个调用 `SDKBox.init(this);`. 这个调用的位置很重要. 它必须在调用 `onLoadNativeLibraries();` 之后. 例如:
 ```java
 onLoadNativeLibraries();
 SDKBox.init(this);
 ```
 
-* Last, we need to insert the proper __overrides__ code. There are a few rules here.
-    * If the method listed has not been defined, __add it__.
+* 最后, 我们需要插入适当的 __overrides__ 代码. 这里有一些规则.
+    * 如果下列方法没有定义, __添加它__.
 
-    * If the method listed has been defined, add the calls to `SDKBox` in the __same__ existing function.
+    * 如果方法已经定义，增加调用到 `SDKBox` 到 __同名的__ 以后函数.
 ```java
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
