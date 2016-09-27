@@ -1,6 +1,5 @@
-## Manual Integration For iOS
-Drag and drop the following frameworks from the __plugins/ios__ folder of
-the`GooglePlay` bundle into your Xcode project, check `Copy items if needed` when adding frameworks:
+## 手工集成到 iOS
+从包的 __plugins/ios__ 目录拖放下列 frameworks 到你的 Xcode 项目中, 添加时选中 `Copy items if needed`:
 
 > sdkbox.framework
 
@@ -31,8 +30,7 @@ the`GooglePlay` bundle into your Xcode project, check `Copy items if needed` whe
 > gpg.framework
 
 
-The above frameworks depend upon other frameworks. You also need to add the
-following system frameworks, if you don't already have them:
+上面的 frameworks依赖其他 frameworks. 你也需要添加一下系统 frameworks, 如果它们还未添加:
 
 > AddressBook.framework
 
@@ -68,30 +66,30 @@ following system frameworks, if you don't already have them:
 
 > libz.dylib
 
-Add a linker flag, if your setup requires it, to:
+添加一个 linker flag, 如果你设置需求为:
 __Target -> Build Settings -> Linking -> Other Linker Flags__:
 
 > -ObjC
 
-### Code changes
+### 代码修改
 
-#### Set a rootview controller for GPG:
+#### 为 GPG 设置一个 rootview controller:
 
-Update `proj.ios_mac/ios/RootViewController.h`
-Add this:
+更新 `proj.ios_mac/ios/RootViewController.h`
+添加:
 
 ```
 import <GoogleSignIn/GoogleSignIn.h>
 
 // Change RootViewController class definition to:
-@interface RootViewController : UIViewController<GIDSignInUIDelegate> 
+@interface RootViewController : UIViewController<GIDSignInUIDelegate>
 ```
 
-#### Set Google Play signin listeners
+#### 设置 Google Play 登录回调
 
-Update `proj.ios_mac/ios/AppController.mm`
+更新 `proj.ios_mac/ios/AppController.mm`
 
-1. Add this method:
+1. 添加这个方法:
 
 ```
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary *)options {
@@ -101,35 +99,35 @@ Update `proj.ios_mac/ios/AppController.mm`
 }
 ```
 
-2. In this method: 
+2. 在这个方法:
 ```
 (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 ```
 
-add a call to (before return YES):
+添加调用 (在 return YES 之前):
 
 ```
-    // _viewController could also be named 
+    // _viewController could also be named
     //  viewController, depending of the project type.
     [GIDSignIn sharedInstance].uiDelegate = _viewController;
 ```
 
-#### Add URL types
+#### 添加 URL 类型
 
-Add the following URL types under **your project > Info > URL Types**
+在 **你的工程 > Info > URL Types** 中添加下列 URL 类型：
 
 + URL 1:
 
     + Identifier: `com.google.ReverseClientId`
     + Url schemes: `com.googleusercontent.apps.777734739048-cdkbeieil19d6pfkavddrri5o19gk4ni`
-    > (use this as sample, or put your very own application’s url scheme) 
+    > (use this as sample, or put your very own application’s url scheme)
 
 + URL 2:
 
     + Identifier: `com.google.BundleId`
     + URL schemes: `com.sdkbox.gpg`
     > (use this as sample or put your own application’s bundle id)
-    
-#### Further info
 
-For more information check out the [official documentation](https://developers.google.com/games/services/cpp/gettingStartedIOS)
+#### 更多信息
+
+更多信息请参考[官方文档](https://developers.google.com/games/services/cpp/gettingStartedIOS)

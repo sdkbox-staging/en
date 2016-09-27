@@ -1,6 +1,6 @@
-## API Reference
+## API 参考
 
-##Callback result descriptions##
+##回调结果描述##
 
 ### Events ###
 

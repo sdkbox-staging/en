@@ -1,7 +1,7 @@
 
 
-### Initialize Google Play Games
-Initialize the plugin where appropriate in your code. We recommend to do this in the `AppDelegate::applicationDidFinishLaunching()` or `AppController:didFinishLaunchingWithOptions()`. Make sure to include the appropriate headers:
+### 初始化 Google Play Games
+在你代码的适当位置初始化插件. 我们推荐在 `AppDelegate::applicationDidFinishLaunching()` 或者 `AppController:didFinishLaunchingWithOptions()` 里做初始化. 确保包含了适当的头文件:
 ```cpp
 AppDelegate::applicationDidFinishLaunching()
 {
@@ -9,29 +9,29 @@ AppDelegate::applicationDidFinishLaunching()
 }
 ```
 
-### Authorization
-All Google Play Game services require user login, make sure you request user to login before using any of the services. For more information take a look at the [official documentation](https://developers.google.com/games/services/cpp/GettingStartedNativeClient#concepts)
+### 授权
+所有 Google Play Game 服务都需要用户登录, 确保在使用任何服务前请求用户登录. 更多信息参考 [官方文档](https://developers.google.com/games/services/cpp/GettingStartedNativeClient#concepts)
 
-### Achievements
-For Achievements to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at [achievements documentation](https://developers.google.com/games/services/common/concepts/achievements)
+### 成就
+要使成就功能可以工作, 确保你连接 Game Services 到你的游戏, 也确保游戏处于 "Published" 状态. 更多信息参考 [achievements documentation](https://developers.google.com/games/services/common/concepts/achievements)
 
-### Leaderboards
-For Leaderboards to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at [leaderboards documentation](https://developers.google.com/games/services/common/concepts/leaderboards)
+### 排行榜
+要使排行榜功能可以工作, 确保你连接 Game Services 到你的游戏, 也确保游戏处于 "Published" 状态. 更多信息参考 [leaderboards documentation](https://developers.google.com/games/services/common/concepts/leaderboards)
 
-### Saved Games
-Saved Games feature requires to be turned on during initialization stage by calling `EnableSnapshots()` as well as Enable it in the Google Play Developer Console. For more information please take a look at [Saved Games documentation](https://developers.google.com/games/services/common/concepts/savedgames)
+### 保存的游戏
+Saved Games 特征需要在初始化阶段调用 `EnableSnapshots()` 打开，也需要在 Google Play Developer Console 中允许这个功能. 更多信息参考 [Saved Games documentation](https://developers.google.com/games/services/common/concepts/savedgames)
 
-### Real-time multiplayer
-For Real-time multiplayer to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at [Real-time Multiplayer documentation](https://developers.google.com/games/services/common/concepts/realtimeMultiplayer)
+### 实时多人游戏
+要使实时多人游戏功能可以工作, 确保你连接 Game Services 到你的游戏, 也确保游戏处于 "Published" 状态. 更多信息参考 [Real-time Multiplayer documentation](https://developers.google.com/games/services/common/concepts/realtimeMultiplayer)
 
-### Turn-based multiplayer
-For Turn-based multiplayer to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at [Turn-based Multiplayer documentation](https://developers.google.com/games/services/common/concepts/turnbasedMultiplayer)
+### 回合多人游戏
+要使回合多人游戏功能可以工作, 确保你连接 Game Services 到你的游戏, 也确保游戏处于 "Published" 状态. 更多信息参考 [Turn-based Multiplayer documentation](https://developers.google.com/games/services/common/concepts/turnbasedMultiplayer)
 
-### Events and Quests
-For Events and Quests to work, make sure you linked Game Services with your game, also make sure the game is in "Published" state. For more information please take a look at [Events and Quests documentation](https://developers.google.com/games/services/common/concepts/quests)
+### 事件和任务
+要使事件和任务功能可以工作, 确保你连接 Game Services 到你的游戏, 也确保游戏处于 "Published" 状态. 更多信息参考 [Events and Quests documentation](https://developers.google.com/games/services/common/concepts/quests)
 
-### Player Statistics
-Player Stats adds useful analytics data to your game. For more information please take a look at [Player Stats documentation](https://developers.google.com/games/services/cpp/stats) 
+### 玩家统计
+玩家统计添加有用的分析数据到你的游戏. 更多信息参考 [Player Stats documentation](https://developers.google.com/games/services/cpp/stats) 
 
-### Nearby Connections
-Nearby Connections enables local multiplayer and screen casting for your game. For more information please take a look at [Nearby documentation](https://developers.google.com/games/services/cpp/nearby)
+### 临近连接
+临近连接允许本地多人游戏和屏幕广播. 更多信息参考 [Nearby documentation](https://developers.google.com/games/services/cpp/nearby)

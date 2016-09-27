@@ -1,13 +1,12 @@
-### Copy Files
-Copy the following __jar__ files from `plugin/android/libs` folder of this
-bundle into your project’s __<project_root>/libs__ folder.
+### 复制文件
+从包中 `plugin/android/libs` 复制下列 __jar__ 文件到你项目的 __<project_root>/libs__ 目录.
 
 > PluginGoogleAnalytics.jar
 
 > sdkbox.jar
 
 
-* If you're using cocos2d-x from source copy the __jar__ files to:
+* 如果你使用 cocos2d-x 复制 __jar__ 文件到:
 
 	Android command-line:
 	```
@@ -19,7 +18,7 @@ bundle into your project’s __<project_root>/libs__ folder.
 	cocos2d/cocos/platform/android/libcocos2dx/libs
 	```
 
-* If you're using cocos2d-js or lua copy the __jar__ files to:
+* 如果你使用 cocos2d-js 或者 lua 复制 __jar__ 文件到:
 
 	Android command-line:
 	```
@@ -31,7 +30,7 @@ bundle into your project’s __<project_root>/libs__ folder.
 	frameworks/cocos2d-x/cocos/platform/android/libcocos2dx/libs
 	```
 
-* If you're using prebuilt cocos2d-x copy the __jar__ files to:
+* 如果你使用 cocos2d-x 预编译库，复制 __jar__ 文件到:
 
 	Android command-line:
 	```
@@ -41,34 +40,33 @@ bundle into your project’s __<project_root>/libs__ folder.
 <<[../../shared/copy_jni_lib.md]
 
 
-### Edit `AndroidManifest.xml`
-Include the following permissions above the __application tag__:
+### 编辑 `AndroidManifest.xml`
+在 __application tag__ 添加下列权限:
 ```xml
   <uses-permission android:name="android.permission.INTERNET" />
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
   <uses-permission android:name="android.permission.WAKE_LOCK" />
 ```
 
-There are also a few necessary meta-data tags that also need to be added:
+还有少量的附件 meta-data 需要添加:
 ```xml
 <meta-data android:name="com.google.android.gms.version"
     android:value="@integer/google_play_services_version" />
-<meta-data android:name="com.google.android.gms.games.APP_ID" 
+<meta-data android:name="com.google.android.gms.games.APP_ID"
     android:value="@string/google_app_id" />
 ```
 
-Make sure to add an entry to the file `res/values/string.xml` of the form: `<string name="google_app_id">777734739048</string>`
-Change that value for your own generated play games App Id.
+确保添加 `<string name="google_app_id">777734739048</string>` 到文件 `res/values/string.xml` 中。将值修改为你自己的 App Id。
 
-### Edit `Android.mk`
+### 编辑 `Android.mk`
 
-Edit `<project_root>/jni/Android.mk` to:
+编辑 `<project_root>/jni/Android.mk`:
 
-#### GPG dependency
+#### GPG 依赖
 
-Install in a folder named `gpg` inside your `proj.android` directory the android part of a file downloaded from: https://developers.google.com/games/services/downloads/gpg-cpp-sdk.v2.1.zip 
+安装一个名为 `gpg` 的目录到你的 `proj.android` 目录。下载地址 https://developers.google.com/games/services/downloads/gpg-cpp-sdk.v2.1.zip
 
-Add this to your `android.mk` file
+添加这个到你的 `android.mk` 文件
 
 ```
 # right after: include $(CLEAR_VARS)
@@ -86,32 +84,30 @@ LOCAL_WHOLE_STATIC_LIBRARIES += gpg-1
 $(call import-module, ../gpg)
 ```
 
-#### Other mk file steps
+#### 其他 mk 文件步骤
 
-Add additional requirements to __LOCAL_WHOLE_STATIC_LIBRARIES__:
+添加附加的 __LOCAL_WHOLE_STATIC_LIBRARIES__:
 ```
 LOCAL_WHOLE_STATIC_LIBRARIES += PluginGoogleAnalytics
 LOCAL_WHOLE_STATIC_LIBRARIES += sdkbox
 ```
 
-Add a call to:
+添加调用到:
 ```
 $(call import-add-path,$(LOCAL_PATH))
 ```
-before any __import-module__ statements.
+在任何 __import-module__ 指令之前.
 
-Add additional __import-module__ statements at the end:
+添加附加的 __import-module__ 指定在最后:
 ```
 $(call import-module, ./sdkbox)
 $(call import-module, ./pluginsdkboxgoogleplay)
 ```
 
-  __Note:__ It is important to make sure these statements are above the existing `$(call import-module,./prebuilt-mk)` statement, if you are using the pre-built libraries.
+  __注意:__ 如果你使用预编译库，重要的是确保这些指令在已有的 `$(call import-module,./prebuilt-mk)` 指令之前.
 
-### Modify `Application.mk` (Cocos2d-x v3.0 to v3.2 only)
-Edit `<project_root>/jni/Application.mk` to make sure __APP_STL__ is defined
-correctly. If `Application.mk` contains `APP_STL := c++_static`, it should be
-changed to:
+### 修改 `Application.mk` (仅限 Cocos2d-x v3.0 到 v3.2)
+修改 `<project_root>/jni/Application.mk` 确保 __APP_STL__ 正确定义. 如果 `Application.mk` 包含 `APP_STL := c++_static`, 应该修改为:
 ```
 APP_STL := gnustl_static
 ```

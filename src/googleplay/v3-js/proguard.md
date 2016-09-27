@@ -1,10 +1,10 @@
-## Proguard (optional)
-* Edit `project.properties`  to specify a `Proguard` configuration file. Example:
+## Proguard (可选)
+* 编辑 `project.properties` 指定一个 `Proguard` 配置文件. 示例:
 ```
 proguard.config=${sdk.dir}/tools/proguard/proguard-android.txt:proguard-project.txt
 ```
 
-* Edit the file you specified to include the following:
+* 编辑文件包含下列内容:
 
 ```
 # cocos2d-x
@@ -39,4 +39,4 @@ proguard.config=${sdk.dir}/tools/proguard/proguard-android.txt:proguard-project.
 -dontwarn com.sdkbox.**
 ```
 
- __Note:__ Proguard only works with __Release__ builds (i.e `cocos run -m release`) debug builds do not invoke Proguard rules.
+__备注:__ Proguard 只能工作在 __Release__ 构建 (例如 `cocos run -m release`) debug 构建不会调用 Proguard 规则.

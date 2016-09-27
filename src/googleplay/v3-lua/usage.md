@@ -1,25 +1,24 @@
 
+##配置 Google Play Services##
 
-##Configuring Google Play Services##
+当前配置过程是在 Lua 中完成并传递到 Google Play Services. 这个对象在 ```gpg``` Lua 名字空间可用.
 
-Currently the configuration process is done in Lua and passed into Google Play Services when creating the game services object. This object is managed for you, and is available from the ```gpg``` Lua namespace.
-
-To create the game services instance, you need to pass in a table that contains the ```ClientID``` that represents the game you have created in the Google Play Console.
+要建立一个游戏服务实例，你需要传递一个包含 ```ClientID``` 的表格，这个值在 Google Play Console 中.
 
 ```
     local config = {ClientID="..."}
     gpg:CreateGameServices(config)
 ```
 
-Note that the ```ClientID``` used is the forwards version from the Google Play Console. There is also a reversed version that is used in the plist. Make sure that you have the correct version, else the initialization will fail.
+注意 ```ClientID``` 使用的是从 Google Play Console 转发的版本. 这里还有一个保留的版本用在 plist 中.确保你有正确的版本，否则初始化会失败。
 
-##Callbacks##
+##回调##
 
-Most of the Google Play Services methods take a callback argument to return the results. This is mainly because the methods are performed asynchronously, and the results may only be available in the future.
+大部分 Google Play Services 方法通过一个回调来返回结果。这主要是因为异步操作的结果只能在调用后提供。
 
-Two types of callbacks are supported. Class method callbacks, and function callbacks (which includes lambda functions)
+支持两种类型的回调。类方法回调和函数回调 (包括 lambda 函数)
 
-###Class method example###
+###类方法示例###
 
 ```
 ExampleClass:CallbackMethod(result)
@@ -31,9 +30,9 @@ local someClass = ExampleClass:new()
 gpg:MethodWithCallback({someClass, ExampleClass.CallbackMethod})
 ```
 
-Notice that in the class method example, you must pass in the instance of the class as well as the method.
+注意类方法示例里，你必须传递类实例和方法.
 
-###Lambda function example###
+###Lambda 函数示例###
 
 ```
 gpg:MethodWithCallback(function(result)
@@ -41,11 +40,11 @@ gpg:MethodWithCallback(function(result)
 end)
 ```
 
-##Authorization##
+##授权##
 
-Before you can do anything with Google Play Services, you must authenticate. If you have previously authenticated, then sdkbox will attempt to log you in automatically. You will still get the same events that you normally would if you are logged in automatically.
+在使用任何 Google Play Services 之前你必须登录. 如果你之前登录过，sdkbox 会尝试自动登录. 你会得到同样的事件，通常来说你是自动登录的。
 
-To begin the authentication process, you call the following, and pass in either a class method or a lambda method (see Callbacks) to recieve the response.
+要开始登录过程，你调用下面的方法并传入回调来接受响应.
 
 ```
 gpg:StartAuthorizationUI(function(result)
@@ -56,25 +55,25 @@ end)
 ```
 
 
-##Quests API##
+##任务 API##
 
-###Before you begin###
+###开始之前###
 
-Make sure to checkout the Google Play Services Quests [documentation](https://developers.google.com/games/services/common/concepts/quests) in order to better understand how to setup quests using their portal, and for a reference on the API.
+确保检查 Google Play Services Quests [文档](https://developers.google.com/games/services/common/concepts/quests) 明确如何设置任务并在 API 中引用.
 
-Before your game can access events and quests, you must define them first in the [Google Play Developer Console](https://play.google.com/apps/publish/)
+在你游戏开始访问事件和任务之前，你必须首先在 [Google Play Developer Console](https://play.google.com/apps/publish/) 里定义它们。
 
-###Submitting an event###
+###提交一个事件###
 
-You send events to the Events service in order to let it know that something has happened. There is no result to this method, so no callback is needed.
+你发送一个事件到事件服务让它知道发生了什么事. 这不会有返回结果，所以不需要回调.
 
 ```
 gpg.Events:Increment("<event id>")
 ```
 
-### Retrieving events###
+### 接收一个事件###
 
-To retrieve the current count of events, use one of the *Fetch* methods.
+要接收事件的计数，使用一个 *Fetch* 方法.
 
 ```
 gpg.Events:Fetch("<event id>", function(result)
@@ -91,13 +90,13 @@ gpg.Events:FetchAll(function(results)
 end)
 ```
 
-The complete list of members to callback results can be found in the callback result descriptions section at the end of this documentation.
+完整的回调结果成员可以在本文档的相关部分找到。
 
-###Displaying quests###
+###显示任务###
 
-Google Play Services provides a UI to select quests, or you can provide your own using the quest data from callbacks.
+Google Play Services 提供一个 UI 来选择任务, 或者你可以提供你自己的 UI 并从回调中使用任务数据.
 
-To use the one provided, you can either display all available quests, or just a single quest UI.
+你可以显示所有可用的任务或者单个任务 UI。
 
 ```
 gpg.Quests:ShowUI("<quest id>", function(result)
@@ -109,11 +108,11 @@ end)
 gpg.Quests:ShowAllUI(function(result)
     -- use result.quest here
 end)
-``` 
+```
 
-###Handling quest acceptance###
+###处理接受任务###
 
-If your game uses the built-in quest UI, then the callback result will have a valid Quest object, which you can test using ```quest.valid()``` otherwise if you are using your own UI, then you can call accept as follows.
+如果你的游戏使用内置的任务 UI，回调结果会包含一个有效的 Quest 对象，你可以使用 ```quest.valid()``` 测试它。或者你可以使用自己的 UI，然后调用下列方法来接受任务。
 
 ```
 gpg.Quests:Accept("<quest id>", function(result)
@@ -121,13 +120,13 @@ gpg.Quests:Accept("<quest id>", function(result)
 end)
 ```
 
-###Handling quest completion###
+###处理任务完成###
 
-After players accept a quest, you send events to the quest service to inform it of progress on the quest.
+在用户接受一个任务后，你发送关于任务进度的事件到任务服务.
 
-One all the criteria for the quest have been satisfied, you can claim the reward  in the built-in UI or your own.
+一旦任务的所有要求都满足，你可以通过内置 UI 或者自己的 UI 索取奖励。
 
-You claim a quest milestone by calling the claim method.
+你可以调用 claim 方法.
 
 ```
 gpg.Quests:ClaimMilestone("<milestone id>", function(result)
@@ -137,13 +136,13 @@ gpg.Quests:ClaimMilestone("<milestone id>", function(result)
 end)
 ```
 
-##Player statistics##
+##玩家统计##
 
-For a complete description of what player statistics are, and how to use them, please refer to the Google Play Services section on the topic [here](https://developers.google.com/games/services/cpp/stats)
+关于玩家统计的完整描述以及如何使用，请参考[这里](https://developers.google.com/games/services/cpp/stats)
 
-###Getting stats for the currently signed in player###
+###取得当前已登录玩家的统计信息###
 
-You can fetch stats for the current player like this.
+你可以像这样取得统计信息.
 
 ```
 gpg.Stats:FetchForPlayer(function(result)
@@ -153,91 +152,91 @@ gpg.Stats:FetchForPlayer(function(result)
 end)
 ```
 
-## Achievements
+## 成就
 
-For the complete documentation, check out [achievements](https://developers.google.com/games/services/common/concepts/achievements)
+完整文档请参考 [achievements](https://developers.google.com/games/services/common/concepts/achievements)
 
-###State
+###状态
 
-Achievements can be hidden, revealed, and unlocked. 
+成就可以隐藏、已透露和已解锁。
 
-Achievements can be designated as standard or incremental. Generally, an incremental achievement involves a player making gradual progress towards earning the achievement over a longer period of time
+成就可以指定为标准的或渐进的。一般来说，一个渐进的成就涉及到一个玩家在一段较长的时间内逐步取得成就的进展.
 
-### Showing the UI
+### 显示 UI
 ```
     gpg.Achievements:ShowAllUI(function(result)
 		-- handle the result here
     end)
 ```
 
-### Fetch Achievements
+### 读取所有成就
 ```
 	gpg.Achievements:FetchAll(nil, function(result)
 	    log:d(log:to_str(result))
 	end)
 ```
 
-### Fetch Achievement
+### 读取指定的成就
 ```
 	gpg.Achievements:Fetch('CgkI6KjppNEWEAIQBQ', nil, function(result)
 	    log:d(log:to_str(result))
 	end)
 ```
 
-### Increment Achievement
+### 增加成就
 ```
    gpg.Achievements:Increment('CgkI6KjppNEWEAIQBQ')
 ```
 
-### Unlock Achievement
+### 解锁成绩
 ```
    gpg.Achievements:Unlock('CgkI6KjppNEWEAIQBQ')
 ```
 
-### Reveal Achievement
+### 暴露成就
 ```
 	gpg.Achievements:Reveal('CgkI6KjppNEWEAIQBQ')
 ```
 
-## Leaderboards
+## 排行榜
 
-Checkout additional docs for leaderboards [here](https://developers.google.com/games/services/common/concepts/leaderboards)
+完整文档请参考 [here](https://developers.google.com/games/services/common/concepts/leaderboards)
 
-### Show UI
+### 显示指定排行榜
 ```
     gpg.Leaderboards:ShowUI("achievement id")
 ```
 
-### ShowAllUI
+### 显示所有排行榜
 ```
     gpg.Leaderboards:ShowAllUI()
 ```
 
-###Submit Score
+### 提交分数
 ```
     gpg.Leaderboards:SubmitScore("achievement id", score, "meta data", function(result)
     end)
 ```
 
-###FetchAllScoreSummaries
+### 取得成就的概要
 ```
     gpg.Leaderboards:FetchAllScoreSummaries("achievement id", data source, function(result)
     end)
 ```
 
-###FetchAll
+### 取得所有成就
 ```
     gpg.Leaderboards:FetchAll(datasource, function(result)
     end)
 ```
 
-###FetchScorePage
+### 取得得分页
 ```
     gpg.Leaderboards:FetchScorePage("achievement id", datasource, time, timespan, collection, maxitmes, function(result)
     end)
 ```
 
-###FetchNextScorePage
+### 取得下一个得分页
 ```
     gpg.Leaderboards:FetchNextScorePage(datasource, max items, function(result)
     end)
