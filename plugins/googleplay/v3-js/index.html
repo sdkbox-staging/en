@@ -65,42 +65,25 @@
                 
                 
                     <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cocos <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cocos2d-x <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../../../cocos/">Cocos Integration</a>
+    <a href="../../../cocos/">Overview</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../installer/">Installer</a>
+    <a href="../../../installer/">CLI Installer</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../faq/">FAQ</a>
+    <a href="../../../qa/integration-admob-to-creator/">For Cocos Creator</a>
 </li>
-
-                        
-                            
-  
-  <li class="dropdown-submenu">
-    <a tabindex="-1" class="non-link">API</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../../api/gpg/">Google Play Games</a>
-</li>
-
-        
-    </ul>
-  </li>
-  
 
                         
                             
@@ -518,6 +501,45 @@
                 
                 
                 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../qa/integration-admob-to-creator/">Admob in Creator</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/integration-fyber-to-cocos/">Fyber with Cocos2d-x</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/fb-share-on-cocos/">Facebook with Cocos2d-x</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/android_64k/">Fix Android 64K methods limit</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/integration-iap-on-unity/">IAP with Unity</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
                     <li >
                         <a href="../../../release-note/">About</a>
                     </li>
@@ -665,7 +687,7 @@
 
 <h2 id="integration">Integration</h2>
 <p>Open a terminal and use the following command to install the SDKBOX Google Play Games Services plugin. Make sure you setup the SDKBOX installer correctly.</p>
-<pre><code class="bash">$ sdkbox import googleplay 
+<pre><code class="bash">$ sdkbox import gpg 
 </code></pre>
 
 <h2 id="after-installation">After Installation</h2>
@@ -775,15 +797,15 @@ Add this:</p>
 <p>You need to register all the Google Play Games JS functions with cocos2d-x before using them.</p>
 <p>To do this:
 * Modify <code>./frameworks/runtime-src/Classes/AppDelegate.cpp</code> to include the following headers:</p>
-<pre><code class="cpp">#include &quot;PluginSdkboxGooglePlayJS.hpp&quot;
-#include &quot;PluginSdkboxGooglePlayJSHelper.h&quot;
+<pre><code class="cpp">#include &quot;PluginGPGJS.hpp&quot;
+#include &quot;PluginGPGJSHelper.h&quot;
 </code></pre>
 
 <ul>
 <li>Modify <code>./frameworks/runtime-src/Classes/AppDelegate.cpp</code> make sure to call:</li>
 </ul>
-<pre><code class="cpp">    sc-&gt;addRegisterCallback(register_all_PluginSdkboxGooglePlayJS);
-    sc-&gt;addRegisterCallback(register_all_PluginSdkboxGooglePlayJS_helper);
+<pre><code class="cpp">    sc-&gt;addRegisterCallback(register_all_PluginGPGJS);
+    sc-&gt;addRegisterCallback(register_all_PluginGPGJS_helper);
 </code></pre>
 
 <h3 id="initialize-google-play-games">Initialize Google Play Games</h3>
@@ -898,7 +920,7 @@ Also, player stats can be obtained with interesting information such as a player
 the<code>GooglePlay</code> bundle into your Xcode project, check <code>Copy items if needed</code> when adding frameworks:</p>
 <blockquote>
 <p>sdkbox.framework</p>
-<p>PluginSdkboxGooglePlay.framework</p>
+<p>PluginGPG.framework</p>
 <p>GoogleAppUtilities.framework</p>
 <p>GoogleAuthUtilities.framework</p>
 <p>GoogleNetworkingUtilities.framework</p>
@@ -1061,7 +1083,7 @@ Change that value for your own generated play games App Id.</p>
 <h4 id="add-static-libraries">Add static libraries</h4>
 <p>Add additional requirements to <strong>LOCAL_WHOLE_STATIC_LIBRARIES</strong>:</p>
 <pre><code>LOCAL_WHOLE_STATIC_LIBRARIES += gpg-1
-LOCAL_WHOLE_STATIC_LIBRARIES += PluginSdkboxGooglePlay
+LOCAL_WHOLE_STATIC_LIBRARIES += PluginGPG
 LOCAL_WHOLE_STATIC_LIBRARIES += sdkbox
 </code></pre>
 
@@ -1073,7 +1095,7 @@ LOCAL_WHOLE_STATIC_LIBRARIES += sdkbox
 <p>Add additional <strong>import-module</strong> statements at the end:</p>
 <pre><code>$(call import-module, ./gpg)
 $(call import-module, ./sdkbox)
-$(call import-module, ./pluginsdkboxgoogleplay)
+$(call import-module, ./plugingpg)
 </code></pre>
 
 <p><strong>Note:</strong> It is important to make sure these statements are above the existing <code>$(call import-module,./prebuilt-mk)</code> statement, if you are using the pre-built libraries.</p>

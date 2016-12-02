@@ -65,42 +65,25 @@
                 
                 
                     <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cocos <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cocos2d-x <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../../../cocos/">Cocos Integration</a>
+    <a href="../../../cocos/">Overview</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../installer/">Installer</a>
+    <a href="../../../installer/">CLI Installer</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../faq/">FAQ</a>
+    <a href="../../../qa/integration-admob-to-creator/">For Cocos Creator</a>
 </li>
-
-                        
-                            
-  
-  <li class="dropdown-submenu">
-    <a tabindex="-1" class="non-link">API</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../../api/gpg/">Google Play Games</a>
-</li>
-
-        
-    </ul>
-  </li>
-  
 
                         
                             
@@ -518,6 +501,45 @@
                 
                 
                 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../qa/integration-admob-to-creator/">Admob in Creator</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/integration-fyber-to-cocos/">Fyber with Cocos2d-x</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/fb-share-on-cocos/">Facebook with Cocos2d-x</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/android_64k/">Fix Android 64K methods limit</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/integration-iap-on-unity/">IAP with Unity</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
                     <li >
                         <a href="../../../release-note/">About</a>
                     </li>
@@ -576,6 +598,8 @@
             <li><a href="#initialize-share">Initialize Share</a></li>
         
             <li><a href="#share">share</a></li>
+        
+            <li><a href="#native-share">Native Share</a></li>
         
             <li><a href="#catch-share-events-optional">Catch Share events (optional)</a></li>
         
@@ -773,6 +797,9 @@ plugin.share(shareInfo);
 <li>Platform_Unknow</li>
 <li>Platform_Twitter</li>
 <li>Platform_Facebook</li>
+<li>Platform_SMS</li>
+<li>Platform_Mail</li>
+<li>Platform_Native</li>
 <li>Platform_Select</li>
 <li>Platform_All</li>
 </ul>
@@ -787,6 +814,28 @@ plugin.share(shareInfo);
 <li>SocialShareStateSelectShow</li>
 <li>SocialShareStateSelected</li>
 <li>SocialShareStateSelectCancelled</li>
+</ul>
+<h3 id="native-share">Native Share</h3>
+<p>you can use ios/andrid system native share:</p>
+<pre><code class="js">var shareInfo = {};
+shareInfo.text = &quot;#sdkbox(www.sdkbox.com) - the cure for sdk fatigue &quot;;
+shareInfo.title = &quot;sdkbox&quot;;
+//shareInfo.image = &quot;path/to/image&quot;
+shareInfo.link = &quot;http://www.sdkbox.com&quot;;
+sdkbox::PluginShare::nativeShare(info);
+
+// the follow property will be ignored in nativeShare
+//shareInfo.showDialog = false;
+//shareInfo.platform = sdkbox.SocialPlatform.Platform_Select;
+
+sdkbox.PluginShare.nativeShare(shareInfo);
+</code></pre>
+
+<p><em>Note</em>:</p>
+<ul>
+<li>IOS: when trigger share success event, action name will pass by error in sdkbox::SocialShareResponse</li>
+<li>Android: share success event will trigger, but this is not real share success, just show share panel success, because can't get real share success event on android</li>
+<li>please make sure you have permission <code>NSPhotoLibraryUsageDescription</code>, if you want to use <code>native share</code> to share image.</li>
 </ul>
 <h3 id="catch-share-events-optional">Catch Share events (optional)</h3>
 <p>This allows you to catch the <code>Share</code> events so that you can perform operations based upon responses. A simple example might look like this:</p>

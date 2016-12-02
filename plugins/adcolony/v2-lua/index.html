@@ -65,42 +65,25 @@
                 
                 
                     <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cocos <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cocos2d-x <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../../../cocos/">Cocos Integration</a>
+    <a href="../../../cocos/">Overview</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../installer/">Installer</a>
+    <a href="../../../installer/">CLI Installer</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../faq/">FAQ</a>
+    <a href="../../../qa/integration-admob-to-creator/">For Cocos Creator</a>
 </li>
-
-                        
-                            
-  
-  <li class="dropdown-submenu">
-    <a tabindex="-1" class="non-link">API</a>
-    <ul class="dropdown-menu">
-        
-            
-<li >
-    <a href="../../../api/gpg/">Google Play Games</a>
-</li>
-
-        
-    </ul>
-  </li>
-  
 
                         
                             
@@ -518,6 +501,45 @@
                 
                 
                 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../../qa/integration-admob-to-creator/">Admob in Creator</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/integration-fyber-to-cocos/">Fyber with Cocos2d-x</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/fb-share-on-cocos/">Facebook with Cocos2d-x</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/android_64k/">Fix Android 64K methods limit</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/integration-iap-on-unity/">IAP with Unity</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
                     <li >
                         <a href="../../../release-note/">About</a>
                     </li>
@@ -628,6 +650,7 @@
 
 <h2 id="prerequisites">Prerequisites</h2>
 <p>Certain SDKBOX plugins do not work together. If you use <strong>AdColony</strong>, then you cannot also use the <strong>Fyber</strong> and <strong>SOOMLA GROW</strong> services, in the same project.</p>
+<p>Start from AdColony 3.0 it requires you to config your app to support all orientations, please read the details <a href="https://github.com/AdColony/AdColony-iOS-SDK-3/wiki/Xcode-Project-Setup#configuring-supported-orientations">here</a></p>
 <h2 id="integration">Integration</h2>
 <p>Open a terminal and use the following command to install the SDKBOX AdColony plugin. Make sure you setup the SDKBOX installer correctly.</p>
 <pre><code class="bash">$ sdkbox import adcolony
@@ -652,7 +675,6 @@
 <p>If your game doesn't support all screen orientations you will need to check <code>Requires full screen</code> in Xcode. If you do not, your app will fail Apple's submission process.</p>
 <h4 id="whitelist-canopenurl-function">Whitelist canOpenURL function</h4>
 <p>This depends on what plugins are in your project. You may need to add the required entry to the <code>info.plist</code>, under <code>LSApplicationQueriesSchemes</code>.</p>
-<p>Follow <a href="https://github.com/AdColony/AdColony-iOS-SDK/wiki/iOS-9#using-canopenurl">this link</a></p>
 <!--## Configuration
 
 ## Remote Configuration
