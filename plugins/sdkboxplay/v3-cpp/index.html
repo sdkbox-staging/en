@@ -314,6 +314,26 @@
         
             
 <li >
+    <a href="../../phunwareads/">Phunware Ads</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
+    <a href="../../phunwareads/">Phunware Messaging</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../review/">Ratings & Reviews</a>
 </li>
 
@@ -535,6 +555,18 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../../../qa/use-gui-integration-ga-to-creator/">GA with SDKBox GUI in Creator</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/use-custom-activity-on-unity/">Unity Custom Activity</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -626,7 +658,7 @@
         
             <li><a href="#edit-androidmk">Edit Android.mk</a></li>
         
-            <li><a href="#edit-aplicationmk">Edit Aplication.mk</a></li>
+            <li><a href="#edit-applicationmk">Edit Application.mk</a></li>
         
             <li><a href="#modify-cocos2dxactivityjava">Modify Cocos2dxActivity.java</a></li>
         
@@ -649,6 +681,15 @@
         <li class="main "><a href="#proguard-optional">Proguard (optional)</a></li>
 	
     
+        <li class="main "><a href="#qa">Q&amp;A</a></li>
+	
+	<ul class="sub-sidenav">
+        
+            <li><a href="#how-to-submit-float-score">How To Submit Float Score</a></li>
+        
+	</ul>
+	
+    
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -669,7 +710,8 @@
 <h3 id="game-center">Game Center</h3>
 <ul>
 <li>Enable Game Center on XCode.</li>
-<li>Use developer console to configure leaderboards and achievements.</li>
+<li>Use itunes connect to configure <a href="https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnectGameCenter_Guide/Leaderboards/Leaderboards.html#//apple_ref/doc/uid/TP40013726-CH2-SW47">leaderboards</a> and <a href="https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnectGameCenter_Guide/Achievements/Achievements.html#//apple_ref/doc/uid/TP40013726-CH3-SW3">achievements</a>.</li>
+<li>Make sure Leaderboard and Achievements are live before testing</li>
 </ul>
 <h2 id="integration">Integration</h2>
 <p>Open a terminal and use the following command to install the SDKBOX SdkboxPlay plugin. Make sure you setup the SDKBOX installer correctly.</p>
@@ -770,6 +812,7 @@ If the requested field does not exist, empty string will returned in exchange.
 <li>hires_image_uri</li>
 <li>last_play_timestamp</li>
 <li>retrieved_timestamp</li>
+<li>server_auth_code</li>
 </ul>
 <p>use the same <code>getPlayerAccountField</code> to get these values as strings.</p>
 <h5 id="achievements">Achievements</h5>
@@ -1045,7 +1088,7 @@ this method will fail silently.
 If the call is successful, this method may invoke two different methods:
   + <code>onIncrementalAchievementStep</code> if the achievement is not unlocked.
   + <code>onIncrementalAchievementUnlocked</code> the first time it's been newly unlocked.
-On Android, the achievement is set to a fixed number of incremental steps. On iOS, the achievment is set as
+On Android, the achievement is set to a fixed number of incremental steps. On iOS, the achievement is set as
 a percentage value (0..100). In either case, the <code>increment</code> value will be added to the current achievement's
 value.</p>
 </blockquote>
@@ -1261,7 +1304,7 @@ The <code>json_achievements_info</code> parameter is a json array encoded string
 <pre><code class="json">  {
      &quot;id&quot;                        : string,
      &quot;name&quot;                      : string,
-     &quot;xp_value&quot;                  : string,   // experience value
+     &quot;xp_value&quot;                  : number,
      &quot;last_updated_timestamp&quot;    : number,
      &quot;description&quot;               : string,
      &quot;type&quot;                      : number,   // 0 = standard, 1 = incremental
@@ -1275,7 +1318,7 @@ The <code>json_achievements_info</code> parameter is a json array encoded string
 <pre><code class="json">  {
      &quot;formatted_current_steps&quot;   : string,
      &quot;formatted_total_steps&quot;     : string,
-     current_steps&quot;              : number,
+     &quot;current_steps&quot;             : number,
      &quot;total_steps&quot;               : number
   }
 </code></pre>
@@ -1284,19 +1327,20 @@ The <code>json_achievements_info</code> parameter is a json array encoded string
 <pre><code class="json">  {
      &quot;id&quot;                        : string,
      &quot;name&quot;                      : string,
-     &quot;xp_value&quot;                  : number, int
+     &quot;xp_value&quot;                  : number,
      &quot;last_updated_timestamp&quot;    : number,
-     &quot;description&quot;               : string,   // maybe empty if no achievemnt submission happened before.
      &quot;state&quot;                     : number,   // 0 = unlocked, 1 = revealed,   2 = hidden
-     &quot;type&quot;                      : 1,        // on ios all achievemtns are incremental.
+     &quot;type&quot;                      : number,   // always 1 = incremental, on iOS all achievemtns are incremental.
      &quot;current_steps&quot;             : number,   // double value. percentage 0.0 .. 100.0
      &quot;total_steps&quot;               : number,   // 100.0
   }
- ```
- iOS only fields:
-```json
-  {
-     &quot;replayable&quot;                : boolean,
+</code></pre>
+
+<p>iOS only fields:</p>
+<pre><code class="json">  {
+     &quot;replayable&quot;                : boolean, // whether this achievement can be earned multiple times.
+     &quot;achieved_description&quot;      : string,  // maybe empty if no achievemnt submission happened before.
+     &quot;unachieved_description&quot;    : string
   }
 </code></pre>
 
@@ -1409,7 +1453,7 @@ $(call import-module, ./sdkbox)
 $(call import-module, ./pluginsdkboxplay)
 </code></pre>
 
-<h3 id="edit-aplicationmk">Edit <code>Aplication.mk</code></h3>
+<h3 id="edit-applicationmk">Edit <code>Application.mk</code></h3>
 <p>Edit <code>proj.android/jni/Application.mk</code> to:</p>
 <p>Add <strong>APP_PLATFORM</strong> version requirements:</p>
 <pre><code>APP_PLATFORM := android-10
@@ -1599,7 +1643,19 @@ This is default proguard config:</p>
 }
 </code></pre>
 
-<p><strong>Note:</strong> Proguard only works with <strong>Release</strong> builds (i.e <code>cocos run -m release</code>) debug builds do not invoke Proguard rules.</p></div>
+<p><strong>Note:</strong> Proguard only works with <strong>Release</strong> builds (i.e <code>cocos run -m release</code>) debug builds do not invoke Proguard rules.</p>
+<h2 id="qa">Q&amp;A</h2>
+<h3 id="how-to-submit-float-score">How To Submit Float Score</h3>
+<pre><code class="c++">static void submitScore( const std::string&amp; leaderboard_name, long score );
+</code></pre>
+
+<p>The meaning of the score value depends on the formatting of the leaderboard established in the developer console.</p>
+<p>Fixed-point formats:</p>
+<p>score represents a raw value, and will be formatted based on the number of decimal places configured. A score of 1000 would be formatted as 1000, 100.0, or 10.00 for 0, 1, or 2 decimal places.</p>
+<p>eg. if you want to submit score 3.14, you must set score formats is <code>Fixed Point To 2 Decimal</code> (change score format at apple/google develope website), and invoke like follow:</p>
+<pre><code class="c++">submitScore(&quot;leaderboardName&quot;, 3.14 * 100);
+
+</code></pre></div>
             
         </div>
 

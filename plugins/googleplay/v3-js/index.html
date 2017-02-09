@@ -314,6 +314,26 @@
         
             
 <li >
+    <a href="../../phunwareads/">Phunware Ads</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
+    <a href="../../phunwareads/">Phunware Messaging</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../review/">Ratings & Reviews</a>
 </li>
 
@@ -535,6 +555,18 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../../../qa/use-gui-integration-ga-to-creator/">GA with SDKBox GUI in Creator</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/use-custom-activity-on-unity/">Unity Custom Activity</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -690,6 +722,9 @@
 <pre><code class="bash">$ sdkbox import gpg 
 </code></pre>
 
+<blockquote>
+<p>Warning: Account creation within iOS is no longer supported, please read <a href="https://android-developers.googleblog.com/2016/12/games-authentication-adopting-google.html">this blog post</a> for details</p>
+</blockquote>
 <h2 id="after-installation">After Installation</h2>
 <h3 id="android">Android</h3>
 <h4 id="update-androidmanifestxml">Update AndroidManifest.xml</h4>
@@ -812,10 +847,6 @@ Add this:</p>
 <p>Google Play initialization is thorughout a <code>gpg.Builder</code> object.
 This is a valid copy-and-paste example for authenticating into the library:</p>
 <pre><code class="javascript">
-//Initialization
-var config = new gpg.PlatformConfiguration();
-config.SetClientID('777734739048-cdkbeieil19d6pfkavddrri5o19gk4ni.apps.googleusercontent.com');
-
 new gpg.GameServices.Builder()
             .SetOnAuthActionStarted( function( result ) {
                 // Auth started callback
@@ -825,7 +856,7 @@ new gpg.GameServices.Builder()
             })
             .SetLogging( gpg.LogLevel.INFO )    // Set Logging level
             .EnableSnapshots()                  // Enable Snapshot (Saved Game) functionailty
-            .Create( config, function( game_services ) {
+            .Create( function( game_services ) {
                 // 8
             } );
 </code></pre>
@@ -857,7 +888,7 @@ new gpg.GameServices.Builder()
 <p>If your game expects to save games on the cloud, this is step would be mandatory and you have to specify it during initialization.</p>
 <h4 id="step-8">Step 8</h4>
 <p>Until this steps, all previous code is authentication set up.
-This <code>Create</code> call is the actual executable code to be authenticated, notified apropriately and agin access to the GPG objects.
+This <code>Create</code> call is the actual executable code to be authenticated, notified appropriately and again access to the GPG objects.
 GPG interation will happen by means of a <code>gpg.GameServices</code> object. This object will eventually been passed to the <code>Create</code> method's callback if everything went ok.</p>
 <h3 id="authorization">Authorization</h3>
 <p>All Google Play Game services require user login. So after GPG has been initialized you should attempt to log user in with following API</p>
@@ -964,7 +995,7 @@ following system frameworks, if you don't already have them:</p>
 <h4 id="set-a-rootview-controller-for-gpg_1">Set a rootview controller for GPG:</h4>
 <p>Update <code>proj.ios_mac/ios/RootViewController.h</code>
 Add this:</p>
-<pre><code>import &lt;GoogleSignIn/GoogleSignIn.h&gt;
+<pre><code>#import &lt;GoogleSignIn/GoogleSignIn.h&gt;
 
 // Change RootViewController class definition to:
 @interface RootViewController : UIViewController&lt;GIDSignInUIDelegate&gt; 
@@ -1020,8 +1051,6 @@ Add this:</p>
 </ul>
 <h4 id="further-info_1">Further info</h4>
 <p>For more information check out the <a href="https://developers.google.com/games/services/cpp/gettingStartedIOS">official documentation</a></p>
-<p>Copy all source and header files from <code>plugin/jsbindings/</code> to your projects <code>Classes</code> folder.</p>
-<p>Add these same files, that you just copied, to Xcode by either dragging and dropping them into Xcode or by using <strong>File -&gt; Add files to...</strong>.</p>
 <h2 id="manual-integration-for-android">Manual Integration For Android</h2>
 <p>SDKBOX supports three different kinds of <strong>Android</strong> projects <strong>command-line</strong>, <strong>eclipse</strong> and <strong>Android Studio</strong>. </p>
 <ul>
@@ -1032,7 +1061,7 @@ Add this:</p>
 <p>Copy the following <strong>jar</strong> files from <code>plugin/android/libs</code> folder of this
 bundle into your project’s <strong><project_root>/libs</strong> folder.</p>
 <blockquote>
-<p>PluginGoogleAnalytics.jar</p>
+<p>Plugingpg.jar</p>
 <p>sdkbox.jar</p>
 </blockquote>
 <ul>
@@ -1104,14 +1133,6 @@ $(call import-module, ./plugingpg)
 correctly. If <code>Application.mk</code> contains <code>APP_STL := c++_static</code>, it should be
 changed to:</p>
 <pre><code>APP_STL := gnustl_static
-</code></pre>
-
-<p>Copy all source and header files from <code>plugin/jsbindings/</code> to your projects <code>Classes</code> folder.</p>
-<p>Add all <code>.cpp</code> files, that you just copied, to <code>Android.mk</code> in the <strong>LOCAL_SRC_FILES</strong> section. Example</p>
-<pre><code>LOCAL_SRC_FILES := hellocpp/main.cpp \
-                  ../../Classes/AppDelegate.cpp \
-                  ../../Classes/HelloWorldScene.cpp \
-                                    ../../Classes/NewSourceFile.cpp
 </code></pre>
 
 <h3 id="modify-cocos2dxactivityjava">Modify <strong>Cocos2dxActivity.java</strong></h3>

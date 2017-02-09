@@ -314,6 +314,26 @@
         
             
 <li >
+    <a href="../../plugins/phunwareads/">Phunware Ads</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
+    <a href="../../plugins/phunwareads/">Phunware Messaging</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../plugins/review/">Ratings & Reviews</a>
 </li>
 
@@ -535,6 +555,18 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../../qa/use-gui-integration-ga-to-creator/">GA with SDKBox GUI in Creator</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../qa/use-custom-activity-on-unity/">Unity Custom Activity</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -618,10 +650,14 @@
 <li>The newly created configuration sets by importing are still in <strong>Draft</strong> state. They are not accessible by the client, until you can edit and publish them to the cloud. </li>
 </ul>
 <h2 id="setup-app-to-use-remote-config">Setup App to use Remote Config</h2>
+<p>To enable the cloud service in your applications is as easy as calling a single <strong>sdkbox::init()</strong> function and pass following parameters from the <code>Configuration Set</code></p>
 <ul>
-<li>To enable the cloud service in your applications is as easy as calling a single <strong>sdkbox::init()</strong> function and passing in your <strong>token</strong> and <strong>secret</strong> that are provided by the <code>Configuration Set</code>. </li>
+<li>Application token</li>
+<li>Application secret</li>
+<li>store name (all, apple, googleplay, playphone)</li>
+<li>debug (fetch debug config or live config)</li>
 </ul>
-<pre><code>sdkbox::init( &lt;application token&gt;, &lt;application secret&gt; );
+<pre><code class="cpp">sdkbox::init( &lt;application_token&gt;, &lt;application_secret&gt; &lt;store_name&gt; &lt;debug_environment&gt;);
 </code></pre>
 
 <ul>

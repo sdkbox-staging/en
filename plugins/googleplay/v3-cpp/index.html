@@ -314,6 +314,26 @@
         
             
 <li >
+    <a href="../../phunwareads/">Phunware Ads</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
+    <a href="../../phunwareads/">Phunware Messaging</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../review/">Ratings & Reviews</a>
 </li>
 
@@ -535,6 +555,18 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../../../qa/use-gui-integration-ga-to-creator/">GA with SDKBox GUI in Creator</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/use-custom-activity-on-unity/">Unity Custom Activity</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -686,6 +718,9 @@
 <pre><code class="bash">$ sdkbox import gpg 
 </code></pre>
 
+<blockquote>
+<p>Warning: Account creation within iOS is no longer supported, please read <a href="https://android-developers.googleblog.com/2016/12/games-authentication-adopting-google.html">this blog post</a> for details</p>
+</blockquote>
 <h2 id="after-installation">After Installation</h2>
 <h3 id="android">Android</h3>
 <h4 id="update-androidmanifestxml">Update AndroidManifest.xml</h4>
@@ -869,7 +904,7 @@ following system frameworks, if you don't already have them:</p>
 <h4 id="set-a-rootview-controller-for-gpg_1">Set a rootview controller for GPG:</h4>
 <p>Update <code>proj.ios_mac/ios/RootViewController.h</code>
 Add this:</p>
-<pre><code>import &lt;GoogleSignIn/GoogleSignIn.h&gt;
+<pre><code>#import &lt;GoogleSignIn/GoogleSignIn.h&gt;
 
 // Change RootViewController class definition to:
 @interface RootViewController : UIViewController&lt;GIDSignInUIDelegate&gt; 
@@ -935,7 +970,7 @@ Add this:</p>
 <p>Copy the following <strong>jar</strong> files from <code>plugin/android/libs</code> folder of this
 bundle into your project’s <strong><project_root>/libs</strong> folder.</p>
 <blockquote>
-<p>PluginGoogleAnalytics.jar</p>
+<p>Plugingpg.jar</p>
 <p>sdkbox.jar</p>
 </blockquote>
 <ul>

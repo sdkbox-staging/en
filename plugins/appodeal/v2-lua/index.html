@@ -314,6 +314,26 @@
         
             
 <li >
+    <a href="../../phunwareads/">Phunware Ads</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
+    <a href="../../phunwareads/">Phunware Messaging</a>
+</li>
+
+        
+            
+  
+
+        
+            
+<li >
     <a href="../../review/">Ratings & Reviews</a>
 </li>
 
@@ -535,6 +555,18 @@
 </li>
 
                         
+                            
+<li >
+    <a href="../../../qa/use-gui-integration-ga-to-creator/">GA with SDKBox GUI in Creator</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../../qa/use-custom-activity-on-unity/">Unity Custom Activity</a>
+</li>
+
+                        
                         </ul>
                     </li>
                 
@@ -635,7 +667,7 @@
         
             <li><a href="#edit-androidmk">Edit Android.mk</a></li>
         
-            <li><a href="#edit-aplicationmk">Edit Aplication.mk</a></li>
+            <li><a href="#edit-applicationmk">Edit Application.mk</a></li>
         
             <li><a href="#modify-java">Modify .java</a></li>
         
@@ -694,6 +726,17 @@
 <p>If your game doesn't support all screen orientations you will need to check <code>Requires full screen</code> in Xcode. If you do not, your app will fail Apple's submission process.</p>
 <h4 id="whitelist-canopenurl-function">Whitelist canOpenURL function</h4>
 <p>This depends on what plugins are in your project. You may need to add the required entry to the <code>info.plist</code>, under <code>LSApplicationQueriesSchemes</code>.</p>
+<p>Add this key in Info.plist , if you use this function in your app</p>
+<pre><code class="plist">&lt;key&gt;NSBluetoothPeripheralUsageDescription&lt;/key&gt;
+&lt;string&gt;Advertising&lt;/string&gt;
+&lt;key&gt;NSCalendarsUsageDescription&lt;/key&gt;
+&lt;string&gt;Advertising&lt;/string&gt;
+&lt;key&gt;NSLocationWhenInUseUsageDescription&lt;/key&gt;
+&lt;string&gt;Advertising&lt;/string&gt;
+&lt;key&gt;NSPhotoLibraryUsageDescription&lt;/key&gt;
+&lt;string&gt;Advertising&lt;/string&gt;
+</code></pre>
+
 <!--## Configuration
 
 ## Remote Configuration
@@ -1103,7 +1146,7 @@ $(call import-module, ./sdkbox)
 $(call import-module, ./pluginappodeal)
 </code></pre>
 
-<h3 id="edit-aplicationmk">Edit <code>Aplication.mk</code></h3>
+<h3 id="edit-applicationmk">Edit <code>Application.mk</code></h3>
 <p>Edit <code>proj.android/jni/Application.mk</code> to:</p>
 <p>Add <strong>APP_PATFORM</strong> version requirements:</p>
 <pre><code>APP_PLATFORM := android-9
